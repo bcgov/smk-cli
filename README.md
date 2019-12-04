@@ -4,7 +4,7 @@ A command line utility and visual editor for creating and editing Simple Map Kit
 # Requirements
 Node.js, git
 
-#How to use
+# How to use
 
 To run the create CLI: node index.js create
 to run the editor: node index.js ui [port]
