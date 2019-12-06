@@ -1,7 +1,7 @@
 {
   "preferGlobal": true,
   "name": "smk-cli",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "A utility for creating and configuring a Simple Map Kit project",
   "main": "index.js",
   "scripts": {
