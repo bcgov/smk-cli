@@ -10,7 +10,6 @@
   "keywords": [],
   "author": "Vivid Solutions Inc.",
   "license": "(MIT OR Apache-2.0)",
-  "private": true,
   "bin": {
     "smk": "./index.js"
   },
