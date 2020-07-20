@@ -1,6 +1,6 @@
 {
   "preferGlobal": true,
-  "name": "smk-cli",
+  "name": "@qqnluaq/smk-cli",
   "version": "0.8.6",
   "description": "A utility for creating and configuring a Simple Map Kit project",
   "main": "index.js",
@@ -18,6 +18,7 @@
     "url": "https://github.com/dhlevi/smk-cli.git"
   },
   "dependencies": {
+    "@qqnluaq/smk": "^0.9.0",
     "@tmcw/togeojson": "^3.0.1",
     "chalk": "^3.0.0",
     "clear": "^0.1.0",
@@ -29,7 +30,7 @@
     "figlet": "^1.2.4",
     "helmet": "^3.21.2",
     "inquirer": "^7.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "minimist": "^1.2.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
@@ -40,6 +41,10 @@
     "touch": "^3.1.0",
     "unzipper": "^0.10.5",
     "xml2js": "^0.4.22",
-    "xmldom": "^0.1.27"
+    "xmldom": "^0.1.27",
+    "glob": "^7.1.2"
+  },
+  "devDependencies": {
+    "grunt-release": "^0.14.0"
   }
 }

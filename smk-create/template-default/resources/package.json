@@ -1,0 +1,13 @@
+{
+    "name": "<%= app.name %>",
+    "version": "0.0.1",
+    "description": "<%= app.description %>",
+    "author": "<%= app.author %>",
+    "dependencies": {
+        "@qqnluaq/smk": "^0.9.0",
+        "http-server": "^0.12.3"
+    },
+    "scripts": {
+        "browse": "http-server -o"
+    }
+}
