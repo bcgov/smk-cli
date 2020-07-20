@@ -39,12 +39,15 @@ module.exports = async function ( args ) {
 
     const viewApp = await inquirer.prompt( [ {
         name: 'answer',
-        type: 'list',
-        message: 'Would you like to view the application now?',
-        choices: [ 'Yes', 'No' ],
-        default: 'Yes'
+        type: 'input',
+        message: 'Would you like to view the application now? ',
+        suffix: 'y/n',
+        validate: function ( answer ) {
+            if ( !/^[yn]/i.test( answer ) ) return false
+            return true
+        }
     } ] )
-    if ( viewApp.answer == 'Yes' )
+    if ( viewApp.answer.toLowerCase() == 'y' )
         viewApplication()
 
     console.log()
