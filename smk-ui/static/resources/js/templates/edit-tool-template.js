@@ -1,7 +1,7 @@
 Vue.component('tools',
 {
     props: ['config', 'editingTool'],
-    template:   
+    template:
         `<form id="manageToolsForm" style="padding: 0px; margin: 0px;">
             <div class="row" style="padding: 0px; margin: 0px;">
                 <div id="allTools" class="col s6" style="height: calc(100vh - 282px);">
@@ -25,16 +25,16 @@ Vue.component('tools',
 Vue.component('tool-component',
 {
     props: ['tool', 'index'],
-    template:   
+    template:
         `<li class="collection-item avatar">
             <span class="title">{{tool.type}} tool</span>
             <p>
                 <label>
-                    <input v-bind:name="'' + index + '-operatorGroup'" type="radio" value="true" v-model="tool.enabled"/>
+                    <input v-bind:name="'' + index + '-operatorGroup'" type="radio" v-bind:value="true" v-model="tool.enabled"/>
                     <span>Enabled</span>
                 </label>
                 <label>
-                    <input v-bind:name="'' + index + '-operatorGroup'" type="radio" value="false" v-model="tool.enabled"/>
+                    <input v-bind:name="'' + index + '-operatorGroup'" type="radio" v-bind:value="false" v-model="tool.enabled"/>
                     <span>Disabled</span>
                 </label>
                 <br />
@@ -46,7 +46,7 @@ Vue.component('tool-component',
 Vue.component('edit-tool',
 {
     props: ['tool'],
-    template:   
+    template:
         `<div v-if="tool">
             <div class="row" style="width: 100%; height: calc(100vh - 363px);" id="editPanelData">
                 <div v-if="tool.hasOwnProperty('position')" class="col s6 input-field">

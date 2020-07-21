@@ -97,10 +97,10 @@
                 <div id="contentPanel" class="content-panel" style="display: none;">
                     <div class="card white" style="margin: 0px;">
                         <div id="contentCard" class="card-content black-text" style="height: calc(100vh - 130px); overflow: auto;">
-                            <component v-bind:is="currentTabComponent" 
-                                       v-bind:config="config" 
-                                       v-bind:catalog-layers="catalogLayers" 
-                                       v-bind:wms-layers="wmsLayers" 
+                            <component v-bind:is="currentTabComponent"
+                                       v-bind:config="config"
+                                       v-bind:catalog-layers="catalogLayers"
+                                       v-bind:wms-layers="wmsLayers"
                                        v-bind:vector-layers="vectorLayers"
                                        v-bind:editing-layer="editingLayer"
                                        v-bind:editing-tool="editingTool"
@@ -108,8 +108,8 @@
                         </div>
                         <div class="card-action">
                             <a class="waves-effect waves-light btn-small blue-grey darken-2" v-on:click="saveConfig()" style="width: 140px;"><em style="position: absolute; top: 4px; left: 14px;" class="material-icons left">save</em>Save</a>
-                            <a class="waves-effect waves-light btn-small blue-grey darken-2" v-on:click="testConfig()" style="width: 140px;"><em style="position: absolute; top: 4px; left: 14px;" class="material-icons left">cached</em>Test</a>
-                            <a class="waves-effect waves-light btn-small blue-grey darken-2" v-on:click="buildConfig()" style="width: 140px;"><em style="position: absolute; top: 4px; left: 14px;" class="material-icons left">build</em>Build</a>
+                            <!-- <a class="waves-effect waves-light btn-small blue-grey darken-2" v-on:click="testConfig()" style="width: 140px;"><em style="position: absolute; top: 4px; left: 14px;" class="material-icons left">cached</em>Test</a> -->
+                            <!-- <a class="waves-effect waves-light btn-small blue-grey darken-2" v-on:click="buildConfig()" style="width: 140px;"><em style="position: absolute; top: 4px; left: 14px;" class="material-icons left">build</em>Build</a> -->
                         </div>
                     </div>
                 </div>

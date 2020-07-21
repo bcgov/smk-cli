@@ -190,7 +190,8 @@ function saveConfig(req, res, next)
     req.on('end', function ()
     {
         console.log(`Saving config to ${ configFile }`);
-        fs.writeFile( configFile, body, function(err)
+        var json = JSON.parse( body )
+        fs.writeFile( configFile, JSON.stringify( json, null, '    ' ), function(err)
         {
             if(err)
             {
