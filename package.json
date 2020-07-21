@@ -1,9 +1,9 @@
 {
   "name": "@qqnluaq/smk-cli",
-  "version": "0.9.0",
+  "version": "0.0.1-alpha.1",
   "description": "A utility for creating and configuring a Simple Map Kit project",
   "main": "index.js",
-  "author": "Ben Jubb (benjubb@vividsolutions.com)",
+  "author": "Ben Jubb <benjubb@gmail.com>",
   "license": "(MIT OR Apache-2.0)",
   "bin": {
     "smk": "./index.js"
