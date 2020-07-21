@@ -8,6 +8,6 @@
         "http-server": "^0.12.3"
     },
     "scripts": {
-        "browse": "http-server -o"
+        "browse": "http-server -o -c-1"
     }
 }
