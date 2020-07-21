@@ -19,7 +19,7 @@ if ( command == 'create' )
 if ( command == 'help' || command == '-h' || command == '-?' ) {
     usage()
     console.log( chalk.yellow( 'To create a new SMK project:     ' ) + chalk.blueBright( `${ exec } create [name]` ) )
-    console.log( chalk.yellow( 'To modify an SMK project config: ' ) + chalk.blueBright( `${ exec } ui [port]` ) )
+    console.log( chalk.yellow( 'To modify an SMK project config: ' ) + chalk.blueBright( `${ exec } ui [-p port]` ) )
     return 1
 }
 

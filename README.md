@@ -1,21 +1,32 @@
-# smk-cli
-A command line utility and visual editor for creating and editing Simple Map Kit applications (https://github.com/bcgov/smk-client)
+# Simple Map Kit Command-line Interface (smk-cli)
+
+A command line utility and visual editor for creating and editing Simple Map Kit applications
+(https://github.com/bcgov/smk)
 
 # Installation
 
-Install the smk-cli tool as global: npm install -g smk-cli
+Install the smk-cli tool as a global command (you may need to use `sudo`):
+`npm install -g smk-cli`
+
+Test that installation was successful:
+`smk help`
+
+You should see a help message for `smk-cli`.
 
 # Commands
 
-smk create
+`smk create [name]`
 
-smk create will launch the command line tool for creating a new SMK application. This will download the latest version of SMK from GitHub and build a map configuration for you to start working with.
+This will launch the command line tool for creating a new SMK application.
+You can provide a name, it will be the name of the new subdirectory for the application.
+This will download the latest version of SMK from GitHub and build a map configuration for you to start working with.
 
-smk ui [port]
+`smk ui [-p port]`
 
-Once you've created an SMK application, or if you have an existing one, you can run 'smk ui' to launch the visual editor
-By default, the editor will use port 1337 (it launches a simple api), but feel free to supply a port number to use instead
+Once you've created an SMK application, or if you have an existing one, you can run this command to launch the visual editor.
 
-for more information on the SMK project, and to read documentation on SMK development and building your finished SMK app, see: https://bcgov.github.io/smk-client/
+For more information on the SMK project, or to read documentation on SMK development and building your finished SMK app, see https://bcgov.github.io/smk/
 
-to uninstall: npm remove smk-cli 
+# Uninstall
+
+`npm remove smk-cli`

@@ -1,38 +1,27 @@
 {
-  "preferGlobal": true,
   "name": "@qqnluaq/smk-cli",
-  "version": "0.8.6",
+  "version": "0.9.0",
   "description": "A utility for creating and configuring a Simple Map Kit project",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "Vivid Solutions Inc.",
+  "author": "Ben Jubb (benjubb@vividsolutions.com)",
   "license": "(MIT OR Apache-2.0)",
   "bin": {
     "smk": "./index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dhlevi/smk-cli.git"
+    "url": "https://github.com/qqnluaq/smk-cli.git"
   },
   "dependencies": {
-    "@qqnluaq/smk": "^0.9.0",
     "@tmcw/togeojson": "^3.0.1",
     "chalk": "^3.0.0",
-    "clear": "^0.1.0",
-    "clui": "^0.3.6",
-    "configstore": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fgdb": "^1.0.0",
     "figlet": "^1.2.4",
-    "helmet": "^3.21.2",
     "inquirer": "^7.0.0",
     "lodash": "^4.17.19",
     "minimist": "^1.2.0",
-    "morgan": "^1.9.1",
     "multer": "^1.4.2",
     "opn": "^6.0.0",
     "proj4": "^2.6.0",
@@ -43,8 +32,5 @@
     "xml2js": "^0.4.22",
     "xmldom": "^0.1.27",
     "glob": "^7.1.2"
-  },
-  "devDependencies": {
-    "grunt-release": "^0.14.0"
   }
 }
