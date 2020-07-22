@@ -1,6 +1,6 @@
 {
   "name": "@qqnluaq/smk-cli",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "description": "A utility for creating and configuring a Simple Map Kit project",
   "main": "index.js",
   "author": "Ben Jubb <benjubb@gmail.com>",
