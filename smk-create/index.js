@@ -6,7 +6,6 @@ const inquirer = require( 'inquirer' )
 const shell = require( 'shelljs' )
 
 module.exports = async function ( args ) {
-    // console.log( args )
     var name = args._.shift()
     var baseDir = args.base || args.b || process.cwd()
 
