@@ -35,37 +35,26 @@ function startService( opt ) {
 
     require( './controllers' )( app )
 
-    const staticPath = path.join( __dirname, 'static' )
-    // console.log( `Serving static resources from ${ staticPath }` )
-    app.use( express.static( staticPath ) )
+    app.use( express.static( path.join( __dirname, 'static' ) ) )
 
-    app.get("/Ping", (req, res, next) =>
-    {
-        //console.log('Pong');
-        res.json(['Pong']);
-    });
+    const routes = app._router.stack
+        .filter( function ( r ) { return r.route } )
+        .map( function ( r ) { return [
+            Object.keys( r.route.methods ).map( function ( m ) { return m.toUpperCase() } ).join( ', ' ),
+            r.route.path
+        ] } )
+        .sort( function( a, b ) { return a[ 1 ] > b[ 1 ] ? 1 : -1 } )
+    routes.unshift( [ 'GET', '/', '(index.html)' ] )
 
-    app.listen( opt.port, () =>
-    {
-        console.log(chalk.yellow("Service running on port " + opt.port));
-        console.log("-----------------------------------------------------");
-        console.log(chalk.green("UI available: /index.html"));
-        console.log("-----------------------------------------------------");
-        console.log(chalk.yellow("Endpoints available: GET  /Ping"));
-        console.log(chalk.yellow("                     GET  /LayerLibrary"));
-        console.log(chalk.yellow("                     GET  /LayerLibrary/:id"));
-        console.log(chalk.yellow("                     GET  /LayerLibrary/wms/:url"));
-        console.log(chalk.yellow("                     POST /ProcessKML"));
-        console.log(chalk.yellow("                     POST /ProcessKMZ"));
-        console.log(chalk.yellow("                     POST /ProcessShape"));
-        console.log(chalk.yellow("                     POST /ProcessFGDB"));
-        console.log(chalk.yellow("                     GET  /ProjectConfig"));
-        console.log(chalk.yellow("                     POST /SaveConfig"));
-        console.log(chalk.yellow("                     POST /TestConfig"));
-        console.log(chalk.yellow("                     POST /BuildConfig/:release"));
-        console.log(chalk.yellow("                     POST /SaveImage/:fileName"));
-        console.log(chalk.yellow("                     POST /SaveAttachment/:fileName"));
-        console.log("-----------------------------------------------------");
+    app.listen( opt.port, () => {
+        console.log( chalk.yellow( `Service listening on port ${ opt.port }` ) )
+        console.log()
+        console.log( chalk.yellow( 'Endpoints available:\n' ) +
+            routes.map( function ( r ) {
+                return `\t${ chalk.green( r[ 0 ] ) }\t${ chalk.blue( r[ 1 ] ) }   ${ r[ 2 ] || '' }`
+            } ).join( '\n' )
+        )
+        console.log()
     } )
 
     return app
