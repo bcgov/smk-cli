@@ -47,13 +47,11 @@ function startService( opt ) {
     routes.unshift( [ 'GET', '/', '(index.html)' ] )
 
     app.listen( opt.port, () => {
+        console.log( chalk.yellow( 'Endpoints available:' ) )
+        console.log( routes.map( function ( r ) {
+            return `\t${ chalk.green( r[ 0 ] ) }\t${ chalk.blue( r[ 1 ] ) }   ${ r[ 2 ] || '' }`
+        } ).join( '\n' ) )
         console.log( chalk.yellow( `Service listening on port ${ opt.port }` ) )
-        console.log()
-        console.log( chalk.yellow( 'Endpoints available:\n' ) +
-            routes.map( function ( r ) {
-                return `\t${ chalk.green( r[ 0 ] ) }\t${ chalk.blue( r[ 1 ] ) }   ${ r[ 2 ] || '' }`
-            } ).join( '\n' )
-        )
         console.log()
     } )
 
