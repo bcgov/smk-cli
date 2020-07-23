@@ -4,7 +4,7 @@
     "description": "<%= app.description %>",
     "author": "<%= app.author %>",
     "dependencies": {
-        "@qqnluaq/smk": "*",
+        "<%= app.smkPackage %>": "<%= app.smkVersion %>",
         "http-server": "^0.12.3"
     },
     "scripts": {

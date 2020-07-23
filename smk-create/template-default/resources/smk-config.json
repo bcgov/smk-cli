@@ -1,6 +1,6 @@
 
 {
-    "version": "<%= app.version %>",
+    "version": "<%= app.smkVersion %>",
     "name": "<%= app.name %>",
     "createdBy": "<%= app.author %>",
     "createdDate": "<%= app.createdDate %>",

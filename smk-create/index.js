@@ -1,22 +1,21 @@
 const chalk = require( 'chalk' )
-const figlet = require( 'figlet' )
 const fs = require( 'fs' )
 const path = require( 'path' )
 const inquirer = require( 'inquirer' )
 const shell = require( 'shelljs' )
+const semverRsort = require( 'semver/functions/rsort' )
 
 module.exports = async function ( args ) {
-    var name = args._.shift()
-    var baseDir = args.base || args.b || process.cwd()
+    const name = args._.shift()
+    const baseDir = args.base || args.b || process.cwd()
+    const package = args.package
 
-    console.log(chalk.yellow(figlet.textSync('Simple Map Kit', { horizontalLayout: 'full' })));
-    console.log('');
-    console.log(chalk.blue('Welcome to the SMK application creation tool!'));
-    console.log(chalk.blue('A application skeleton will be created for you at the current directory.'));
-    console.log(chalk.blue('But first, please answer some questions about your new SMK application.'));
-    console.log('');
+    console.log( chalk.blue( 'Welcome to the SMK application creation tool!' ) )
+    console.log( chalk.blue( 'A application skeleton will be created for you at the current directory.' ) )
+    console.log( chalk.blue( 'But first, please answer some questions about your new SMK application.' ) )
+    console.log()
 
-    const app = await inquireAppInfo( name, baseDir );
+    const app = await inquireAppInfo( name, baseDir, package );
     app.tool = app.tools.reduce( function ( acc, t ) { acc[ t ] = true; return acc }, {} )
 
     app.absoluteDir = path.resolve( baseDir, app.name )
@@ -70,6 +69,8 @@ module.exports = async function ( args ) {
             console.log( chalk.red( 'npm install failed' ) )
             throw Error( 'Application install failed' )
         }
+
+        shell.exec( 'npm ls --depth=0' )
     }
 
     function viewApplication() {
@@ -82,13 +83,13 @@ module.exports = async function ( args ) {
     }
 }
 
-async function inquireAppInfo( name, baseDir ) {
+async function inquireAppInfo( name, baseDir, package ) {
     return inquirer.prompt( [
         {
             name: 'name',
             type: 'input',
             message: "Enter your application's name:",
-            default: name || 'smk-app', //argv._[0] || files.getCurrentDirectoryBase(),
+            default: name || 'SMK-App',
             validate: function( value )
             {
                 if ( !value ) return 'A application name is required to create a new SMK application.'
@@ -115,6 +116,29 @@ async function inquireAppInfo( name, baseDir ) {
             type: 'input',
             message: "Enter the author's name:",
             default: 'SMK Developer'
+        },
+        {
+            name: 'smkPackage',
+            type: 'input',
+            message: `Enter the package name of SMK:`,
+            default: package,
+            validate: function ( value ) {
+                const view = JSON.parse( shell.exec( `npm view ${ value } --json`, { silent: true } ) )
+                if ( view.error )
+                    return view.error.summary.split( '\n' )[ 0 ]
+
+                return true
+            }
+        },
+        {
+            name: 'smkVersion',
+            type: 'list',
+            message: function ( app ) {
+                return `Select the version of ${ chalk.yellow( app.smkPackage ) } for your application:`
+            },
+            choices: function ( app ) {
+                return semverRsort( JSON.parse( shell.exec( `npm view ${ app.smkPackage } versions --json`, { silent: true } ).stdout ) )
+            }
         },
         {
             name: 'template',

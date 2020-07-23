@@ -1,12 +1,32 @@
 #!/usr/bin/env node
 
 const chalk = require( 'chalk' )
+const figlet = require( 'figlet' )
+const package = require( './package.json' )
 
-// get the command line, remove first two args (node exe and js location)
 const args = process.argv
 const exec = args[ 1 ]
 const command = ( args[ 2 ] || '' ).toLowerCase()
 const opt = require( 'minimist' )( args.slice( 3 ) )
+
+const fonts = [
+    'big', 'doom', 'graffiti', 'rectangles', 'gothic', 'varsity', 'script',
+    'shadow', 'small', 'speed', 'sl script', 'stop', 'swan', 'soft'
+]
+const ver = 'v' + package.version
+const title = figlet.textSync( 'Simple Map Kit', {
+    font: fonts[ Math.round( fonts.length * Math.random() ) ],
+    horizontalLayout: 'full'
+} ).slice( 0, -ver.length )
+console.log( chalk.yellow( title ) + chalk.gray( ver ) )
+
+if ( !opt.package ) {
+    const packageNameSegs = package.name.split( '/' )
+    if ( packageNameSegs.length == 1 )
+        opt.package = 'smk'
+    else
+        opt.package = `${ packageNameSegs[ 0 ] }/smk`
+}
 
 // if the first arg is 'ui', then we should attempt to launch the ui editor
 if ( command == 'ui' )
@@ -23,10 +43,7 @@ if ( command == 'help' || command == '-h' || command == '-?' ) {
     return 1
 }
 
-if ( !command )
-    console.log( chalk.red( 'No command specified' ) )
-else
-    console.log( chalk.red( `Unknown command specified: "${ command }"` ) )
+console.log( chalk.red( command ? `Unknown command specified: "${ command }"` : 'No command specified' ) )
 
 usage()
 return 1
