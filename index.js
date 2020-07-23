@@ -13,7 +13,7 @@ const fonts = [
     'big', 'doom', 'graffiti', 'rectangles', 'gothic', 'varsity', 'script',
     'shadow', 'small', 'speed', 'sl script', 'stop', 'swan', 'soft'
 ]
-const ver = 'v' + package.version
+const ver = 'CLI v' + package.version
 const title = figlet.textSync( 'Simple Map Kit', {
     font: fonts[ Math.round( fonts.length * Math.random() ) ],
     horizontalLayout: 'full'
