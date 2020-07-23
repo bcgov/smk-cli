@@ -1,5 +1,5 @@
 const chalk = require( 'chalk' )
-const opn = require( 'opn' )
+const open = require( 'open' )
 const express = require( 'express' )
 const cors = require( 'cors' )
 const path = require( 'path' )
@@ -13,7 +13,7 @@ module.exports = async function ( args ) {
         } )
 
         const url = `http://localhost:${ app.get( 'port' ) }`
-        opn( url )
+        open( url )
     }
     catch( err )
     {
