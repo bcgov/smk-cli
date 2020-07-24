@@ -39,8 +39,9 @@
         <!-- smk util css -->
         <link rel="stylesheet" href="assets/css/smk.css" type='text/css'>
     </head>
+
     <body>
-        <div id="content">
+        <div id="content" v-bind:class="{ 'service-no-response': !serviceStatus }">
             <header>
                 <div>
                     <nav>
@@ -151,7 +152,7 @@
         <script src="templates/edit-layer-template.js"></script>
         <script src="templates/edit-tool-template.js"></script>
         <script src="templates/templates.js"></script>
-        <script src="admin-app.js"></script>
+        <!-- <script src="admin-app.js"></script> -->
         <script src="smk-util.js"></script>
         <script src="smk-layer-management.js"></script>
         <script src="smk-query-management.js"></script>
@@ -163,10 +164,11 @@
                 M.Sidenav.init( document.querySelectorAll('.sidenav') );
             } )
         </script>
-        <!-- <script type="module">
+
+        <script type="module">
             import './admin-app.js'
 
 
-        </script> -->
+        </script>
     </body>
 </html>

@@ -7,35 +7,34 @@ var catalogLayers = [];
 var catalogTreeSource = [];
 var basemapViewer;
 
-var app = new Vue(
-{
+var app = new Vue( {
     el: '#content',
-    data:
-    {
-        config:
-        {
-            lmfId: "",
-            lmfRevision: 1,
-            name: "",
-            createdBy: "",
-            createdDate: "",
-            modifiedBy: "",
-            modifiedDate: "",
-            version: "",
-            surround: { type: "default", title: "" },
-            viewer: {
-                type: "leaflet",
-                device: "auto",
-                panelWidth: 400,
-                deviceAutoBreakpoint: 500,
-                themes: [],
-                location: { center: [-125, 55], zoom: 5 },
-                baseMap: 'Topographic',
-                clusterOption: { showCoverageOnHover: false }
-            },
-            tools: [],
-            layers: []
-        },
+    data: {
+        serviceStatus: false,
+        config: {},
+        // {
+        //     lmfId: "",
+        //     lmfRevision: 1,
+        //     name: "",
+        //     createdBy: "",
+        //     createdDate: "",
+        //     modifiedBy: "",
+        //     modifiedDate: "",
+        //     version: "",
+        //     surround: { type: "default", title: "" },
+        //     viewer: {
+        //         type: "leaflet",
+        //         device: "auto",
+        //         panelWidth: 400,
+        //         deviceAutoBreakpoint: 500,
+        //         themes: [],
+        //         location: { center: [-125, 55], zoom: 5 },
+        //         baseMap: 'Topographic',
+        //         clusterOption: { showCoverageOnHover: false }
+        //     },
+        //     tools: [],
+        //     layers: []
+        // },
         editingLayer: null,
         editingTool: null,
         lastTab: 'init',
@@ -44,69 +43,54 @@ var app = new Vue(
         componentKey: 0,
         mySelf: this
     },
-    methods:
-    {
-        tabSwitch: function (tab)
-        {
+    methods: {
+        tabSwitch: function (tab) {
             this.lastTab = this.currentTab;
             this.currentTab = tab;
             $('#contentPanel').show();
         },
-        forceRerender()
-        {
-            this.componentKey += 1;
+        // forceRerender()
+        // {
+        //     this.componentKey += 1;
+        // },
+        saveConfig: function(event) {
+            saveConfig( this.config );
         },
-        saveConfig: function(event)
-        {
-            saveConfig(this.config);
-        },
-        testConfig: function(event)
-        {
-            testConfig(this.config);
-        },
-        buildConfig: function(event)
-        {
-            buildConfig(this.config);
-        }
+        // testConfig: function(event)
+        // {
+        //     testConfig(this.config);
+        // },
+        // buildConfig: function(event)
+        // {
+        //     buildConfig(this.config);
+        // }
     },
-    computed:
-    {
-        currentTabComponent: function ()
-        {
+    computed: {
+        currentTabComponent: function () {
             this.componentKey += 1;
             return this.currentTab.toLowerCase();
         },
-        catalogLayers: function ()
-        {
-            return _.pickBy(this.config.layers, function(layer)
-            {
+        catalogLayers: function () {
+            return _.pickBy(this.config.layers, function(layer) {
                 return layer.type === 'esri-dynamic';
             });
         },
-        wmsLayers: function ()
-        {
-            return _.pickBy(this.config.layers, function(layer)
-            {
+        wmsLayers: function () {
+            return _.pickBy(this.config.layers, function(layer) {
                 return layer.type === 'wms';
             });
         },
-        vectorLayers: function ()
-        {
-            return _.pickBy(this.config.layers, function(layer)
-            {
+        vectorLayers: function () {
+            return _.pickBy(this.config.layers, function(layer) {
                 return layer.type === 'vector';
             });
         }
     },
-    updated: function ()
-    {
-        this.$nextTick(function ()
-        {
+    updated: function () {
+        this.$nextTick(function () {
             // triggered twice in a row after toggling component?
-            if(this.lastTab !== this.currentTab)
-            {
-                switch(this.currentTab)
-                {
+            if(this.lastTab !== this.currentTab) {
+                switch(this.currentTab) {
                     case 'basemap':
                         configureBasemapViewer();
                     break;
@@ -116,9 +100,9 @@ var app = new Vue(
                     case 'vector-layers':
                         configureFileUpload();
                     break;
-                    case 'edit-layer':
-                        configureUpdatePanel();
-                    break;
+                    // case 'edit-layer':
+                    //     configureUpdatePanel();
+                    // break;
                     case 'layers':
                         configureLayersView();
                     break;
@@ -137,8 +121,7 @@ var app = new Vue(
     }
 });
 
-$(document).ready(function()
-{
+$(document).ready(function() {
     // create a background map, remove the zoom buttons
     // var map = L.map('backgroundMap', { zoomControl: false });
     // // disable any ability to move/navigate the map
@@ -160,8 +143,8 @@ $(document).ready(function()
     // map.invalidateSize();
 
     // material init
-    $('.materialboxed').materialbox();
-    $('.parallax').parallax();
+    // $('.materialboxed').materialbox();
+    // $('.parallax').parallax();
     // $('.sidenav').sidenav();
 
     // M.AutoInit();
@@ -170,29 +153,30 @@ $(document).ready(function()
     loadConfig();
 
     // timeout listener
-    setTimeout(statusCheck, 5000);
+    // setTimeout(statusCheck, 5000);
 
     app.tabSwitch( 'identity' )
+
 });
 
-function statusCheck()
-{
-    $.ajax
-	({
-		url: serviceUrl + 'ping',
-		type: "get",
-		success: function (result)
-		{
-            setTimeout(statusCheck, 5000);
-		},
-		error: function (status)
-		{
-            $('#slide-out').empty();
-            $('#contentPanel').empty();
-            $('#titlePanel').empty();
-            $('#titlePanel').append('<p class="label" style="background: #c50d0d; border-top: 2px solid black; border-left: 2px solid black; border-right: 2px solid black;"> SMK UI service has disconnected</p><p class="label" style="background: #c50d0d; border-left: 2px solid black; border-right: 2px solid black;"> Please close this window and restart the service</p><p class="label" style="background: #c50d0d; border-bottom: 2px solid black; border-left: 2px solid black; border-right: 2px solid black;"> enter "smk ui [port]" in your command line</p>');
+statusCheck()
 
-			M.toast({ html: 'Service unavailable. Please restart the SMK Conifg UI'});
-		}
-    });
+function statusCheck() {
+    fetch( '/ping' )
+        .then( function ( resp ) {
+            if ( !resp.ok ) throw Error( 'ping failed' )
+            return resp.json()
+        } )
+        .then( function ( obj ) {
+            if ( !obj.ok ) throw Error( 'ping failed' )
+            app.serviceStatus = true
+        } )
+        .catch( function () {
+            if ( app.serviceStatus )
+                M.toast( { html: 'Service not responding. Please restart the SMK Edit service.' } )
+            app.serviceStatus = false
+        } )
+        .finally( function () {
+            setTimeout( statusCheck, 5000 )
+        } )
 }

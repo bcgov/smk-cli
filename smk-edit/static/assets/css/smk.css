@@ -3,6 +3,20 @@ header, main, footer
     padding-left: 300px;
 }
 
+.service-no-response::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    content: '';
+    background-color: black;
+    opacity: 50%;
+    z-index: 9999;
+}
+
 .sidenav .title-panel {
   position: relative;
   font-weight: lighter;
