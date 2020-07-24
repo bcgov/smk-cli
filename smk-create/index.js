@@ -9,13 +9,14 @@ module.exports = async function ( args ) {
     const name = args._.shift()
     const baseDir = args.base || args.b || process.cwd()
     const package = args.package
+    const version = args.version
 
     console.log( chalk.blue( 'Welcome to the SMK application creation tool!' ) )
     console.log( chalk.blue( 'A application skeleton will be created for you at the current directory.' ) )
     console.log( chalk.blue( 'But first, please answer some questions about your new SMK application.' ) )
     console.log()
 
-    const app = await inquireAppInfo( name, baseDir, package );
+    const app = await inquireAppInfo( name, baseDir, package, version );
     app.tool = app.tools.reduce( function ( acc, t ) { acc[ t ] = true; return acc }, {} )
 
     app.absoluteDir = path.resolve( baseDir, app.name )
@@ -83,7 +84,7 @@ module.exports = async function ( args ) {
     }
 }
 
-async function inquireAppInfo( name, baseDir, package ) {
+async function inquireAppInfo( name, baseDir, package, version ) {
     return inquirer.prompt( [
         {
             name: 'name',
@@ -133,6 +134,7 @@ async function inquireAppInfo( name, baseDir, package ) {
         {
             name: 'smkVersion',
             type: 'list',
+            default: version,
             message: function ( app ) {
                 return `Select the version of ${ chalk.yellow( app.smkPackage ) } for your application:`
             },

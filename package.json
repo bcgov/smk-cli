@@ -13,6 +13,7 @@
     "url": "https://github.com/qqnluaq/smk-cli.git"
   },
   "dependencies": {
+    "@qqnluaq/smk": "^0.9.0-beta.2",
     "@tmcw/togeojson": "^4.1.0",
     "chalk": "^4.1.0",
     "cors": "^2.8.5",

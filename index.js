@@ -21,11 +21,17 @@ const title = figlet.textSync( 'Simple Map Kit', {
 console.log( chalk.yellow( title ) + chalk.gray( ver ) )
 
 if ( !opt.package ) {
-    const packageNameSegs = package.name.split( '/' )
-    if ( packageNameSegs.length == 1 )
-        opt.package = 'smk'
-    else
-        opt.package = `${ packageNameSegs[ 0 ] }/smk`
+    var smkDeps = Object.keys( package.dependencies ).filter( function ( d ) {
+        return /[/]smk$/.test( d )
+    } )
+    if ( smkDeps.length != 1 )
+        throw "Can't find dependency for smk"
+
+    opt.package = smkDeps[ 0 ]
+}
+
+if ( !opt.version ) {
+    opt.version = package.dependencies[ opt.package ]
 }
 
 // if the first arg is 'ui', then we should attempt to launch the ui editor
