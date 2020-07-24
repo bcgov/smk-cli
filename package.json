@@ -13,7 +13,7 @@
     "url": "https://github.com/qqnluaq/smk-cli.git"
   },
   "scripts": {
-    "debug": "./index.js ui --open no --base build/test-app"
+    "debug": "./index.js edit --open no --base build/test-app"
   },
   "dependencies": {
     "@qqnluaq/smk": "^0.9.0-beta.2",

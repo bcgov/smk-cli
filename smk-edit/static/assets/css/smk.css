@@ -1,14 +1,14 @@
-header, main, footer 
+header, main, footer
 {
     padding-left: 300px;
 }
 
-.title-panel
-{
-  top: calc(50vh - 100px);
+.sidenav .title-panel {
   position: relative;
   font-weight: lighter;
   font-size: 24px;
+  line-height: initial;
+  margin: 1em 1em;
 }
 
 .title-panel .label
@@ -22,7 +22,7 @@ header, main, footer
 
 .content-panel
 {
-  top: -143px;
+  /* top: -143px; */
   position: relative;
 }
 
@@ -33,7 +33,7 @@ header, main, footer
 }
 
 /* Override for padding on brand-logo block*/
-nav .brand-logo 
+nav .brand-logo
 {
   padding-left: 25px;
 }
@@ -41,6 +41,11 @@ nav .brand-logo
 .sidenav .user-view
 {
     padding: 64px 32px 0;
+}
+
+.sidenav li.active {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
 }
 
 .header
@@ -62,21 +67,21 @@ nav .brand-logo
 .background-map
 {
   width: calc(100vw - 300px);
-  height: calc(100vh - 64px); 
-  position: absolute; 
+  height: calc(100vh - 64px);
+  position: absolute;
   z-index: 0;
 }
 
 .portfolio-desc
 {
-  color: rgba(84, 84, 84, 1); 
-  font-size: 12px; 
+  color: rgba(84, 84, 84, 1);
+  font-size: 12px;
   font-style: italic;
 }
 
-@media only screen and (max-width : 992px) 
+@media only screen and (max-width : 992px)
 {
-    header, main, footer 
+    header, main, footer
     {
       padding-left: 0;
     }
@@ -84,8 +89,8 @@ nav .brand-logo
     .background-map
     {
       width: 100vw;
-      height: calc(100vh - 64px); 
-      position: absolute; 
+      height: calc(100vh - 64px);
+      position: absolute;
       z-index: 0;
     }
 }
@@ -97,33 +102,33 @@ nav .brand-logo
   color:#000;
 } /*Black color to the text*/
 
-.tabs .tab a:hover 
+.tabs .tab a:hover
 {
   background-color:#eee;
   color:#000;
 } /*Text color on hover*/
 
-.tabs .tab a.active 
+.tabs .tab a.active
 {
   background-color:#455a64;
   color: white;
 } /*Background and text color when a tab is active*/
 
-.tabs .indicator 
+.tabs .indicator
 {
   background-color: orange;
 } /*Color of underline*/
 
-.tabs .tab a:focus, .tabs .tab a:focus.active 
+.tabs .tab a:focus, .tabs .tab a:focus.active
 {
   background-color: #455a64;
   outline: none;
 }
 
-.fancytree-treefocus span.fancytree-selected span.fancytree-title .textarea .materialize-textarea 
+.fancytree-treefocus span.fancytree-selected span.fancytree-title .textarea .materialize-textarea
 {
   border: 1px solid black;
   background: white;
   width: 100%;
-  
+
 }

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Simple Map Kit configuration utility">
         <meta name="author" content="Vivid Solutions Inc.">
-        <title>SMK Config Utility</title>
+        <title>SMK Editor</title>
         <!-- Scripts and CSS -->
         <!-- JQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -30,23 +30,6 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.fancytree/2.28.0/skin-lion/vline.gif"  rel="stylesheet">
         <!-- Omnivore, for converting file uploads into geojson -->
         <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
-        <!-- text editor -->
-        <script src="resources/js/trumbowyg/trumbowyg.min.js"></script>
-        <link rel="stylesheet" href="resources/js/trumbowyg/ui/trumbowyg.min.css">
-        <script src="resources/js/trumbowyg/plugins/allowtagsfrompaste/trumbowyg.allowtagsfrompaste.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/base64/trumbowyg.base64.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/colors/trumbowyg.colors.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/fontfamily/trumbowyg.fontfamily.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/fontsize/trumbowyg.fontsize.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/lineheight/trumbowyg.lineheight.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/mathml/trumbowyg.mathml.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/mention/trumbowyg.mention.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/noembed/trumbowyg.noembed.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/pasteimage/trumbowyg.pasteimage.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/table/trumbowyg.table.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/template/trumbowyg.template.min.js"></script>
-        <script src="resources/js/trumbowyg/plugins/upload/trumbowyg.upload.min.js"></script>
         <!-- lodash -->
         <script src='https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js'></script>
         <!-- Vue Dev -->
@@ -54,7 +37,7 @@
         <!-- Vue Prod -->
         <!-- script src="https://cdn.jsdelivr.net/npm/vue"></script -->
         <!-- smk util css -->
-        <link rel="stylesheet" href="resources/css/smk.css" type='text/css'>
+        <link rel="stylesheet" href="assets/css/smk.css" type='text/css'>
     </head>
     <body>
         <div id="content">
@@ -71,29 +54,68 @@
                     <ul id="slide-out" class="sidenav sidenav-fixed blue-grey darken-2">
                         <li>
                             <div class="user-view">
-                                <div class="background blue-grey darken-1"><img src="resources/images/bc_gov_logo_transparent.png" style="padding-left: 30px;"/></div>
+                                <div class="background blue-grey darken-1"><img src="assets/images/bc_gov_logo_transparent.png" style="padding-left: 30px;"/></div>
                             </div>
                         </li>
-                        <li><a class="subheader white-text">Options</a></li>
-                        <li><a href="#" v-on:click="tabSwitch('identity')" class="waves-effect white-text"><i class="material-icons">assignment</i>My Project</a></li>
-                        <li><a href="#" v-on:click="tabSwitch('basemap')" class="waves-effect white-text"><i class="material-icons">terrain</i>Basemap and Extent</a></li>
-                        <li><a href="#" v-on:click="tabSwitch('mpcm-layers')" class="waves-effect white-text"><i class="material-icons">layers</i>Add DataBC Layers</a></li>
-                        <li><a href="#" v-on:click="tabSwitch('wms-layers')" class="waves-effect white-text"><i class="material-icons">backup</i>Add WMS Layers</a></li>
-                        <li><a href="#" v-on:click="tabSwitch('vector-layers')" class="waves-effect white-text"><i class="material-icons">edit</i>Add Vector Layers</a></li>
-                        <li><a href="#" v-on:click="tabSwitch('layers')" class="waves-effect white-text"><i class="material-icons">map</i>Manage Layers</a></li>
-                        <li><a href="#" v-on:click="tabSwitch('tools')" class="waves-effect white-text"><i class="material-icons">build</i>Tools</a></li>
+                        <li>
+                            <div class="subheader white-text title-panel">
+                                <p>Welcome to the SMK Configuration Utility</p>
+                                <p>Use this tool to modify your application's map configuration.</p>
+                            </div>
+                        </li>
+                        <!-- <li><a class="subheader white-text">Options</a></li> -->
+                        <li v-bind:class="{active:currentTabComponent=='identity'}">
+                            <a href="#" v-on:click="tabSwitch('identity')" class="waves-effect white-text">
+                                <i class="material-icons">assignment</i>Application
+                            </a>
+                        </li>
+                        <li v-bind:class="{active:currentTabComponent=='basemap'}">
+                            <a href="#" v-on:click="tabSwitch('basemap')" class="waves-effect white-text">
+                                <i class="material-icons">terrain</i>Basemap and Extent
+                            </a>
+                        </li>
+                        <li v-bind:class="{active:currentTabComponent=='mpcm-layers'}">
+                            <a href="#" v-on:click="tabSwitch('mpcm-layers')" class="waves-effect white-text">
+                                <i class="material-icons">layers</i>Add DataBC Layers
+                            </a>
+                        </li>
+                        <li v-bind:class="{active:currentTabComponent=='wms-layers'}">
+                            <a href="#" v-on:click="tabSwitch('wms-layers')" class="waves-effect white-text">
+                                <i class="material-icons">backup</i>Add WMS Layers
+                            </a>
+                        </li>
+                        <li v-bind:class="{active:currentTabComponent=='vector-layers'}">
+                            <a href="#" v-on:click="tabSwitch('vector-layers')" class="waves-effect white-text">
+                                <i class="material-icons">edit</i>Add Vector Layers
+                            </a>
+                        </li>
+                        <li v-bind:class="{active:currentTabComponent=='layers'}">
+                            <a href="#" v-on:click="tabSwitch('layers')" class="waves-effect white-text">
+                                <i class="material-icons">map</i>Manage Layers
+                            </a>
+                        </li>
+                        <li v-bind:class="{active:currentTabComponent=='tools'}">
+                            <a href="#" v-on:click="tabSwitch('tools')" class="waves-effect white-text">
+                                <i class="material-icons">build</i>Tools
+                            </a>
+                        </li>
+                        <li>
+                            <div class="subheader white-text title-panel">
+                                <p>Click <b>Save</b> at any time to commit your changes</p>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </header>
             <main class="main-container">
                 <div id="backgroundMap" class="background-map" ></div>
                 <div class="background-map" style="background: rgba(0, 0, 0, 0.3);" ></div>
-                <div id="titlePanel" class="title-panel">
+                <!-- <div id="titlePanel" class="title-panel">
                     <p class="label"> Welcome to the SMK Configuration Utility</p>
                     <p class="label"> With this tool you can modify your projects map-config.json</p>
                     <p class="label"> Select an option (on the left) to modify layers, data, and tools</p>
                     <p class="label"> Click 'Save' at any time to commit your changes</p>
-                </div>
+                </div> -->
                 <div id="contentPanel" class="content-panel" style="display: none;">
                     <div class="card white" style="margin: 0px;">
                         <div id="contentCard" class="card-content black-text" style="height: calc(100vh - 130px); overflow: auto;">
@@ -117,20 +139,34 @@
             <footer>
             </footer>
         </div>
+
+        <script src="//localhost:35729/livereload.js"></script>
+
         <!-- templates, init, util scripts -->
-        <script src="resources/js/templates/identity-template.js"></script>
-        <script src="resources/js/templates/basemap-template.js"></script>
-        <script src="resources/js/templates/mpcm-layers-template.js"></script>
-        <script src="resources/js/templates/wms-layers-template.js"></script>
-        <script src="resources/js/templates/vector-layers-template.js"></script>
-        <script src="resources/js/templates/edit-layer-template.js"></script>
-        <script src="resources/js/templates/edit-tool-template.js"></script>
-        <script src="resources/js/templates/templates.js"></script>
-        <script src="resources/js/smk-init.js"></script>
-        <script src="resources/js/smk-util.js"></script>
-        <script src="resources/js/smk-layer-management.js"></script>
-        <script src="resources/js/smk-query-management.js"></script>
-        <script src="resources/js/smk-create-vector.js"></script>
-        <script src="resources/js/smk-file-io.js"></script>
+        <script src="templates/identity-template.js"></script>
+        <script src="templates/basemap-template.js"></script>
+        <script src="templates/mpcm-layers-template.js"></script>
+        <script src="templates/wms-layers-template.js"></script>
+        <script src="templates/vector-layers-template.js"></script>
+        <script src="templates/edit-layer-template.js"></script>
+        <script src="templates/edit-tool-template.js"></script>
+        <script src="templates/templates.js"></script>
+        <script src="admin-app.js"></script>
+        <script src="smk-util.js"></script>
+        <script src="smk-layer-management.js"></script>
+        <script src="smk-query-management.js"></script>
+        <script src="smk-create-vector.js"></script>
+        <script src="smk-file-io.js"></script>
+
+        <script>
+            document.addEventListener( 'DOMContentLoaded', function() {
+                M.Sidenav.init( document.querySelectorAll('.sidenav') );
+            } )
+        </script>
+        <!-- <script type="module">
+            import './admin-app.js'
+
+
+        </script> -->
     </body>
 </html>

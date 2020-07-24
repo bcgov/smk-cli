@@ -140,31 +140,31 @@ var app = new Vue(
 $(document).ready(function()
 {
     // create a background map, remove the zoom buttons
-    var map = L.map('backgroundMap', { zoomControl: false });
-    // disable any ability to move/navigate the map
-    map.touchZoom.disable();
-    map.doubleClickZoom.disable();
-    map.scrollWheelZoom.disable();
-    map.boxZoom.disable();
-    map.keyboard.disable();
-    // add a base layer (osm for now)
-    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib = 'Map Tiles © <a href="https://openstreetmap.org">OpenStreetMap</a>';
-    var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
-    map.addLayer(osm);
-    // set the map to a random location somewhere roughly over British Columbia
-    var rndLat = Math.random() * (60 - 48.3) + 47.294;
-    var rndLon = (Math.random() * (124 - 111.291) + 114) * -1;
-    var rndZoom = Math.floor(Math.random() * (11 - 6) + 6);
-    map.setView(new L.latLng(rndLat, rndLon), rndZoom, { animate: true, duration: 60 } );
-    map.invalidateSize();
+    // var map = L.map('backgroundMap', { zoomControl: false });
+    // // disable any ability to move/navigate the map
+    // map.touchZoom.disable();
+    // map.doubleClickZoom.disable();
+    // map.scrollWheelZoom.disable();
+    // map.boxZoom.disable();
+    // map.keyboard.disable();
+    // // add a base layer (osm for now)
+    // var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    // var osmAttrib = 'Map Tiles © <a href="https://openstreetmap.org">OpenStreetMap</a>';
+    // var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+    // map.addLayer(osm);
+    // // set the map to a random location somewhere roughly over British Columbia
+    // var rndLat = Math.random() * (60 - 48.3) + 47.294;
+    // var rndLon = (Math.random() * (124 - 111.291) + 114) * -1;
+    // var rndZoom = Math.floor(Math.random() * (11 - 6) + 6);
+    // map.setView(new L.latLng(rndLat, rndLon), rndZoom, { animate: true, duration: 60 } );
+    // map.invalidateSize();
 
     // material init
     $('.materialboxed').materialbox();
     $('.parallax').parallax();
-    $('.sidenav').sidenav();
+    // $('.sidenav').sidenav();
 
-    M.AutoInit();
+    // M.AutoInit();
 
     // load the config data, preload mpcm layers
     loadConfig();
@@ -172,6 +172,7 @@ $(document).ready(function()
     // timeout listener
     setTimeout(statusCheck, 5000);
 
+    app.tabSwitch( 'identity' )
 });
 
 function statusCheck()

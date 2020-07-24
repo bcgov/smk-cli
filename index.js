@@ -25,7 +25,7 @@ if ( !opt.package ) {
         return /[/]smk$/.test( d )
     } )
     if ( smkDeps.length != 1 )
-        throw "Can't find dependency for smk"
+        throw Error( "Can't determine the dependency information for smk" )
 
     opt.package = smkDeps[ 0 ]
 }
@@ -35,8 +35,8 @@ if ( !opt.version ) {
 }
 
 // if the first arg is 'ui', then we should attempt to launch the ui editor
-if ( command == 'ui' )
-    return require( './smk-ui' )( opt )
+if ( command == 'edit' )
+    return require( './smk-edit' )( opt )
 
 // if the first arg is 'create', then we should attempt to launch the cli project creator
 if ( command == 'create' )
@@ -45,7 +45,7 @@ if ( command == 'create' )
 if ( command == 'help' || command == '-h' || command == '-?' ) {
     usage()
     console.log( chalk.yellow( 'To create a new SMK project:     ' ) + chalk.blueBright( `${ exec } create [name]` ) )
-    console.log( chalk.yellow( 'To modify an SMK project config: ' ) + chalk.blueBright( `${ exec } ui [-p port]` ) )
+    console.log( chalk.yellow( 'To modify an SMK project config: ' ) + chalk.blueBright( `${ exec } edit [-p port]` ) )
     return 1
 }
 

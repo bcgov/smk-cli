@@ -20,7 +20,7 @@ module.exports = async function ( args ) {
         }
     }
     catch ( err ) {
-        console.log( chalk.red( 'Failed to launch SMK UI' ) )
+        console.log( chalk.red( 'Failed to launch SMK Edit' ) )
         console.log( chalk.yellow( err ) )
         process.exit( 1 )
     }
