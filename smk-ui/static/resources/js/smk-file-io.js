@@ -103,7 +103,7 @@ function loadConfig()
 	// trigger the ajax load for edit copy configs
 	$.ajax
 	({
-		url: serviceUrl + 'ProjectConfig',
+		url: serviceUrl + 'config',
         type: 'get',
         dataType: 'json',
         contentType:'application/json',
@@ -157,7 +157,7 @@ function saveConfig(config)
 
 	$.ajax
 	({
-		url: serviceUrl + 'SaveConfig',
+		url: serviceUrl + 'config',
         type: 'post',
         dataType: 'json',
         data: JSON.stringify(config),
@@ -175,53 +175,53 @@ function saveConfig(config)
 	});
 }
 
-function testConfig(config)
-{
+// function testConfig(config)
+// {
 
-	// set revisions
-	config.lmfRevision += 1;
-	config.modifiedDate = new Date();
-	config.surround.title = config.name;
+// 	// set revisions
+// 	config.lmfRevision += 1;
+// 	config.modifiedDate = new Date();
+// 	config.surround.title = config.name;
 
-	$.ajax
-	({
-		url: serviceUrl + 'TestConfig',
-        type: 'post',
-        dataType: 'json',
-        data: JSON.stringify(config),
-        contentType:'application/json',
-        crossDomain: true,
-        withCredentials: true,
-        success: function (result)
-        {
-			M.toast({html: 'Successfully launched config'});
-        },
-        error: function (status)
-        {
-            M.toast({html: 'Error testing application. Error: ' + status.responseText});
-        }
-	});
-}
+// 	$.ajax
+// 	({
+// 		url: serviceUrl + 'TestConfig',
+//         type: 'post',
+//         dataType: 'json',
+//         data: JSON.stringify(config),
+//         contentType:'application/json',
+//         crossDomain: true,
+//         withCredentials: true,
+//         success: function (result)
+//         {
+// 			M.toast({html: 'Successfully launched config'});
+//         },
+//         error: function (status)
+//         {
+//             M.toast({html: 'Error testing application. Error: ' + status.responseText});
+//         }
+// 	});
+// }
 
-function buildConfig(config)
-{
+// function buildConfig(config)
+// {
 
-	// set revisions
-	config.lmfRevision += 1;
-	config.modifiedDate = new Date();
-	config.surround.title = config.name;
+// 	// set revisions
+// 	config.lmfRevision += 1;
+// 	config.modifiedDate = new Date();
+// 	config.surround.title = config.name;
 
-	$.ajax
-	({
-		url: serviceUrl + 'BuildConfig/true',
-        type: 'post',
-        success: function (result)
-        {
-			M.toast({html: 'Build process executed'});
-        },
-        error: function (status)
-        {
-            M.toast({html: 'Error building application. Error: ' + status.responseText});
-        }
-	});
-}
+// 	$.ajax
+// 	({
+// 		url: serviceUrl + 'BuildConfig/true',
+//         type: 'post',
+//         success: function (result)
+//         {
+// 			M.toast({html: 'Build process executed'});
+//         },
+//         error: function (status)
+//         {
+//             M.toast({html: 'Error building application. Error: ' + status.responseText});
+//         }
+// 	});
+// }

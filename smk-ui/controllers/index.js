@@ -3,5 +3,5 @@ module.exports = function ( app ) {
     require( './converters.js' )( app )
     require( './layers.js' )( app )
 
-    app.get( "/Ping", ( req, res, next ) => { res.json( [ 'Pong' ] ) } )
+    app.get( '/ping', function ( req, res, next ) { res.json( { ok: true } ) } )
 }

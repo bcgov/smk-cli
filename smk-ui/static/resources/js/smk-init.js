@@ -10,9 +10,9 @@ var basemapViewer;
 var app = new Vue(
 {
     el: '#content',
-    data: 
+    data:
     {
-        config: 
+        config:
         {
             lmfId: "",
             lmfRevision: 1,
@@ -44,17 +44,17 @@ var app = new Vue(
         componentKey: 0,
         mySelf: this
     },
-    methods: 
+    methods:
     {
-        tabSwitch: function (tab) 
+        tabSwitch: function (tab)
         {
             this.lastTab = this.currentTab;
             this.currentTab = tab;
             $('#contentPanel').show();
         },
-        forceRerender() 
+        forceRerender()
         {
-            this.componentKey += 1;  
+            this.componentKey += 1;
         },
         saveConfig: function(event)
         {
@@ -69,38 +69,38 @@ var app = new Vue(
             buildConfig(this.config);
         }
     },
-    computed: 
+    computed:
     {
-        currentTabComponent: function () 
-        {   
+        currentTabComponent: function ()
+        {
             this.componentKey += 1;
             return this.currentTab.toLowerCase();
         },
         catalogLayers: function ()
         {
-            return _.pickBy(this.config.layers, function(layer) 
+            return _.pickBy(this.config.layers, function(layer)
             {
                 return layer.type === 'esri-dynamic';
             });
         },
         wmsLayers: function ()
         {
-            return _.pickBy(this.config.layers, function(layer) 
+            return _.pickBy(this.config.layers, function(layer)
             {
                 return layer.type === 'wms';
             });
         },
         vectorLayers: function ()
         {
-            return _.pickBy(this.config.layers, function(layer) 
+            return _.pickBy(this.config.layers, function(layer)
             {
                 return layer.type === 'vector';
             });
         }
     },
-    updated: function () 
+    updated: function ()
     {
-        this.$nextTick(function () 
+        this.$nextTick(function ()
         {
             // triggered twice in a row after toggling component?
             if(this.lastTab !== this.currentTab)
@@ -129,7 +129,7 @@ var app = new Vue(
             }
 
             $('select').formSelect();
-            M.AutoInit(); 
+            M.AutoInit();
             M.updateTextFields();
 
             this.lastTab = this.currentTab;
@@ -163,9 +163,9 @@ $(document).ready(function()
     $('.materialboxed').materialbox();
     $('.parallax').parallax();
     $('.sidenav').sidenav();
-    
+
     M.AutoInit();
-    
+
     // load the config data, preload mpcm layers
     loadConfig();
 
@@ -178,7 +178,7 @@ function statusCheck()
 {
     $.ajax
 	({
-		url: serviceUrl + 'Ping',
+		url: serviceUrl + 'ping',
 		type: "get",
 		success: function (result)
 		{
