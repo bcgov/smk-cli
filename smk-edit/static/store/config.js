@@ -1,0 +1,27 @@
+import viewer from './configViewer.js'
+import layers from './configLayers.js'
+
+export default {
+    state: function () {
+        return {
+            name: null,
+        }
+    },
+    modules: {
+        viewer: viewer,
+        layers: layers
+    },
+    getters: {
+        configName: function ( state ) {
+            return state.name
+        }
+    },
+    mutations: {
+        config: function ( state, config ) {
+            Object.assign( state, config )
+        },
+        configName: function ( state, name ) {
+            state.name = name
+        },
+    },
+}

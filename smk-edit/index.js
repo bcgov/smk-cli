@@ -39,7 +39,8 @@ function startService( opt ) {
 
     require( './controllers' )( app )
 
-    app.use( express.static( path.join( __dirname, 'static' ) ) )
+    app.use( express.static( path.resolve( __dirname, 'static' ) ) )
+    app.use( express.static( path.resolve( __dirname, '../node_modules' ) ) )
 
     const routes = app._router.stack
         .filter( function ( r ) { return r.route } )

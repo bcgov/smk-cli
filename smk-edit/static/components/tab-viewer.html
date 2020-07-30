@@ -1,0 +1,24 @@
+<form>
+    <div class="row" style="padding: 0px; margin: 0px;">
+        <div class="col s4" ref="col1">
+            <p>
+                Select a basemap from list to set your application's default basemap.
+                Pan and zoom the map to the right to set the application's initial extent.
+            </p>
+            <p v-for="bm in baseMaps">
+                <label>
+                    <input name="basemapGroup" type="radio"
+                        v-bind:value="bm.id"
+                        v-model="baseMap"
+                    >
+                    <span>{{ bm.title }}</span>
+                </label>
+            </p>
+        </div>
+        <div class="col s8" ref="col2">
+            <div style="height: 100%; width: 100%;"
+                v-content="map"
+            ></div>
+        </div>
+    </div>
+</form>

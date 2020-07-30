@@ -1,0 +1,10 @@
+<li class="collection-item avatar">
+    <i v-if="layer.type ==='esri-dynamic'" class="material-icons circle blue" title="ESRI Dynamic Layer">layers</i>
+    <i v-if="layer.type ==='wms'" class="material-icons circle green" title="WMS Layer">backup</i>
+    <i v-if="layer.type ==='vector'" class="material-icons circle yellow darken-4" title="Vector Layer">edit</i>
+    <span class="title">{{ layer.title }}</span>
+    <p><a v-bind:href="layer.metadataUrl" target="_blank" v-if="layer.metadataUrl != null">Metadata</a>
+    <br />
+    <a href="#!" v-on:click="editLayer( layer.id )">Edit Layer</a></p>
+    <a href="#!" v-on:click="removeLayer( layer.id )" class="secondary-content"><i class="material-icons red-text">delete_forever</i></a>
+</li>

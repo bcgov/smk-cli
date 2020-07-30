@@ -38,120 +38,33 @@
         <!-- script src="https://cdn.jsdelivr.net/npm/vue"></script -->
         <!-- smk util css -->
         <link rel="stylesheet" href="assets/css/smk.css" type='text/css'>
+
+        <!-- VueX -->
+        <script src="https://unpkg.com/vuex"></script>
+
+        <!-- SMK -->
+        <script src="/@qqnluaq/smk/dist/smk.js"></script>
+
     </head>
 
     <body>
         <div id="content" v-bind:class="{ 'service-no-response': !serviceStatus }">
-            <header>
-                <div>
-                    <nav>
-                        <div class="nav-wrapper blue-grey darken-2">
-                            <a href="index.html" class="brand-logo">Simple Map Kit Editor</a>
-                            <a href="#" data-target="slide-out" class="sidenav-trigger">
-                                <i class="material-icons">menu</i>
-                            </a>
-                        </div>
-                    </nav>
-                    <ul id="slide-out" class="sidenav sidenav-fixed blue-grey darken-2">
-                        <li>
-                            <div class="user-view">
-                                <div class="background blue-grey darken-1"><img src="assets/images/bc_gov_logo_transparent.png" style="padding-left: 30px;"/></div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="subheader white-text title-panel">
-                                <p>Welcome to the SMK Configuration Utility</p>
-                                <p>Use this tool to modify your application's map configuration.</p>
-                            </div>
-                        </li>
-                        <!-- <li><a class="subheader white-text">Options</a></li> -->
-                        <li v-bind:class="{active:currentTabComponent=='identity'}">
-                            <a href="#" v-on:click="tabSwitch('identity')" class="waves-effect white-text">
-                                <i class="material-icons">assignment</i>Application
-                            </a>
-                        </li>
-                        <li v-bind:class="{active:currentTabComponent=='basemap'}">
-                            <a href="#" v-on:click="tabSwitch('basemap')" class="waves-effect white-text">
-                                <i class="material-icons">terrain</i>Basemap and Extent
-                            </a>
-                        </li>
-                        <li v-bind:class="{active:currentTabComponent=='mpcm-layers'}">
-                            <a href="#" v-on:click="tabSwitch('mpcm-layers')" class="waves-effect white-text">
-                                <i class="material-icons">layers</i>Add DataBC Layers
-                            </a>
-                        </li>
-                        <li v-bind:class="{active:currentTabComponent=='wms-layers'}">
-                            <a href="#" v-on:click="tabSwitch('wms-layers')" class="waves-effect white-text">
-                                <i class="material-icons">backup</i>Add WMS Layers
-                            </a>
-                        </li>
-                        <li v-bind:class="{active:currentTabComponent=='vector-layers'}">
-                            <a href="#" v-on:click="tabSwitch('vector-layers')" class="waves-effect white-text">
-                                <i class="material-icons">edit</i>Add Vector Layers
-                            </a>
-                        </li>
-                        <li v-bind:class="{active:currentTabComponent=='layers'}">
-                            <a href="#" v-on:click="tabSwitch('layers')" class="waves-effect white-text">
-                                <i class="material-icons">map</i>Manage Layers
-                            </a>
-                        </li>
-                        <li v-bind:class="{active:currentTabComponent=='tools'}">
-                            <a href="#" v-on:click="tabSwitch('tools')" class="waves-effect white-text">
-                                <i class="material-icons">build</i>Tools
-                            </a>
-                        </li>
-                        <li>
-                            <div class="subheader white-text title-panel">
-                                <p>Click <b>Save</b> at any time to commit your changes</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </header>
-            <main class="main-container">
-                <div id="backgroundMap" class="background-map" ></div>
-                <div class="background-map" style="background: rgba(0, 0, 0, 0.3);" ></div>
-                <!-- <div id="titlePanel" class="title-panel">
-                    <p class="label"> Welcome to the SMK Configuration Utility</p>
-                    <p class="label"> With this tool you can modify your projects map-config.json</p>
-                    <p class="label"> Select an option (on the left) to modify layers, data, and tools</p>
-                    <p class="label"> Click 'Save' at any time to commit your changes</p>
-                </div> -->
-                <div id="contentPanel" class="content-panel" style="display: none;">
-                    <div class="card white" style="margin: 0px;">
-                        <div id="contentCard" class="card-content black-text" style="height: calc(100vh - 130px); overflow: auto;">
-                            <component v-bind:is="currentTabComponent"
-                                       v-bind:config="config"
-                                       v-bind:catalog-layers="catalogLayers"
-                                       v-bind:wms-layers="wmsLayers"
-                                       v-bind:vector-layers="vectorLayers"
-                                       v-bind:editing-layer="editingLayer"
-                                       v-bind:editing-tool="editingTool"
-                                       v-bind:key="componentKey"></component>
-                        </div>
-                        <div class="card-action">
-                            <a class="waves-effect waves-light btn-small blue-grey darken-2" v-on:click="saveConfig()" style="width: 140px;"><em style="position: absolute; top: 4px; left: 14px;" class="material-icons left">save</em>Save</a>
-                            <!-- <a class="waves-effect waves-light btn-small blue-grey darken-2" v-on:click="testConfig()" style="width: 140px;"><em style="position: absolute; top: 4px; left: 14px;" class="material-icons left">cached</em>Test</a> -->
-                            <!-- <a class="waves-effect waves-light btn-small blue-grey darken-2" v-on:click="buildConfig()" style="width: 140px;"><em style="position: absolute; top: 4px; left: 14px;" class="material-icons left">build</em>Build</a> -->
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <footer>
-            </footer>
+            <app-header></app-header>
+            <app-main></app-main>
+            <app-footer></app-footer>
         </div>
 
         <script src="//localhost:35729/livereload.js"></script>
 
         <!-- templates, init, util scripts -->
-        <script src="templates/identity-template.js"></script>
-        <script src="templates/basemap-template.js"></script>
-        <script src="templates/mpcm-layers-template.js"></script>
-        <script src="templates/wms-layers-template.js"></script>
-        <script src="templates/vector-layers-template.js"></script>
-        <script src="templates/edit-layer-template.js"></script>
-        <script src="templates/edit-tool-template.js"></script>
-        <script src="templates/templates.js"></script>
+        <!-- <script src="templates/identity-template.js"></script> -->
+        <!-- <script src="templates/basemap-template.js"></script> -->
+        <!-- <script src="templates/mpcm-layers-template.js"></script> -->
+        <!-- <script src="templates/wms-layers-template.js"></script> -->
+        <!-- <script src="templates/vector-layers-template.js"></script> -->
+        <!-- <script src="templates/edit-layer-template.js"></script> -->
+        <!-- <script src="templates/edit-tool-template.js"></script> -->
+        <!-- <script src="templates/templates.js"></script> -->
         <!-- <script src="admin-app.js"></script> -->
         <script src="smk-util.js"></script>
         <script src="smk-layer-management.js"></script>
@@ -168,7 +81,8 @@
         <script type="module">
             import './admin-app.js'
 
-
         </script>
     </body>
 </html>
+
+

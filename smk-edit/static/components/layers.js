@@ -1,13 +1,7 @@
-Vue.component('init',
-{
-    template:   
-        `<div>Loading...</div>`
-});
-
 Vue.component('layers',
 {
     props: ['config'],
-    template:   
+    template:
         `<form id="manageLayersForm" style="padding: 0px; margin: 0px;">
             <div id="layerDisplayOrderContent" class="row" style="background: white; height: calc(100vh - 294px); overflow: auto;">
                 <div id="layer-display-tree" class="display-order-container" style="height: 100%;"></div>
@@ -26,20 +20,3 @@ Vue.component('layers',
             </div>
         </form>`
 });
-
-Vue.component('catalog-item',
-{
-    props: ['layer'],
-    template:   
-        `<li class="collection-item avatar">
-            <i v-if="layer.type ==='esri-dynamic'" class="material-icons circle blue" title="ESRI Dynamic Layer">layers</i>
-            <i v-if="layer.type ==='wms'" class="material-icons circle green" title="WMS Layer">backup</i>
-            <i v-if="layer.type ==='vector'" class="material-icons circle yellow darken-4" title="Vector Layer">edit</i>
-            <span class="title">{{layer.title}}</span>
-            <p><a v-bind:href="layer.metadataUrl" target="_blank" v-if="layer.metadataUrl != null">Metadata</a>
-            <br />
-            <a href="#!" v-bind:onclick="'editLayer(\\'' + layer.id + '\\')'">Edit Layer</a></p>
-            <a href="#!" v-bind:onclick="'removeLayer(\\'' + layer.id + '\\')'" class="secondary-content"><i class="material-icons red-text">delete_forever</i></a>
-        </li>`
-});
-

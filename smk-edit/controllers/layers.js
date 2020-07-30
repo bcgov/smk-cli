@@ -12,7 +12,7 @@ const MPCM_OPTIONS =
 };
 
 module.exports = function(app) {
-    app.get("/LayerLibrary", (req, res, next) =>
+    app.get("/mpcm-catalog", (req, res, next) =>
     {
         try
         {
@@ -26,7 +26,7 @@ module.exports = function(app) {
         }
     });
 
-    app.get("/LayerLibrary/:id", (req, res, next) =>
+    app.get("/mpcm-catalog/:id", (req, res, next) =>
     {
         try
         {
@@ -41,7 +41,7 @@ module.exports = function(app) {
         }
     });
 
-    app.get("/LayerLibrary/wms/:url", (req, res, next) =>
+    app.get("/wms-catalog/:url", (req, res, next) =>
     {
         try
         {
@@ -238,9 +238,16 @@ function getLayerConfigItem(id, res)
     mpcmReq.end();
 };
 
+var wmsCache = {}
+
 function getWmsItem(urlString, res)
 {
     console.log('GetWMSItem ->');
+    if ( wmsCache[ urlString ] ) {
+        res.json(wmsCache[ urlString ]);
+        return
+    }
+
     var url = new URL(urlString)
     var http = require('http');
 
@@ -280,14 +287,19 @@ function getWmsItem(urlString, res)
                         for(var i = 0; i < result.WMS_Capabilities.Capability[0].Layer[0].Layer.length; i++)
                         {
                             var wmsLayer = result.WMS_Capabilities.Capability[0].Layer[0].Layer[i];
+                            var folder = []
+                            layers.push( {
+                                title: wmsLayer.Title[0],
+                                folders: folder
+                            } )
                             for(var j = 0; j < wmsLayer.Style.length; j++)
                             {
                                 var style = wmsLayer.Style[j];
                                 var layer =
                                 {
                                     type: "wms",
-                                    id: wmsLayer.Name + "_" + style.Name,
-                                    title: wmsLayer.Title[0] + "_" + style.Name,
+                                    id: slugify( wmsLayer.Name, style.Name ),
+                                    title: wmsLayer.Title[0] + " (" + style.Name + ")",
                                     isVisible: false,
                                     isQueryable: true,
                                     opacity: 0.65,
@@ -303,11 +315,16 @@ function getWmsItem(urlString, res)
                                     styleName: style.Name[0]
                                 };
 
-                                layers.push(layer);
+                                // layers.push(layer);
+                                folder.push(layer);
                             }
                         }
 
                         console.log('Success!');
+                        layers.sort( function ( a, b ) {
+                            return a.title > b.title ? 1 : -1
+                        } )
+                        wmsCache[ urlString] = layers
                         res.json(layers);
                     }
                     catch(er)
@@ -341,3 +358,13 @@ class Layer
         this.label = null;
     }
 };
+
+function slugify( ) {
+    return [].slice.call( arguments )
+        .filter( function ( a ) { return !!a } )
+        .map( function ( a ) {
+            return ( '' + a ).replace( /[^0-9a-z]+/ig, '-' ).replace( /^[-]+|[-]+$/g, '' ).toLowerCase()
+        } )
+        .filter( function ( a ) { return !!a } )
+        .join( '--' )
+}

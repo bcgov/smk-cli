@@ -1,3 +1,17 @@
+import { store } from './store.js'
+import { importComponents } from './vue-util.js'
+
+var components = importComponents( [
+    './components/app-header.js',
+    './components/app-main.js',
+    './components/app-footer.js',
+    './components/tab-application.js',
+    './components/tab-viewer.js',
+    './components/tab-mpcm-layers.js',
+    './components/tab-wms-layers.js',
+    './components/tab-vector-layers.js',
+] )
+
 var serviceUrl = "../";
 var wmsUrl = "https://openmaps.gov.bc.ca/geo/pub/ows";
 var wmsPostfix = "?service=WMS&request=GetCapabilities";
@@ -7,176 +21,86 @@ var catalogLayers = [];
 var catalogTreeSource = [];
 var basemapViewer;
 
-var app = new Vue( {
-    el: '#content',
-    data: {
-        serviceStatus: false,
-        config: {},
-        // {
-        //     lmfId: "",
-        //     lmfRevision: 1,
-        //     name: "",
-        //     createdBy: "",
-        //     createdDate: "",
-        //     modifiedBy: "",
-        //     modifiedDate: "",
-        //     version: "",
-        //     surround: { type: "default", title: "" },
-        //     viewer: {
-        //         type: "leaflet",
-        //         device: "auto",
-        //         panelWidth: 400,
-        //         deviceAutoBreakpoint: 500,
-        //         themes: [],
-        //         location: { center: [-125, 55], zoom: 5 },
-        //         baseMap: 'Topographic',
-        //         clusterOption: { showCoverageOnHover: false }
-        //     },
-        //     tools: [],
-        //     layers: []
-        // },
-        editingLayer: null,
-        editingTool: null,
-        lastTab: 'init',
-        currentTab: 'init',
-        tabs: ['init', 'identity', 'basemap', 'mpcm-layers', 'wms-layers', 'vector-layers', 'layers', 'tools', 'edit-layer'],
-        componentKey: 0,
-        mySelf: this
-    },
-    methods: {
-        tabSwitch: function (tab) {
-            this.lastTab = this.currentTab;
-            this.currentTab = tab;
-            $('#contentPanel').show();
+components.then( function () {
+    var app = new Vue( {
+        el: '#content',
+        store: store,
+        methods: {
+            saveConfig: function(event) {
+                saveConfig( this.config );
+            },
+            // testConfig: function(event)
+            // {
+            //     testConfig(this.config);
+            // },
+            // buildConfig: function(event)
+            // {
+            //     buildConfig(this.config);
+            // }
         },
-        // forceRerender()
-        // {
-        //     this.componentKey += 1;
-        // },
-        saveConfig: function(event) {
-            saveConfig( this.config );
-        },
-        // testConfig: function(event)
-        // {
-        //     testConfig(this.config);
-        // },
-        // buildConfig: function(event)
-        // {
-        //     buildConfig(this.config);
-        // }
-    },
-    computed: {
-        currentTabComponent: function () {
-            this.componentKey += 1;
-            return this.currentTab.toLowerCase();
-        },
-        catalogLayers: function () {
-            return _.pickBy(this.config.layers, function(layer) {
-                return layer.type === 'esri-dynamic';
-            });
-        },
-        wmsLayers: function () {
-            return _.pickBy(this.config.layers, function(layer) {
-                return layer.type === 'wms';
-            });
-        },
-        vectorLayers: function () {
-            return _.pickBy(this.config.layers, function(layer) {
-                return layer.type === 'vector';
-            });
-        }
-    },
-    updated: function () {
-        this.$nextTick(function () {
-            // triggered twice in a row after toggling component?
-            if(this.lastTab !== this.currentTab) {
-                switch(this.currentTab) {
-                    case 'basemap':
-                        configureBasemapViewer();
-                    break;
-                    case 'mpcm-layers':
-                        loadDataBCCatalogLayers();
-                    break;
-                    case 'vector-layers':
-                        configureFileUpload();
-                    break;
-                    // case 'edit-layer':
-                    //     configureUpdatePanel();
-                    // break;
-                    case 'layers':
-                        configureLayersView();
-                    break;
-                    case 'edit-tool':
-                        configureToolEditPanel();
-                    break;
-                }
+        computed: {
+            serviceStatus: function () {
+                return this.$store.state.serviceStatus
             }
+        },
+        updated: function () {
+            this.$nextTick(function () {
+                // triggered twice in a row after toggling component?
+                if(this.lastTab !== this.currentTab) {
+                    switch(this.currentTab) {
+                        case 'basemap':
+                            configureBasemapViewer();
+                        break;
+                        case 'mpcm-layers':
+                            loadDataBCCatalogLayers();
+                        break;
+                        case 'vector-layers':
+                            configureFileUpload();
+                        break;
+                        // case 'edit-layer':
+                        //     configureUpdatePanel();
+                        // break;
+                        case 'layers':
+                            configureLayersView();
+                        break;
+                        case 'edit-tool':
+                            configureToolEditPanel();
+                        break;
+                    }
+                }
 
-            $('select').formSelect();
-            M.AutoInit();
-            M.updateTextFields();
+                $('select').formSelect();
+                M.AutoInit();
+                M.updateTextFields();
 
-            this.lastTab = this.currentTab;
-        })
+                this.lastTab = this.currentTab;
+            })
+        }
+    } )
+
+    app.$store.commit( 'currentTab', 'tab-application' )
+
+    app.$store.dispatch( 'loadConfig' )
+
+    statusCheck()
+
+    function statusCheck() {
+        fetch( '/ping' )
+            .then( function ( resp ) {
+                if ( !resp.ok ) throw Error( 'ping failed' )
+                return resp.json()
+            } )
+            .then( function ( obj ) {
+                if ( !obj.ok ) throw Error( 'ping failed' )
+                app.$store.commit( 'serviceStatus', true )
+            } )
+            .catch( function () {
+                if ( app.serviceStatus )
+                    M.toast( { html: 'Service not responding. Please restart the SMK Edit service.' } )
+                app.$store.commit( 'serviceStatus', false )
+            } )
+            .finally( function () {
+                // setTimeout( statusCheck, 5000 )
+            } )
     }
-});
-
-$(document).ready(function() {
-    // create a background map, remove the zoom buttons
-    // var map = L.map('backgroundMap', { zoomControl: false });
-    // // disable any ability to move/navigate the map
-    // map.touchZoom.disable();
-    // map.doubleClickZoom.disable();
-    // map.scrollWheelZoom.disable();
-    // map.boxZoom.disable();
-    // map.keyboard.disable();
-    // // add a base layer (osm for now)
-    // var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    // var osmAttrib = 'Map Tiles © <a href="https://openstreetmap.org">OpenStreetMap</a>';
-    // var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
-    // map.addLayer(osm);
-    // // set the map to a random location somewhere roughly over British Columbia
-    // var rndLat = Math.random() * (60 - 48.3) + 47.294;
-    // var rndLon = (Math.random() * (124 - 111.291) + 114) * -1;
-    // var rndZoom = Math.floor(Math.random() * (11 - 6) + 6);
-    // map.setView(new L.latLng(rndLat, rndLon), rndZoom, { animate: true, duration: 60 } );
-    // map.invalidateSize();
-
-    // material init
-    // $('.materialboxed').materialbox();
-    // $('.parallax').parallax();
-    // $('.sidenav').sidenav();
-
-    // M.AutoInit();
-
-    // load the config data, preload mpcm layers
-    loadConfig();
-
-    // timeout listener
-    // setTimeout(statusCheck, 5000);
-
-    app.tabSwitch( 'identity' )
-
-});
-
-statusCheck()
-
-function statusCheck() {
-    fetch( '/ping' )
-        .then( function ( resp ) {
-            if ( !resp.ok ) throw Error( 'ping failed' )
-            return resp.json()
-        } )
-        .then( function ( obj ) {
-            if ( !obj.ok ) throw Error( 'ping failed' )
-            app.serviceStatus = true
-        } )
-        .catch( function () {
-            if ( app.serviceStatus )
-                M.toast( { html: 'Service not responding. Please restart the SMK Edit service.' } )
-            app.serviceStatus = false
-        } )
-        .finally( function () {
-            setTimeout( statusCheck, 5000 )
-        } )
-}
+} )
