@@ -1,26 +1,29 @@
-<form>
-    <div class="row">
-        <div class="col s6">
-            <div class="row">
-                <div class="col s12 input-field">
-                    <i class="material-icons prefix"
-                        v-on:click="clearFilter"
-                    >cancel</i>
-                    <label>Filter DataBC Layers</label>
-                    <input type="text" v-model="layerFilter">
-                </div>
+<article>
+    <section>
+        <header>
+            <h5>DataBC Catalog</h5>
+            <div class="col s12 input-field">
+                <i class="material-icons prefix"
+                    v-on:click="clearFilter"
+                >cancel</i>
+                <label>Filter DataBC Layers</label>
+                <input type="text" v-model="layerFilter">
             </div>
-            <div class="row">
-                <catalog-tree
-                    v-if="mpcmCatalog.length > 0"
-                    v-bind:items="mpcmCatalog"
-                    v-bind:filter="layerFilter"
-                    v-on:select-item="addLayer"
-                ></catalog-tree>
-            </div>
+        </header>
+        <div>
+            <catalog-tree
+                v-if="mpcmCatalog.length > 0"
+                v-bind:items="mpcmCatalog"
+                v-bind:filter="layerFilter"
+                v-on:select-item="addLayer"
+            ></catalog-tree>
         </div>
-        <div class="col s6">
-            <h5>Existing DataBC layers</h5>
+    </section>
+    <section>
+        <header>
+            <h5>DataBC Layers In App</h5>
+        </header>
+        <div>
             <ul class="collection">
                 <catalog-item
                     v-for="layer in mpcmLayers"
@@ -29,5 +32,5 @@
                 ></catalog-item>
             </ul>
         </div>
-    </div>
-</form>
+    </section>
+</article>

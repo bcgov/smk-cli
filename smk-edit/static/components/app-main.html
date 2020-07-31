@@ -1,5 +1,7 @@
 <main class="main-container">
-    <div class="content-panel black-text white">
+    <div class="content-panel black-text white"
+        v-bind:class="currentTabComponent"
+    >
         <component
             v-bind:is="currentTabComponent"
             v-bind:key="currentTabComponent"

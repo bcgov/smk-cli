@@ -1,6 +1,7 @@
-<form>
-    <div class="row">
-        <div class="col s6">
+<article>
+    <section>
+        <header>
+            <h5>WMS Layer Catalog</h5>
             <div class="row">
                 <div class="col s9 input-field">
                     <label class="active">WMS Base URL</label>
@@ -22,17 +23,21 @@
                     <input type="text" v-model="layerFilter">
                 </div>
             </div>
-            <div class="row">
-                <catalog-tree
-                    v-if="wmsCatalog.length > 0"
-                    v-bind:items="wmsCatalog"
-                    v-bind:filter="layerFilter"
-                    v-on:select-item="addLayer"
-                ></catalog-tree>
-            </div>
+        </header>
+        <div>
+            <catalog-tree
+                v-if="wmsCatalog.length > 0"
+                v-bind:items="wmsCatalog"
+                v-bind:filter="layerFilter"
+                v-on:select-item="addLayer"
+            ></catalog-tree>
         </div>
-        <div class="col s6">
-            <h5>Existing WMS layers</h5>
+    </section>
+    <section>
+        <header>
+            <h5>WMS Layers In App</h5>
+        </header>
+        <div>
             <ul class="collection">
                 <catalog-item
                     v-for="layer in wmsLayers"
@@ -41,5 +46,5 @@
                 ></catalog-item>
             </ul>
         </div>
-    </div>
-</form>
+    </section>
+</article>

@@ -25,7 +25,7 @@ export default importComponents( [
             addLayer: function ( item ) {
                 var self = this
 
-                console.log(item)
+                // console.log(item)
                 fetch( '/mpcm-catalog/' + item.mpcmId )
                     .then( function ( resp ) {
                         if ( !resp.ok ) throw Error( 'request failed' )
