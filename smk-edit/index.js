@@ -9,7 +9,10 @@ module.exports = async function ( args ) {
         var app = startService( {
             port:       args.port || args.p || 1337,
             base:       args.base || '.',
-            config:     args.config || 'smk-config.json'
+            config:     args.config || 'smk-config.json',
+            layers:     args.layers || 'layers',
+            temp:       args.temp || '.temp',
+            ping:       args.ping || 10 * 1000,
         } )
 
         if ( !args.open || !/^(no|none|false|0)$/i.test( args.open ) ) {
@@ -34,13 +37,31 @@ function startService( opt ) {
     app.set( 'port', opt.port )
     app.set( 'smk base', path.resolve( opt.base ) )
     app.set( 'smk config', path.resolve( opt.base, opt.config ) )
+    app.set( 'smk layers', path.resolve( opt.base, opt.layers ) )
+    app.set( 'smk temp', path.resolve( opt.base, opt.temp ) )
+    app.set( 'smk ping', opt.ping )
 
     app.use( cors() )
 
-    require( './controllers' )( app )
+    require( './controllers' )( app, function ( req, res, next ) {
+        console.log( chalk.yellow( ( new Date() ).toISOString() ), chalk.green( req.method ), chalk.blue( req.originalUrl ) )
+        next()
+    } )
+
+    app.use( function ( err, req, res, next ) {
+        console.log( chalk.yellow( ( new Date() ).toISOString() ), chalk.red( err.stack ) )
+        res.status( 500 ).json( { ok: false, message: err.toString() } )
+    } )
 
     app.use( express.static( path.resolve( __dirname, 'static' ) ) )
     app.use( express.static( path.resolve( __dirname, '../node_modules' ) ) )
+    app.use( function ( req, res, next ) {
+        if ( ( '' + req.originalUrl ).endsWith( 'css' ) ) {
+            console.log( `Returned dummy content for ${ req.originalUrl }` )
+            res.type( 'text/css' ).send( `/* ${ req.originalUrl } */` ).end()
+        }
+        next()
+    } )
 
     const routes = app._router.stack
         .filter( function ( r ) { return r.route } )
@@ -56,9 +77,12 @@ function startService( opt ) {
         console.log( routes.map( function ( r ) {
             return `\t${ chalk.green( r[ 0 ] ) }\t${ chalk.blue( r[ 1 ] ) }   ${ r[ 2 ] || '' }`
         } ).join( '\n' ) )
-        console.log( chalk.yellow( `Service listening on port ${ chalk.blue( app.get( 'port' ) ) }` ) )
         console.log( chalk.yellow( `Base path is ${ chalk.blue( app.get( 'smk base' ) ) }` ) )
         console.log( chalk.yellow( `Configuration path is ${ chalk.blue( app.get( 'smk config' ) ) }` ) )
+        console.log( chalk.yellow( `Layers catalog path is ${ chalk.blue( app.get( 'smk layers' ) ) }` ) )
+        console.log( chalk.yellow( `Temp path is ${ chalk.blue( app.get( 'smk temp' ) ) }` ) )
+        console.log( chalk.yellow( `Service listening at ${ chalk.blue( 'http://localhost:' + app.get( 'port' ) + '/' ) }` ) )
+        console.log( chalk.yellow( `Hit Ctrl-C to exit` ) )
         console.log()
     } )
 

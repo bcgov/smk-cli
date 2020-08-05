@@ -1,0 +1,390 @@
+const xml2js = require( 'xml2js' ).parseString
+const http = require( 'http' )
+const layer = require( './layer.js' )
+const path = require( 'path' )
+const fs = require( 'fs' )
+const multer = require( 'multer' )
+
+// move these into an external config
+const DATABC_SERVICE_URL = 'https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer'
+
+const MPCM_OPTIONS = {
+    host: 'apps.gov.bc.ca',
+    port: '80',
+    path: 'https://apps.gov.bc.ca/pub/mpcm/services/catalog/PROD',
+    method: 'GET',
+    headers: {
+        accept: 'application/json'
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+module.exports = function( app, logger ) {
+    var catalogPath = path.resolve( app.get( 'smk layers' ) )
+    var upload = multer( { dest: catalogPath, limits: { fieldSize: Number.POSITIVE_INFINITY } } ).single( 'file' )
+
+    app.use(    '/catalog', logger )
+
+    app.get(    '/catalog/mpcm',            getMpcmCatalog )
+    app.get(    '/catalog/mpcm/:id',        getMpcmCatalogLayerConfig )
+
+    app.get(    '/catalog/wms/:url',        getWmsCatalog )
+    app.get(    '/catalog/wms/:url/:id',    getWmsCatalogLayerConfig )
+
+    app.get(    '/catalog/local',           getLocalCatalog )
+    app.get(    '/catalog/local/:id',       getLocalCatalogLayerConfig )
+    app.post(   '/catalog/local',           upload, postLocalCatalog )
+    // app.delete( '/catalog/local/:id',       deleteLocalCatalog )
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+var mpcmCatalogCache
+
+function getMpcmCatalog( req, res, next ) {
+    if ( mpcmCatalogCache ) {
+        console.log( '    Using cached MPCM Catalog' )
+        res.json( mpcmCatalogCache )
+        return
+    }
+
+    console.log( '    Loading MPCM Catalog from ' + MPCM_OPTIONS.path )
+    var mpcmReq = http.request( MPCM_OPTIONS, function( resp ) {
+        resp.setEncoding('utf8');
+
+        var msg = ''
+        resp.on( 'data', function ( chunk ) { msg += chunk } )
+
+        resp.on( 'end', function () {
+            var mpcm = JSON.parse( msg )
+            var catalog = convertFolders( mpcm.catalog.folders )
+
+            res.json( mpcmCatalogCache = catalog )
+            console.log('    Success!');
+        } )
+    } )
+
+    mpcmReq.end();
+
+    function convertFolders( folders ) {
+        if ( !folders ) return []
+
+        return [].concat( folders.folder ).reduce( function ( acc, f ) {
+            acc.push( catalogItem( f.folderName, null, convertFolders( f.folders ).concat( convertLayers( f.layers ) ) ) )
+            return acc
+        }, [] )
+    }
+
+    function convertLayers( layers ) {
+        if ( !layers ) return []
+
+        return [].concat( layers.layer ).reduce( function ( acc, l ) {
+            acc.push( catalogItem( l.layerDisplayName, { id: l.layerId } ) )
+            return acc
+        }, [] )
+    }
+}
+
+function getMpcmCatalogLayerConfig( req, res, next ) {
+    var mpcmId = req.params.id
+
+    var options = JSON.parse( JSON.stringify( MPCM_OPTIONS ) )
+    options.path += '/' + mpcmId;
+
+    console.log( '    Loading MPCM Layer from ' + options.path )
+    var mpcmReq = http.request( options, function ( resp ) {
+        resp.setEncoding('utf8');
+
+        var msg = '';
+        resp.on( 'data', function( chunk ) { msg += chunk } )
+
+        resp.on( 'end', function() {
+            var mpcmLayer = JSON.parse( msg )[ 'gis-layer' ]
+
+            var ly = layer.EsriDynamic( {
+                id:             mpcmLayer.layerId,
+                title:          mpcmLayer.layerDisplayName,
+                opacity:        0.65,
+                minScale:       mpcmLayer.minScale,
+                maxScale:       mpcmLayer.maxScale,
+                isQueryable:    true,
+                // titleAttribute: null,
+                mpcmId:         mpcmId,
+                mpcmWorkspace:  mpcmLayer.workspaceName,
+                serviceUrl:     DATABC_SERVICE_URL,
+                dynamicLayers:  [ mpcmLayer.dynamicJson ],
+            } )
+
+            ly.metadataUrl = mpcmLayer.properties.property.find( function ( p ) {
+                return p.key == 'metadata.url'
+            } ).value
+
+            ly.attributes = mpcmLayer.fields.field.map( function ( f ) {
+                return {
+                    name: f.fieldName,
+                    title: f.fieldAlias,
+                    visible: f.visible
+                }
+            } )
+
+            res.json( ly )
+            console.log( '    Success!' )
+        } )
+    } )
+
+    mpcmReq.end()
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+var wmsCatalogCache = {}
+var wmsLayerCache = {}
+
+function getWmsCatalog( req, res, next ) {
+    var wmsUrl = req.params.url
+
+    if ( wmsCatalogCache[ wmsUrl ] ) {
+        console.log( '    Using cached WMS Catalog for ' + wmsUrl )
+        res.json( wmsCatalogCache[ wmsUrl ] )
+        return
+    }
+
+    console.log( '    Loading WMS Catalog from ' + wmsUrl )
+
+    var url = new URL( wmsUrl ),
+        options = {
+            host: url.host,
+            port: url.port,
+            path: url,
+            method: 'GET'
+        },
+        serviceUrl = new URL( wmsUrl )
+
+    serviceUrl.search = ''
+    serviceUrl.hash = ''
+
+    var wmsReq = http.request( options, function( resp ) {
+        resp.setEncoding( 'utf8' )
+
+        var msg = ''
+        resp.on( 'data', function( chunk ) { msg += chunk } )
+
+        resp.on( 'end', function() {
+            xml2js( msg, function ( err, result) {
+                if ( err ) throw new Error( err )
+
+                var layerCache = {}
+                var layers = assertOne( assertOne( result.WMS_Capabilities.Capability ).Layer ).Layer
+                var catalog = layers.map( function ( ly ) {
+                        var title = assertOne( ly.Title ),
+                            lyName = assertOne( ly.Name )
+                        return catalogItem( title, null,
+                            ly.Style.map( function ( st ) {
+                                var stName = assertOne( st.Name ),
+                                    lyTitle = `${ title } ( ${ stName } )`,
+                                    id = slugify( lyName, stName )
+
+                                if ( layerCache[ id ] ) return
+
+                                layerCache[ id ] = layer.WMS( {
+                                    id: id,
+                                    title: lyTitle,
+                                    isQueryable: true,
+                                    opacity: 0.65,
+                                    // attribution: "",
+                                    // minScale: null,
+                                    // maxScale: null,
+                                    // titleAttribute: null,
+                                    metadataUrl: ly.MetadataURL && ly.MetadataURL[ 0 ].OnlineResource && ly.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
+                                    // attributes:  [ ],
+                                    // queries: [],
+                                    serviceUrl: serviceUrl.toString(),
+                                    layerName: lyName,
+                                    styleName: stName
+                                } )
+
+                                return catalogItem( lyTitle, { id: id } )
+                            } ).filter( function ( i ) { return i } )
+                        )
+                    } )
+
+                catalog.sort( function ( a, b ) {
+                    return a.title > b.title ? 1 : -1
+                } )
+
+                wmsLayerCache[ wmsUrl ] = layerCache
+                res.json( wmsCatalogCache[ wmsUrl ] = catalog );
+                console.log('    Success!');
+            } )
+        } )
+    } )
+
+    wmsReq.end()
+}
+
+function getWmsCatalogLayerConfig( req, res, next ) {
+    var wmsUrl = req.params.url
+    var id = req.params.id
+
+    console.log( '    Using cached layer ' + id + ' from WMS Catalog for ' + wmsUrl )
+
+    if ( !( wmsUrl in wmsLayerCache ) )
+        throw Error( `${ wmsUrl } not in WMS Catalog cache` )
+
+    if ( !( id in wmsLayerCache[ wmsUrl ] ) )
+        throw Error( `${ id } not in WMS Catalog cache for ${ wmsUrl }` )
+
+    res.json( wmsLayerCache[ wmsUrl ][ id ] )
+    console.log('    Success!');
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function getLocalCatalog( req, res, next ) {
+    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+
+    if ( !fs.existsSync( catalogFile ) ) {
+        console.log( `    No catalog at ${ catalogFile }` );
+        res.status( 404 ).json( { error: `No catalog at ${ catalogFile }` } )
+        return
+    }
+
+    console.log( `    Reading catalog from ${ catalogFile }` );
+    const catalog = JSON.parse( fs.readFileSync( catalogFile, { encoding: 'utf8' } ) )
+
+    if ( !( 'layers' in catalog ) || !Array.isArray( catalog.layers ) )
+        throw Error( 'no layers in catalog' )
+
+    var out = catalog.layers.map( function ( ly ) {
+        return catalogItem( ly.title, { id: ly.id } )
+    } )
+
+    res.json( out )
+    console.log('    Success!');
+}
+
+function getLocalCatalogLayerConfig( req, res, next ) {
+    var id = req.params.id
+    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+
+    if ( !fs.existsSync( catalogFile ) ) {
+        console.log( `    No catalog at ${ catalogFile }` );
+        res.status( 404 ).json( { error: `No catalog at ${ catalogFile }` } )
+        return
+    }
+
+    console.log( `    Reading catalog from ${ catalogFile }` );
+    const catalog = JSON.parse( fs.readFileSync( catalogFile, { encoding: 'utf8' } ) )
+
+    if ( !( 'layers' in catalog ) || !Array.isArray( catalog.layers ) )
+        throw Error( 'no layers in catalog' )
+
+    var ly = catalog.layers.find( function ( ly ) { return ly.id == id } )
+    if ( !ly ) {
+        console.log( `    No layer for ${ id } in ${ catalogFile }` );
+        res.status( 404 ).json( { error: `No layer for ${ id } in ${ catalogFile }` } )
+        return
+    }
+
+    var out = layer.Vector( {
+        id: id,
+        title: ly.title,
+        isQueryable: true,
+        opacity: 0.65,
+        // attribution: "",
+        // minScale: null,
+        // maxScale: null,
+        // titleAttribute: null,
+        // attributes:  [ ],
+        // queries: [],
+        dataUrl: ly.dataUrl,
+    } )
+
+    res.json( out )
+    console.log('    Success!');
+}
+
+function postLocalCatalog( req, res, next ) {
+    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+
+    if ( !fs.existsSync( catalogFile ) ) {
+        console.log( `    Creating catalog at ${ catalogFile }` );
+        var dir = path.resolve( req.app.get( 'smk layers' ) )
+        if ( !fs.existsSync( dir ) )
+            fs.mkdirSync( dir )
+
+        fs.writeFileSync( catalogFile, JSON.stringify( { layers: [] } ) )
+    }
+
+    console.log( `    Reading catalog from ${ catalogFile }` );
+    const catalog = JSON.parse( fs.readFileSync( catalogFile, { encoding: 'utf8' } ) )
+
+    if ( !( 'layers' in catalog ) || !Array.isArray( catalog.layers ) )
+        throw Error( 'no layers in catalog' )
+
+    var ly = JSON.parse( req.body.layer )
+
+    if ( !ly.id )
+        ly.id = slugify( ly.title )
+
+    var i = 0
+    while ( catalog.layers.find( function ( l ) { return l.id == ly.id } ) ) {
+        i += 1
+        ly.id = slugify( ly.title, i )
+    }
+
+    var outputFile = path.resolve( req.app.get( 'smk layers' ), `${ ly.id }.geojson` )
+
+    if ( req.file ) {
+        console.log( `    Adding ${ ly.id } to catalog from ${ req.file.originalname }` )
+        console.log( req.file )
+    }
+    else if ( req.body.file ) {
+        console.log( `    Adding ${ ly.id } to catalog from geojson` )
+        // console.log( req.body.file )
+
+        fs.writeFileSync( outputFile, req.body.file )
+        ly.dataUrl = `./layers/${ ly.id }.geojson`
+    }
+    else {
+        console.log( `    Adding ${ ly.id } to catalog` )
+    }
+
+    catalog.layers.push( ly )
+
+    fs.writeFileSync( catalogFile, JSON.stringify( catalog, null, '    ' ) )
+
+    res.json( { ok: true, message: `Successfully added ${ ly.id } to ${ catalogFile }` } )
+    console.log('    Success!');
+}
+
+function deleteLocalCatalog( req, res, next ) {
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function slugify( ) {
+    return [].slice.call( arguments )
+        .filter( function ( a ) { return !!a } )
+        .map( function ( a ) {
+            return ( '' + a ).replace( /[^0-9a-z]+/ig, '-' ).replace( /^[-]+|[-]+$/g, '' ).toLowerCase()
+        } )
+        .filter( function ( a ) { return !!a } )
+        .join( '--' )
+}
+
+function catalogItem( title, data, children ) {
+    return {
+        title: title,
+        data: data,
+        folder: children && children.length > 0,
+        children: children
+    }
+}
+
+function assertOne( arr ) {
+    if ( !Array.isArray( arr ) ) throw Error( 'not an array' )
+    if ( arr.length != 1 ) throw Error( 'not exactly one element' )
+    return arr[ 0 ]
+}

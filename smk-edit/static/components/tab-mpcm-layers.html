@@ -2,18 +2,24 @@
     <section>
         <header>
             <h5>DataBC Catalog</h5>
-            <div class="col s12 input-field">
-                <i class="material-icons prefix"
-                    v-on:click="clearFilter"
-                >cancel</i>
-                <label>Filter DataBC Layers</label>
-                <input type="text" v-model="layerFilter">
+            <div class="row">
+                <div class="col s10 input-field">
+                    <label>Filter DataBC Layers</label>
+                    <input type="text" v-model="layerFilter">
+                </div>
+                <div class="col s2" >
+                    <a class="waves-effect waves-light blue-grey darken-2 btn-small"
+                        v-on:click="clearFilter"
+                        style="margin-top: 20px;"
+                    >
+                        <i class="material-icons center">cancel</i>
+                    </a>
+                </div>
             </div>
         </header>
         <div>
             <catalog-tree
-                v-if="mpcmCatalog.length > 0"
-                v-bind:items="mpcmCatalog"
+                src="/catalog/mpcm"
                 v-bind:filter="layerFilter"
                 v-on:select-item="addLayer"
             ></catalog-tree>

@@ -6,38 +6,17 @@ export const store = new Vuex.Store( {
     },
     state: {
         serviceStatus: true,
+        statusPingInterval: 5000,
         dirtyConfig: false,
-        // config: {},
-        // {
-        //     lmfId: "",
-        //     lmfRevision: 1,
-        //     name: "",
-        //     createdBy: "",
-        //     createdDate: "",
-        //     modifiedBy: "",
-        //     modifiedDate: "",
-        //     version: "",
-        //     surround: { type: "default", title: "" },
-        //     viewer: {
-        //         type: "leaflet",
-        //         device: "auto",
-        //         panelWidth: 400,
-        //         deviceAutoBreakpoint: 500,
-        //         themes: [],
-        //         location: { center: [-125, 55], zoom: 5 },
-        //         baseMap: 'Topographic',
-        //         clusterOption: { showCoverageOnHover: false }
-        //     },
-        //     tools: [],
-        //     layers: []
-        // },
-        editingLayer: null,
-        editingTool: null,
+        // editingLayer: null,
+        // editingTool: null,
         currentTab: null,
-        tabs: ['init', 'identity', 'basemap', 'mpcm-layers', 'wms-layers', 'vector-layers', 'layers', 'tools', 'edit-layer'],
-        mySelf: this
+        // tabs: ['init', 'identity', 'basemap', 'mpcm-layers', 'wms-layers', 'vector-layers', 'layers', 'tools', 'edit-layer'],
+        // mySelf: this,
+        wmsCatalogUrl: null
     },
     mutations: {
+        // /^(?!serviceStatus)/ -- filter out these mutations from devtools
         serviceStatus: function ( state, status ) {
             state.serviceStatus = status
         },
@@ -46,24 +25,12 @@ export const store = new Vuex.Store( {
         },
         dirtyConfig: function ( state, dirty ) {
             state.dirtyConfig = dirty
+        },
+        wmsCatalogUrl: function ( state, url ) {
+            state.wmsCatalogUrl = url
         }
     },
     getters: {
-        // catalogLayers: function ( state ) {
-        //     return _.pickBy( state.config.layers, function(layer) {
-        //         return layer.type === 'esri-dynamic';
-        //     });
-        // },
-        // wmsLayers: function ( state ) {
-        //     return _.pickBy( state.config.layers, function(layer) {
-        //         return layer.type === 'wms';
-        //     });
-        // },
-        // vectorLayers: function ( state ) {
-        //     return _.pickBy( state.config.layers, function(layer) {
-        //         return layer.type === 'vector';
-        //     });
-        // }
     },
     actions: {
         loadConfig: function ( context ) {
@@ -74,6 +41,11 @@ export const store = new Vuex.Store( {
                 } )
                 .then( function ( data ) {
                     context.commit( 'config', data )
+                } )
+                .catch( function ( err ) {
+                    M.toast( {
+                        html: 'Error: ' + JSON.stringify( err )
+                    } )
                 } )
         },
         saveConfig: function ( context ) {
@@ -93,14 +65,33 @@ export const store = new Vuex.Store( {
                     M.toast( {
                         html: JSON.stringify( result.message )
                     } )
+                    context.commit( 'dirtyConfig', false )
                 } )
                 .catch( function ( err ) {
                     M.toast( {
                         html: 'Error: ' + JSON.stringify( err )
                     } )
                 } )
-        }
+        },
+        statusCheck: function ( context ) {
+            var nextPing
+            return fetch( '/ping' )
+                .then( function ( resp ) {
+                    if ( !resp.ok ) throw Error( 'ping failed' )
+                    return resp.json()
+                } )
+                .then( function ( obj ) {
+                    if ( !obj.ok ) throw Error( 'ping failed' )
 
+                    if ( obj.next )
+                        context.state.statusPingInterval = obj.next
+
+                    context.commit( 'serviceStatus', true )
+                } )
+                .catch( function () {
+                    context.commit( 'serviceStatus', false )
+                } )
+        }
     }
 } )
 

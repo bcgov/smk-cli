@@ -9,6 +9,12 @@ export default {
                 extent: null,
                 zoom: null
             }
+//         panelWidth: 400,
+//         deviceAutoBreakpoint: 500,
+//         themes: [],
+//         location: { center: [-125, 55], zoom: 5 },
+//         baseMap: 'Topographic',
+//         clusterOption: { showCoverageOnHover: false }
         }
     },
     getters: {

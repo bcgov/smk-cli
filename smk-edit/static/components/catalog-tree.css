@@ -1,0 +1,14 @@
+.catalog-tree {
+    height: 100%;
+}
+
+.catalog-tree.loading {
+    background-image: url( '../assets/images/spinner.gif' );
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.catalog-tree ul.fancytree-container, .catalog-tree ul.fancytree-container:focus {
+    border: none;
+    outline: none;
+}

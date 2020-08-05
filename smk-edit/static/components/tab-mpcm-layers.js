@@ -1,7 +1,5 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
-var mpcmCatalogCache
-
 export default importComponents( [
     './components/catalog-item.js',
     './components/catalog-tree.js'
@@ -9,7 +7,6 @@ export default importComponents( [
     return vueComponent( import.meta.url, {
         data: function () {
             return {
-                catalogLoading: false,
                 layerFilter: null
             }
         },
@@ -17,16 +14,12 @@ export default importComponents( [
             mpcmLayers: function () {
                 return this.$store.getters.mpcmLayers
             },
-            mpcmCatalog: function () {
-                return this.catalogLoading ? [] : mpcmCatalogCache || []
-            },
         },
         methods: {
             addLayer: function ( item ) {
                 var self = this
 
-                // console.log(item)
-                fetch( '/mpcm-catalog/' + item.mpcmId )
+                fetch( '/catalog/mpcm/' + item.id )
                     .then( function ( resp ) {
                         if ( !resp.ok ) throw Error( 'request failed' )
                         return resp.json()
@@ -43,56 +36,9 @@ export default importComponents( [
             clearFilter: function () {
                 this.layerFilter = null
             }
-        },
-        mounted: function () {
-            var self = this
-            this.catalogLoading = true
-            loadMpcmCatalog().finally( function () {
-                self.catalogLoading = false
-            } )
         }
     } )
 } )
-
-
-function loadMpcmCatalog() {
-    if ( mpcmCatalogCache ) return Promise.resolve()
-
-    return fetch( '/mpcm-catalog' )
-        .then( function ( resp ) {
-            if ( !resp.ok ) throw Error( 'request failed' )
-            return resp.json()
-        } )
-        .then( function ( catalog ) {
-            mpcmCatalogCache = convertCatalog( catalog )
-        } )
-        .catch( function ( err ) {
-            M.toast( {
-                html: 'Error: ' + JSON.stringify( err )
-            } )
-        } )
-}
-
-function convertCatalog( catalog ) {
-    if ( !catalog ) return []
-    return catalog.map( function ( i ) {
-        return convertCatalogItem( i )
-    } )
-}
-
-function convertCatalogItem( catalogItem ) {
-    var children = [].concat( catalogItem.folders ).concat( catalogItem.layers )
-        .filter( function ( item ) { return !!item } )
-        .map( function ( item ) { return convertCatalogItem( item ) } )
-
-	return {
-        title: catalogItem.label,
-        folder: children.length > 0,
-        expanded: false,
-        data: catalogItem,
-        children: children
-    }
-}
 
 
 

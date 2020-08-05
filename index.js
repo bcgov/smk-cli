@@ -10,7 +10,7 @@ const command = ( args[ 2 ] || '' ).toLowerCase()
 const opt = require( 'minimist' )( args.slice( 3 ) )
 
 const fonts = [
-    'big', 'doom', 'graffiti', 'rectangles', 'gothic', 'varsity', 'script',
+    'big', 'doom', 'graffiti', 'rectangles', 'gothic', 'script',
     'shadow', 'small', 'speed', 'sl script', 'stop', 'swan', 'soft'
 ]
 const ver = 'CLI v' + package.version
@@ -34,11 +34,9 @@ if ( !opt.version ) {
     opt.version = package.dependencies[ opt.package ]
 }
 
-// if the first arg is 'ui', then we should attempt to launch the ui editor
 if ( command == 'edit' )
     return require( './smk-edit' )( opt )
 
-// if the first arg is 'create', then we should attempt to launch the cli project creator
 if ( command == 'create' )
     return require( './smk-create' )( opt )
 
@@ -55,5 +53,5 @@ usage()
 return 1
 
 function usage() {
-    console.log( 'Usage: ' + chalk.blueBright( `${ exec } create|ui|help` ) )
+    console.log( 'Usage: ' + chalk.blueBright( `${ exec } create|edit|help` ) )
 }

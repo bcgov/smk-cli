@@ -3,99 +3,95 @@
         <nav>
             <div class="nav-wrapper blue-grey darken-2">
                 <a href="index.html" class="brand-logo">Simple Map Kit Editor</a>
-                <a href="#" data-target="slide-out" class="sidenav-trigger">
+                <a data-target="slide-out" class="sidenav-trigger">
                     <i class="material-icons">menu</i>
                 </a>
             </div>
         </nav>
+
         <ul id="slide-out" class="sidenav sidenav-fixed blue-grey darken-2" ref="sidenav">
             <li>
                 <div class="user-view">
                     <div class="background blue-grey darken-1"><img src="assets/images/bc_gov_logo_transparent.png" style="padding-left: 30px;"/></div>
                 </div>
             </li>
+
             <li>
                 <div class="subheader white-text title-panel">
                     <p>Welcome to the SMK Configuration Utility</p>
                     <p>Use this tool to modify your application's map configuration.</p>
                 </div>
             </li>
-            <!-- <li><a class="subheader white-text">Options</a></li> -->
+
             <li v-bind:class="{active:currentTabComponent=='tab-application'}">
-                <a href="#" v-on:click="tabSwitch('tab-application')" class="waves-effect white-text">
+                <a class="waves-effect white-text"
+                    v-on:click="tabSwitch('tab-application')"
+                >
                     <i class="material-icons">assignment</i>Application
                 </a>
             </li>
 
             <li v-bind:class="{active:currentTabComponent=='tab-viewer'}">
-                <a href="#" v-on:click="tabSwitch('tab-viewer')" class="waves-effect white-text">
+                <a class="waves-effect white-text"
+                    v-on:click="tabSwitch('tab-viewer')"
+                >
                     <i class="material-icons">terrain</i>Viewer
                 </a>
             </li>
-
-            <!-- <li>
-                <a class="dropdown-trigger waves-effect white-text" href="#" data-target="layers-dropdown" >
-                    <i class="material-icons">layers</i>Layers
-                </a>
-            </li> -->
 
             <li class="no-padding">
                 <ul class="collapsible collapsible-accordian" ref="collapsible">
                     <li>
                         <a class="collapsible-header waves-effect white-text"><i class="material-icons">arrow_drop_down</i>Layers</a>
                         <div class="collapsible-body blue-grey darken-2">
-                            <ul class="blue-grey darken-2"> <!--id="layers-dropdown" class="dropdown-content">-->
+                            <ul class="blue-grey darken-2">
+
                                 <li v-bind:class="{active:currentTabComponent=='tab-mpcm-layers'}">
-                                    <a href="#" v-on:click="tabSwitch('tab-mpcm-layers')" class="waves-effect white-text">
+                                    <a class="waves-effect white-text"
+                                        v-on:click="tabSwitch('tab-mpcm-layers')"
+                                    >
                                         <i class="material-icons">layers</i>Manage DataBC Layers
                                     </a>
                                 </li>
+
                                 <li v-bind:class="{active:currentTabComponent=='tab-wms-layers'}">
-                                    <a href="#" v-on:click="tabSwitch('tab-wms-layers')" class="waves-effect white-text">
+                                    <a class="waves-effect white-text"
+                                        v-on:click="tabSwitch('tab-wms-layers')"
+                                    >
                                         <i class="material-icons">backup</i>Manage WMS Layers
                                     </a>
                                 </li>
+
                                 <li v-bind:class="{active:currentTabComponent=='tab-vector-layers'}">
-                                    <a href="#" v-on:click="tabSwitch('tab-vector-layers')" class="waves-effect white-text">
+                                    <a class="waves-effect white-text"
+                                        v-on:click="tabSwitch('tab-vector-layers')"
+                                    >
                                         <i class="material-icons">edit</i>Manage Vector Layers
                                     </a>
                                 </li>
+
                                 <li v-bind:class="{active:currentTabComponent=='tab-organize-layers'}">
-                                    <a href="#" v-on:click="tabSwitch('tab-organize-layers')" class="waves-effect white-text">
+                                    <a class="waves-effect grey-text"
+                                        xv-on:click="tabSwitch('tab-organize-layers')"
+                                    >
                                         <i class="material-icons">map</i>Organize Layers
                                     </a>
                                 </li>
+
                             </ul>
                         </div>
                     </li>
                 </ul>
             </li>
 
-            <!-- <li v-bind:class="{active:currentTabComponent=='mpcm-layers'}">
-                <a href="#" v-on:click="tabSwitch('mpcm-layers')" class="waves-effect white-text">
-                    <i class="material-icons">layers</i>Add DataBC Layers
-                </a>
-            </li>
-            <li v-bind:class="{active:currentTabComponent=='wms-layers'}">
-                <a href="#" v-on:click="tabSwitch('wms-layers')" class="waves-effect white-text">
-                    <i class="material-icons">backup</i>Add WMS Layers
-                </a>
-            </li>
-            <li v-bind:class="{active:currentTabComponent=='vector-layers'}">
-                <a href="#" v-on:click="tabSwitch('vector-layers')" class="waves-effect white-text">
-                    <i class="material-icons">edit</i>Add Vector Layers
-                </a>
-            </li> -->
-            <!-- <li v-bind:class="{active:currentTabComponent=='layers'}">
-                <a href="#" v-on:click="tabSwitch('layers')" class="waves-effect white-text">
-                    <i class="material-icons">map</i>Manage Layers
-                </a>
-            </li> -->
             <li v-bind:class="{active:currentTabComponent=='tab-tools'}">
-                <a href="#" v-on:click="tabSwitch('tab-tools')" class="waves-effect white-text">
+                <a class="waves-effect grey-text"
+                    xv-on:click="tabSwitch('tab-tools')"
+                >
                     <i class="material-icons">build</i>Tools
                 </a>
             </li>
+
             <li>
                 <div class="subheader white-text title-panel">
                     <p>Click <b>Save</b> at any time to commit your changes</p>

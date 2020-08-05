@@ -1,37 +1,39 @@
 const fs = require('fs');
 const shell = require('shelljs');
 
-module.exports = function ( app ) {
-    app.get( '/config', handleReq( getConfig ) )
-    app.post( '/config', handleReq( saveConfig ) )
+module.exports = function ( app, logger ) {
+    app.use( '/config', logger )
 
-    app.post("/SaveImage/:fileName", (req, res, next) =>
-    {
-        try
-        {
-            saveImage(req, res, next);
-        }
-        catch(err)
-        {
-            console.error(err);
-            res.writeHead(500);
-            res.end();
-        }
-    });
+    app.get( '/config', getConfig )
+    app.post( '/config', saveConfig )
 
-    app.post("/SaveAttachment/:fileName", (req, res, next) =>
-    {
-        try
-        {
-            saveAttachment(req, res, next);
-        }
-        catch(err)
-        {
-            console.error(err);
-            res.writeHead(500);
-            res.end();
-        }
-    });
+    // app.post("/SaveImage/:fileName", (req, res, next) =>
+    // {
+    //     try
+    //     {
+    //         saveImage(req, res, next);
+    //     }
+    //     catch(err)
+    //     {
+    //         console.error(err);
+    //         res.writeHead(500);
+    //         res.end();
+    //     }
+    // });
+
+    // app.post("/SaveAttachment/:fileName", (req, res, next) =>
+    // {
+    //     try
+    //     {
+    //         saveAttachment(req, res, next);
+    //     }
+    //     catch(err)
+    //     {
+    //         console.error(err);
+    //         res.writeHead(500);
+    //         res.end();
+    //     }
+    // });
 
     // app.post("/TestConfig", (req, res, next) =>
     // {
@@ -73,18 +75,18 @@ module.exports = function ( app ) {
         // }
     // } )
 
-    function handleReq( handler ) {
-        return function ( req, res, next ) {
-            console.log( (new Date()).toISOString(), req.method, req.url )
-            try {
-                handler.call( null, req, res, next )
-            }
-            catch ( err ) {
-                console.warn( err );
-                res.status( 500 ).json( { error: err.toString() } )
-            }
-        }
-    }
+    // function handleReq( handler ) {
+    //     return function ( req, res, next ) {
+    //         console.log( ( new Date() ).toISOString(), req.method, req.url )
+    //         try {
+    //             handler.call( null, req, res, next )
+    //         }
+    //         catch ( err ) {
+    //             console.warn( err );
+    //             res.status( 500 ).json( { error: err.toString() } )
+    //         }
+    //     }
+    // }
 };
 
 function saveImage(req, res, next)

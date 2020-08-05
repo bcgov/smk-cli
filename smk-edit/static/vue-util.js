@@ -11,6 +11,7 @@ export function vueComponent( url, opt ) {
             .then( function ( html ) {
                 opt.template = html
                 console.log( 'component', m[ 1 ] )
+                if ( opt.style !== false ) includeStyle( url.replace( 'js', 'css' ) )
                 return Vue.component( m[ 1 ], opt )
             } )
     }
@@ -25,4 +26,13 @@ export function importComponents( components ) {
             return module.default
         } )
     } ) )
+}
+
+function includeStyle( url ) {
+    var style = document.createElement( 'link' )
+
+    style.setAttribute( 'rel', 'stylesheet' )
+    style.setAttribute( 'href', url )
+
+    document.getElementsByTagName( 'head' )[ 0 ].appendChild( style )
 }

@@ -71,12 +71,7 @@ export default vueComponent( import.meta.url, {
             }
         },
     },
-    updated: function () {
-        var self = this
-        var h = this.$refs.col1.clientHeight
-        this.$refs.col2.style.height = h + 'px'
-        Vue.nextTick( function () {
-            self.map.update()
-        } )
+    destroyed: function () {
+        this.$smk.destroy()
     }
 } )

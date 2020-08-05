@@ -3,31 +3,37 @@
         <header>
             <h5>WMS Layer Catalog</h5>
             <div class="row">
-                <div class="col s9 input-field">
+                <div class="col s10 input-field">
                     <label class="active">WMS Base URL</label>
-                    <input type="text" v-model="wmsUrl">
+                    <textarea class="materialize-textarea" v-model="wmsUrl" ref="wmsUrl"></textarea>
                 </div>
-                <div class="col s2">
-                    <a class="waves-effect waves-light btn-small blue-grey darken-2"
-                        v-on:click="loadCatalog" style="margin-top: 20px;">
-                        <i xstyle="position: absolute; top: 4px; left: 4px;" class="material-icons center">cached</i>
+                <div class="col s2" >
+                    <a class="waves-effect waves-light blue-grey darken-2 btn-small"
+                        v-on:click="loadCatalog"
+                        style="margin-top: 20px;"
+                    >
+                        <i class="material-icons center">cached</i>
                     </a>
                 </div>
             </div>
             <div class="row">
-                <div class="col s12 input-field">
-                    <i class="material-icons prefix"
-                        v-on:click="clearFilter"
-                    >cancel</i>
+                <div class="col s10 input-field">
                     <label>Filter WMS Layers</label>
                     <input type="text" v-model="layerFilter">
+                </div>
+                <div class="col s2" >
+                    <a class="waves-effect waves-light blue-grey darken-2 btn-small"
+                        v-on:click="clearFilter"
+                        style="margin-top: 20px;"
+                    >
+                        <i class="material-icons center">cancel</i>
+                    </a>
                 </div>
             </div>
         </header>
         <div>
             <catalog-tree
-                v-if="wmsCatalog.length > 0"
-                v-bind:items="wmsCatalog"
+                v-bind:src="catalogUrl"
                 v-bind:filter="layerFilter"
                 v-on:select-item="addLayer"
             ></catalog-tree>

@@ -1,4 +1,4 @@
-#content {
+#app {
     position: absolute;
     top: 0;
     left: 0;
@@ -219,7 +219,7 @@ nav .brand-logo
 }
 
 
-ul.fancytree-container, ul.fancytree-container:focus {
+/* ul.fancytree-container, ul.fancytree-container:focus {
     border: none;
     outline: none;
-}
+} */
