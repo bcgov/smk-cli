@@ -8,7 +8,7 @@ export default importComponents( [
         data: function () {
             return {
                 layerFilter: null,
-                wmsUrl: 'https://openmaps.gov.bc.ca/geo/pub/wms?version=1.3.0&service=wms&request=GetCapabilities',
+                wmsUrl: 'https://openmaps.gov.bc.ca/geo/pub/wms',
             }
         },
         computed: {

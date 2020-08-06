@@ -4,6 +4,7 @@ const layer = require( './layer.js' )
 const path = require( 'path' )
 const fs = require( 'fs' )
 const multer = require( 'multer' )
+const fetch = require( 'node-fetch' )
 
 // move these into an external config
 const DATABC_SERVICE_URL = 'https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer'
@@ -21,8 +22,12 @@ const MPCM_OPTIONS = {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 module.exports = function( app, logger ) {
-    var catalogPath = path.resolve( app.get( 'smk layers' ) )
-    var upload = multer( { dest: catalogPath, limits: { fieldSize: Number.POSITIVE_INFINITY } } ).single( 'file' )
+    var upload = multer( {
+        dest: path.resolve( app.get( 'smk layers' ) ),
+        limits: {
+            fieldSize: Number.POSITIVE_INFINITY
+        }
+    } ).single( 'file' )
 
     app.use(    '/catalog', logger )
 
@@ -142,100 +147,95 @@ var wmsCatalogCache = {}
 var wmsLayerCache = {}
 
 function getWmsCatalog( req, res, next ) {
-    var wmsUrl = req.params.url
+    var serviceUrl = req.params.url
 
-    if ( wmsCatalogCache[ wmsUrl ] ) {
-        console.log( '    Using cached WMS Catalog for ' + wmsUrl )
-        res.json( wmsCatalogCache[ wmsUrl ] )
+    if ( wmsCatalogCache[ serviceUrl ] ) {
+        console.log( '    Using cached WMS Catalog for ' + serviceUrl )
+        res.json( wmsCatalogCache[ serviceUrl ] )
         return
     }
 
-    console.log( '    Loading WMS Catalog from ' + wmsUrl )
+    console.log( '    Loading WMS Catalog from ' + serviceUrl )
 
-    var url = new URL( wmsUrl ),
-        options = {
-            host: url.host,
-            port: url.port,
-            path: url,
-            method: 'GET'
-        },
-        serviceUrl = new URL( wmsUrl )
+    var url = new URL( serviceUrl )
+    url.search = '?version=1.3.0&service=wms&request=GetCapabilities'
 
-    serviceUrl.search = ''
-    serviceUrl.hash = ''
-
-    var wmsReq = http.request( options, function( resp ) {
-        resp.setEncoding( 'utf8' )
-
-        var msg = ''
-        resp.on( 'data', function( chunk ) { msg += chunk } )
-
-        resp.on( 'end', function() {
-            xml2js( msg, function ( err, result) {
-                if ( err ) throw new Error( err )
-
-                var layerCache = {}
-                var layers = assertOne( assertOne( result.WMS_Capabilities.Capability ).Layer ).Layer
-                var catalog = layers.map( function ( ly ) {
-                        var title = assertOne( ly.Title ),
-                            lyName = assertOne( ly.Name )
-                        return catalogItem( title, null,
-                            ly.Style.map( function ( st ) {
-                                var stName = assertOne( st.Name ),
-                                    lyTitle = `${ title } ( ${ stName } )`,
-                                    id = slugify( lyName, stName )
-
-                                if ( layerCache[ id ] ) return
-
-                                layerCache[ id ] = layer.WMS( {
-                                    id: id,
-                                    title: lyTitle,
-                                    isQueryable: true,
-                                    opacity: 0.65,
-                                    // attribution: "",
-                                    // minScale: null,
-                                    // maxScale: null,
-                                    // titleAttribute: null,
-                                    metadataUrl: ly.MetadataURL && ly.MetadataURL[ 0 ].OnlineResource && ly.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
-                                    // attributes:  [ ],
-                                    // queries: [],
-                                    serviceUrl: serviceUrl.toString(),
-                                    layerName: lyName,
-                                    styleName: stName
-                                } )
-
-                                return catalogItem( lyTitle, { id: id } )
-                            } ).filter( function ( i ) { return i } )
-                        )
-                    } )
-
-                catalog.sort( function ( a, b ) {
-                    return a.title > b.title ? 1 : -1
+    return fetch( url )
+        .then( function ( resp ) {
+            return resp.text()
+        } )
+        .then( function ( text ) {
+            return new Promise( function ( res, rej ) {
+                xml2js( text, function ( err, result ) {
+                    if ( err ) return rej( err )
+                    res( result )
                 } )
-
-                wmsLayerCache[ wmsUrl ] = layerCache
-                res.json( wmsCatalogCache[ wmsUrl ] = catalog );
-                console.log('    Success!');
             } )
         } )
-    } )
+        .then( function ( capabilities ) {
+            var layerCache = {}
+            var layers = assertOne( assertOne( capabilities.WMS_Capabilities.Capability ).Layer ).Layer
+            var catalog = layers.map( function ( ly ) {
+                var title = assertOne( ly.Title ),
+                    lyName = assertOne( ly.Name )
 
-    wmsReq.end()
+                return catalogItem( title, null,
+                    ly.Style.map( function ( st ) {
+                        var stName = assertOne( st.Name ),
+                            lyTitle = `${ title } ( ${ stName } )`,
+                            id = slugify( lyName, stName )
+
+                        if ( layerCache[ id ] ) return
+
+                        layerCache[ id ] = layer.WMS( {
+                            id: id,
+                            title: lyTitle,
+                            isQueryable: true,
+                            opacity: 0.65,
+                            // attribution: "",
+                            // minScale: null,
+                            // maxScale: null,
+                            // titleAttribute: null,
+                            metadataUrl: ly.MetadataURL && ly.MetadataURL[ 0 ].OnlineResource && ly.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
+                            // attributes:  [ ],
+                            // queries: [],
+                            serviceUrl: serviceUrl,
+                            layerName: lyName,
+                            styleName: stName
+                        } )
+
+                        return catalogItem( lyTitle, { id: id } )
+                    } ).filter( function ( i ) { return i } )
+                )
+            } )
+
+            catalog.sort( function ( a, b ) {
+                return a.title > b.title ? 1 : -1
+            } )
+
+            wmsLayerCache[ serviceUrl ] = layerCache
+            res.json( wmsCatalogCache[ serviceUrl ] = catalog );
+            console.log('    Success!');
+            next()
+        } )
+        .catch( function ( err ) {
+            next( err )
+        } )
 }
 
 function getWmsCatalogLayerConfig( req, res, next ) {
-    var wmsUrl = req.params.url
+    var serviceUrl = req.params.url
     var id = req.params.id
 
-    console.log( '    Using cached layer ' + id + ' from WMS Catalog for ' + wmsUrl )
+    console.log( '    Using cached layer ' + id + ' from WMS Catalog for ' + serviceUrl )
 
-    if ( !( wmsUrl in wmsLayerCache ) )
-        throw Error( `${ wmsUrl } not in WMS Catalog cache` )
+    if ( !( serviceUrl in wmsLayerCache ) )
+        throw Error( `${ serviceUrl } not in WMS Catalog cache` )
 
-    if ( !( id in wmsLayerCache[ wmsUrl ] ) )
-        throw Error( `${ id } not in WMS Catalog cache for ${ wmsUrl }` )
+    if ( !( id in wmsLayerCache[ serviceUrl ] ) )
+        throw Error( `${ id } not in WMS Catalog cache for ${ serviceUrl }` )
 
-    res.json( wmsLayerCache[ wmsUrl ][ id ] )
+    res.json( wmsLayerCache[ serviceUrl ][ id ] )
     console.log('    Success!');
 }
 
@@ -339,6 +339,7 @@ function postLocalCatalog( req, res, next ) {
     if ( req.file ) {
         console.log( `    Adding ${ ly.id } to catalog from ${ req.file.originalname }` )
         console.log( req.file )
+        // TODO
     }
     else if ( req.body.file ) {
         console.log( `    Adding ${ ly.id } to catalog from geojson` )
