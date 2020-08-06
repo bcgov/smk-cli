@@ -7,12 +7,13 @@ const path = require( 'path' )
 module.exports = async function ( args ) {
     try {
         var app = startService( {
-            port:       args.port || args.p || 1337,
-            base:       args.base || '.',
-            config:     args.config || 'smk-config.json',
-            layers:     args.layers || 'layers',
-            temp:       args.temp || '.temp',
-            ping:       args.ping || 10 * 1000,
+            smkPackage: args.package,
+            port:   args.port || args.p || 1337,
+            base:   args.base || '.',
+            config: args.config || 'smk-config.json',
+            layers: args.layers || 'layers',
+            temp:   args.temp || '.temp',
+            ping:   args.ping || 10 * 1000,
         } )
 
         if ( !args.open || !/^(no|none|false|0)$/i.test( args.open ) ) {
@@ -54,7 +55,8 @@ function startService( opt ) {
     } )
 
     app.use( express.static( path.resolve( __dirname, 'static' ) ) )
-    app.use( express.static( path.resolve( __dirname, '../node_modules' ) ) )
+    app.use( '/module', express.static( path.dirname( require.resolve( opt.smkPackage ) ) ) )
+
     app.use( function ( req, res, next ) {
         if ( ( '' + req.originalUrl ).endsWith( 'css' ) ) {
             console.log( `Returned dummy content for ${ req.originalUrl }` )
