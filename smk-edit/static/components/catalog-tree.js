@@ -18,7 +18,7 @@ vueComponent( import.meta.url, {
 
             if ( this.filter && this.filter.length > 1 ) {
                 var hits = tree.filterBranches( this.filter )
-                self.$emit( 'filtered', hits )
+                this.$emit( 'filtered', hits )
             }
             else {
                 tree.clearFilter()

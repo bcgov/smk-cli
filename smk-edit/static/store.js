@@ -13,7 +13,12 @@ export const store = new Vuex.Store( {
         currentTab: null,
         // tabs: ['init', 'identity', 'basemap', 'mpcm-layers', 'wms-layers', 'vector-layers', 'layers', 'tools', 'edit-layer'],
         // mySelf: this,
-        wmsCatalogUrl: null
+        wmsCatalogUrl: 'https://openmaps.gov.bc.ca/geo/pub/wms',
+        wmsCatalogUrls: [
+            'https://openmaps.gov.bc.ca/geo/pub/wms',
+            'https://maps.th.gov.bc.ca/geoV05/ows',
+            'https://geo.nrs.gov.bc.ca/pub/geoserver/wms'
+        ]
     },
     mutations: {
         // /^(?!serviceStatus)/ -- filter out these mutations from devtools
@@ -28,6 +33,10 @@ export const store = new Vuex.Store( {
         },
         wmsCatalogUrl: function ( state, url ) {
             state.wmsCatalogUrl = url
+        },
+        addWmsCatalogUrl: function ( state, url ) {
+            if ( state.wmsCatalogUrls.includes( url ) ) return
+            state.wmsCatalogUrls.push( url )
         }
     },
     getters: {

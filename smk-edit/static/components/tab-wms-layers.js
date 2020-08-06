@@ -8,25 +8,32 @@ export default importComponents( [
         data: function () {
             return {
                 layerFilter: null,
-                wmsUrl: 'https://openmaps.gov.bc.ca/geo/pub/wms',
+                appliedLayerFilter: null,
+                addCatalogUrl: null,
             }
         },
         computed: {
             wmsLayers: function () {
                 return this.$store.getters.wmsLayers
             },
-            catalogUrl: function () {
-                return this.$store.state.wmsCatalogUrl
+            catalogUrl: {
+                get: function () { return this.$store.state.wmsCatalogUrl },
+                set: function ( url ) { this.$store.commit( 'wmsCatalogUrl', url ) }
+            },
+            catalogUrls: function () {
+                return this.$store.state.wmsCatalogUrls
             }
         },
         methods: {
             loadCatalog: function () {
-                this.$store.commit( 'wmsCatalogUrl', `/catalog/wms/${ encodeURIComponent( this.wmsUrl ) }` )
+            },
+            viewCatalog: function () {
+                this.$store.commit( 'wmsCatalogUrl', this.addCatalogUrl )
             },
             addLayer: function ( item ) {
                 var self = this
 
-                fetch( `${ this.catalogUrl }/${ item.id }` )
+                fetch( `/catalog/wms/${ encodeURIComponent( this.catalogUrl ) }/${ item.id }` )
                     .then( function ( resp ) {
                         if ( !resp.ok ) throw Error( 'request failed' )
                         return resp.json()
@@ -39,15 +46,33 @@ export default importComponents( [
                             html: 'Error: ' + JSON.stringify( err )
                         } )
                     } )
-
-                // self.$store.commit( 'configLayersAppend', item )
+            },
+            applyFilter: function () {
+                this.appliedLayerFilter = this.layerFilter
             },
             clearFilter: function () {
                 this.layerFilter = null
+                this.appliedLayerFilter = null
+            },
+            catalogError: function ( err ) {
+                M.toast( { html: 'Failed to loaded WMS catalog from ' + this.catalogUrl } )
+            },
+            catalogLoaded: function () {
+                M.toast( { html: 'Loaded WMS catalog from ' + this.catalogUrl } )
+                this.$store.commit( 'addWmsCatalogUrl', this.catalogUrl )
+                this.addCatalogUrl = null
+                M.Collapsible.getInstance( this.$refs.collapsible ).close( 0 )
+            },
+            catalogFiltered: function ( count ) {
+                M.toast( { html: `Found ${ count } WMS catalog items matching filter` } )
             }
         },
         mounted: function () {
-            M.textareaAutoResize( this.$refs.wmsUrl )
+            M.Collapsible.init( this.$refs.collapsible )
+            M.FormSelect.init( this.$refs.catalogs )
+        },
+        updated: function () {
+            M.FormSelect.init( this.$refs.catalogs )
         }
     } )
 } )
