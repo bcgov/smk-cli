@@ -65,7 +65,7 @@ function getMpcmCatalog( req, res, next ) {
             var mpcm = JSON.parse( msg )
             var catalog = convertFolders( mpcm.catalog.folders )
 
-            res.json( mpcmCatalogCache = catalog )
+            res.json( mpcmCatalogCache = pruneCatalog( catalog ) )
             console.log('    Success!');
         } )
     } )
@@ -208,6 +208,8 @@ function getWmsCatalog( req, res, next ) {
                     } ).filter( function ( i ) { return i } )
                 )
             } )
+
+            catalog = pruneCatalog( catalog )
 
             catalog.sort( function ( a, b ) {
                 return a.title > b.title ? 1 : -1
@@ -388,4 +390,17 @@ function assertOne( arr ) {
     if ( !Array.isArray( arr ) ) throw Error( 'not an array' )
     if ( arr.length != 1 ) throw Error( 'not exactly one element' )
     return arr[ 0 ]
+}
+
+function pruneCatalog( items ) {
+    return items.map( function ( i ) {
+        if ( !i.folder ) return i
+
+        i.children = pruneCatalog( i.children )
+
+        if ( i.children.length == 1 )
+            return i.children[ 0 ]
+
+        return i
+    } )
 }
