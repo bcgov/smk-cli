@@ -39,7 +39,7 @@ This will launch the command line tool for creating a new SMK application.
 You can provide a name, it will be the name of the new subdirectory for the application.
 This will download the latest version of SMK from GitHub and build a map configuration for you to start working with.
 
-    smk ui [-p port]
+    smk edit [-p port]
 
 Once you've created an SMK application, or if you have an existing one, you can run this command to launch the visual editor.
 

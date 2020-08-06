@@ -56,7 +56,7 @@ module.exports = async function ( args ) {
     console.log()
     console.log( chalk.green( 'To modify the configuration for this application:' ) )
     console.log( chalk.blueBright( `  cd ${ app.name }` ) )
-    console.log( chalk.blueBright( '  smk ui' ) )
+    console.log( chalk.blueBright( '  smk edit' ) )
     console.log()
 
     function installApplication() {
