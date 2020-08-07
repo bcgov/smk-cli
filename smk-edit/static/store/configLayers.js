@@ -21,7 +21,10 @@ export default {
     },
     mutations: {
         configLayersAppend: function ( state, layer ) {
+            if ( state.find( function ( ly ) { return ly.id == layer.id } ) )
+                throw Error( `Layer "${ layer.title }" already exists` )
+
             state.push( layer )
         }
-    }
+    },
 }
