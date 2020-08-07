@@ -42,9 +42,7 @@ export default importComponents( [
                         self.$store.commit( 'configLayersAppend', layer )
                     } )
                     .catch( function ( err ) {
-                        M.toast( {
-                            html: 'Error: ' + JSON.stringify( err )
-                        } )
+                        M.toast( { html: err.toString().replace( /^(Error: )+/, '' ) } )
                     } )
             },
             applyFilter: function () {
