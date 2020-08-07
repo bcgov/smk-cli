@@ -3,6 +3,9 @@ import { vueComponent } from '../vue-util.js'
 Vue.directive( 'content', {
     bind: function ( el, binding ) {
         binding.value.create( el )
+    },
+    unbind: function ( el, binding ) {
+        if ( binding.value.destroy ) binding.value.destroy( el )
     }
 } )
 

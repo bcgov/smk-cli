@@ -16,6 +16,9 @@ export default {
         layers: layers
     },
     getters: {
+        config: function ( state ) {
+            return state
+        },
         configName: function ( state ) {
             return state.name
         }
