@@ -1,0 +1,27 @@
+<div class="display-item">
+    <div class="display-select">
+        <label>
+            <input type="checkbox" class="filled-in"
+                v-model="selected"
+                v-bind:disabled="!enabled"
+            >
+            <span></span>
+        </label>
+
+        <catalog-item
+            v-bind:itemId="item.id"
+            v-bind:key="item.id"
+        ></catalog-item>
+    </div>
+
+    <div class="display-collection" v-if="item.items">
+        <display-item
+            v-for="item in item.items"
+            v-bind:item="item"
+            v-bind:key="item.id"
+            v-bind:selectedIds="selectedIds"
+            v-bind:enabledIds="enabledIds"
+            v-on:select-changed="selectionChanged"
+        ></display-item>
+    </div>
+</div>

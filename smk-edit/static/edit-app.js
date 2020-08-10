@@ -4,12 +4,7 @@ import { importComponents } from './vue-util.js'
 importComponents( [
     './components/app-header.js',
     './components/app-main.js',
-    './components/app-footer.js',
-    './components/tab-application.js',
-    './components/tab-viewer.js',
-    './components/tab-mpcm-layers.js',
-    './components/tab-wms-layers.js',
-    './components/tab-vector-layers.js',
+    './components/app-footer.js'
 ] ).then( function () {
     var app = new Vue( {
         el: '#app',

@@ -1,0 +1,31 @@
+.display-collection .collection {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+}
+
+.display-collection .collection-item {
+    border: none;
+}
+
+.display-collection .display-select {
+    display: flex;
+    align-items: center;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.display-collection .display-select > label {
+    position: relative;
+    left: 15px;
+}
+
+.display-collection .display-select > .collection-item {
+    flex-grow: 1;
+    padding-bottom: 0;
+    min-height: 72px;
+}
+
+.display-item .display-collection {
+    padding-left: 50px;
+}

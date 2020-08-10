@@ -33,7 +33,7 @@
             <ul class="collection">
                 <catalog-item
                     v-for="layer in mpcmLayers"
-                    v-bind:layer="layer"
+                    v-bind:itemId="layer.id"
                     v-bind:key="layer.id"
                 ></catalog-item>
             </ul>

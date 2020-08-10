@@ -3,6 +3,21 @@ export default {
         return []
     },
     getters: {
+        configLayers: function ( state ) {
+            return state
+        },
+        configHasLayer: function ( state ) {
+            return function ( id ) {
+                return !!state.find( function ( ly ) { return ly.id == id } )
+            }
+        },
+        configLayer: function ( state ) {
+            return function ( id ) {
+                var ly = state.find( function ( ly ) { return ly.id == id } )
+                if ( !ly ) throw Error( `Config layer "${ ly.id }" not defined` )
+                return ly
+            }
+        },
         mpcmLayers: function ( state ) {
             return state.filter( function ( ly ) {
                 return !!ly.mpcmId

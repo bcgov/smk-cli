@@ -1,0 +1,83 @@
+<article>
+    <section>
+        <header>
+            <h5>Organize Layers</h5>
+            <div class="row">
+                <div class="col s12">
+                    <a class="waves-effect waves-light btn blue-grey darken-2"
+                        v-bind:class="{ disabled: !canMoveUp }"
+                        v-on:click="moveUp"
+                    ><i class="material-icons left">arrow_upward</i>Move Up</a>
+
+                    <a class="waves-effect waves-light btn blue-grey darken-2"
+                        v-bind:class="{ disabled: !canMoveDown }"
+                        v-on:click="moveDown"
+                    ><i class="material-icons left">arrow_downward</i>Move Down</a>
+
+                    <a class="waves-effect waves-light btn blue-grey darken-2"
+                        v-bind:class="{ disabled: !hasSelected }"
+                        v-on:click="moveToFolder"
+                    ><i class="material-icons left">folder</i>Move to folder</a>
+
+                    <a class="waves-effect waves-light btn blue-grey darken-2"
+                        v-bind:class="{ disabled: !hasSelected }"
+                        v-on:click="selectNone"
+                    ><i class="material-icons left">check_box_outline_blank</i>Select none</a>
+                </div>
+            </div>
+        </header>
+        <div class="display-collection">
+            <ul class="collection">
+                <display-item
+                    v-for="item in displayItems"
+                    v-bind:item="item"
+                    v-bind:key="item.id"
+                    v-bind:selectedIds="selectedIds"
+                    v-bind:enabledIds="enabledIds"
+                    v-on:select-changed="layerSelected"
+                ></display-item>
+            </ul>
+        </div>
+    </section>
+
+    <div class="modal" ref="moveToFolder">
+        <div class="modal-content">
+            <h4>Move items to this folder:</h4>
+            <ul class="collection">
+                <li class="collection-item" v-for="folder in folders">
+                    <label>
+                        <input type="radio"
+                            v-bind:value="folder.id"
+                            v-model="targetFolder"
+                        >
+                        <span>{{ folder.title }}</span>
+                    </label>
+                </li>
+                <li class="collection-item">
+                    <label>
+                        <input type="radio"
+                            value="-new-"
+                            v-model="targetFolder"
+                            v-on:click="selectNewFolder"
+                        >
+                        <span>New Folder:</span>
+                    </label>
+                    <div class="input-field inline">
+                        <input type="text"
+                            ref="folderName"
+                            v-model="newFolderTitle"
+                            v-bind:disabled="targetFolder != '-new-'"
+                        >
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a class="modal-close waves-effect waves-green btn"
+                v-bind:class="{ disabled: !targetFolder }"
+                v-on:click="completeMove"
+            >Agree</a>
+        </div>
+    </div>
+</article>

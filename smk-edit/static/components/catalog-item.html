@@ -1,17 +1,23 @@
 <li class="collection-item avatar">
-    <i v-if="layer.type ==='esri-dynamic'" class="material-icons circle blue" title="ESRI Dynamic Layer">layers</i>
-    <i v-if="layer.type ==='wms'" class="material-icons circle green" title="WMS Layer">backup</i>
-    <i v-if="layer.type ==='vector'" class="material-icons circle yellow darken-4" title="Vector Layer">edit</i>
-    <span class="title">{{ layer.title }}</span>
-    <p>
-        <a target="_blank" v-bind:href="layer.metadataUrl" v-if="layer.metadataUrl">Metadata</a>
-        <span class="secondary-content">
-            <a class="disabled"
-                v-on:click="editLayer( layer.id )"
-            ><i class="material-icons">edit</i></a>
-            <a class="disabled"
-                v-on:click="removeLayer( layer.id )"
-            ><i class="material-icons red-text">delete_forever</i></a>
-        </span>
-    </p>
+    <i class="material-icons circle"
+        v-bind:class="[ typeColour ]"
+        v-bind:title="typeTitle"
+    >{{ typeIcon }}</i>
+
+    <span class="title">{{ title }}</span>
+
+    <span class="secondary-content">
+        <a target="_blank"
+            v-bind:href="metadataUrl"
+            v-if="metadataUrl"
+        ><i class="material-icons">open_in_new</i></a>
+
+        <a class="disabled"
+            v-on:click="edit"
+        ><i class="material-icons">edit</i></a>
+
+        <a class="disabled"
+            v-on:click="remove"
+        ><i class="material-icons red-text">delete_forever</i></a>
+    </span>
 </li>

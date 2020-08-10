@@ -1,5 +1,6 @@
 import viewer from './configViewer.js'
 import layers from './configLayers.js'
+import tools from './configTools.js'
 
 export default {
     state: function () {
@@ -13,7 +14,8 @@ export default {
     },
     modules: {
         viewer: viewer,
-        layers: layers
+        layers: layers,
+        tools: tools
     },
     getters: {
         config: function ( state ) {
