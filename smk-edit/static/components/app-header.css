@@ -1,0 +1,13 @@
+.app-header .sidenav .collapsible {
+    padding-left: 16px;
+}
+
+.app-header .sidenav li.active, .app-header .sidenav ul.collapsible .collapsible-body ul li.active {
+    background-color: #1e88e5;
+    color: white;
+}
+
+.app-header .sidenav .collapsible > li.active {
+    background-color: unset;
+    color: unset;
+}

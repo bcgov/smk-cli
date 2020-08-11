@@ -123,16 +123,6 @@ nav .brand-logo
     padding: 64px 32px 0;
 }
 
-.sidenav li.active {
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
-}
-
-.collapsible > li.active {
-    border-top: none;
-    border-bottom: none;
-}
-
 .header
 {
   border-bottom: 2px solid #455a6459;

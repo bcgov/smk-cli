@@ -42,15 +42,23 @@
             <li class="no-padding">
                 <ul class="collapsible collapsible-accordian" ref="collapsible">
                     <li>
-                        <a class="collapsible-header waves-effect white-text"><i class="material-icons">arrow_drop_down</i>Layers</a>
+                        <a class="collapsible-header waves-effect white-text"><i class="material-icons">layers</i>Layers</a>
                         <div class="collapsible-body blue-grey darken-2">
                             <ul class="blue-grey darken-2">
+
+                                <li v-bind:class="{active:currentTabComponent=='tab-organize-layers'}">
+                                    <a class="waves-effect white-text"
+                                        v-on:click="tabSwitch('tab-organize-layers')"
+                                    >
+                                        <i class="material-icons">map</i>Organize Layers
+                                    </a>
+                                </li>
 
                                 <li v-bind:class="{active:currentTabComponent=='tab-mpcm-layers'}">
                                     <a class="waves-effect white-text"
                                         v-on:click="tabSwitch('tab-mpcm-layers')"
                                     >
-                                        <i class="material-icons">layers</i>Manage DataBC Layers
+                                        <i class="material-icons">description</i>Manage DataBC Layers
                                     </a>
                                 </li>
 
@@ -66,15 +74,7 @@
                                     <a class="waves-effect white-text"
                                         v-on:click="tabSwitch('tab-vector-layers')"
                                     >
-                                        <i class="material-icons">edit</i>Manage Vector Layers
-                                    </a>
-                                </li>
-
-                                <li v-bind:class="{active:currentTabComponent=='tab-organize-layers'}">
-                                    <a class="waves-effect white-text"
-                                        v-on:click="tabSwitch('tab-organize-layers')"
-                                    >
-                                        <i class="material-icons">map</i>Organize Layers
+                                        <i class="material-icons">timeline</i>Manage Vector Layers
                                     </a>
                                 </li>
 

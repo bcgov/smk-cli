@@ -17,11 +17,11 @@ export default {
     'esri-dynamic': {
         title: 'ESRI Dynamic Layer',
         colour: 'blue',
-        icon: 'layers',
+        icon: 'description',
     },
     'vector': {
         title: 'Vector Layer',
         colour: 'pink',
-        icon: 'insights', // 'edit',
+        icon: 'timeline', // 'edit',
     }
 }
