@@ -1,8 +1,8 @@
-<div class="card horizontal"
-    v-bind:class="[ 'size-' + ( iconSize || 2 ) ]"
+<div class="card horizontal lighten-5"
+    v-bind:class="[ 'size-' + ( iconSize || 2 ), typeColour ]"
 >
     <div class="card-image">
-        <i class="material-icons circle"
+        <i class="material-icons circle lighten-2"
             v-bind:class="[ typeColour ]"
             v-bind:title="typeTitle"
         >{{ typeIcon }}</i>

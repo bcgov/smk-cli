@@ -1,7 +1,7 @@
 export default {
     'folder': {
         title: 'Folder',
-        colour: 'red',
+        colour: 'purple',
         icon: 'folder_open',
     },
     'group': {
@@ -21,7 +21,7 @@ export default {
     },
     'vector': {
         title: 'Vector Layer',
-        colour: 'yellow darken-4',
+        colour: 'pink',
         icon: 'insights', // 'edit',
     }
 }

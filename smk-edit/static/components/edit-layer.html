@@ -7,6 +7,7 @@
                     v-if="itemId"
                     v-bind:itemId="itemId"
                     v-bind:allowed="{ edit: false, remove: false }"
+                    v-bind:key="itemId"
                 ></catalog-item>
             </div>
 
@@ -14,13 +15,16 @@
                 <li class="tab col s4">
                     <a href="#details">Details</a>
                 </li>
-                <li class="tab col s4">
+                <li class="tab col s4 disabled">
+                    <a href="#style">Style</a>
+                </li>
+                <li class="tab col s4 disabled">
                     <a href="#attributes">Attributes</a>
                 </li>
                 <!-- <li class="tab col s3"> -->
                     <!-- <a href="#popup">Popup Template</a> -->
                 <!-- </li> -->
-                <li class="tab col s4">
+                <li class="tab col s4 disabled">
                     <a href="#queries">Queries</a>
                 </li>
             </ul>
