@@ -27,7 +27,7 @@
             </div>
         </header>
         <div class="display-collection">
-            <ul class="collection">
+            <div class="catalog-collection">
                 <display-item
                     v-for="item in displayItems"
                     v-bind:item="item"
@@ -35,8 +35,10 @@
                     v-bind:selectedIds="selectedIds"
                     v-bind:enabledIds="enabledIds"
                     v-on:select-changed="layerSelected"
+                    v-on:edit-item="editItem"
+                    v-on:remove-item="removeItem"
                 ></display-item>
-            </ul>
+            </div>
         </div>
     </section>
 
@@ -80,4 +82,9 @@
             >Agree</a>
         </div>
     </div>
+
+    <edit-layer
+        v-bind:showDialog.sync="showEditItem"
+        v-bind:itemId="editItemId"
+    ></edit-layer>
 </article>

@@ -6,15 +6,11 @@
                 'light-green': needsSave
             }"
             v-on:click="save()"
-        >
-            <i class="material-icons left">save</i>Save
-        </a>
+        ><i class="material-icons left">save</i>Save</a>
 
         <a class="waves-effect waves-light btn blue-grey darken-2"
             v-on:click="view()"
-        >
-            <i class="material-icons left">public</i>View
-        </a>
+        ><i class="material-icons left">public</i>View</a>
     </div>
     <div class="modal" ref="mapDialog">
         <div style="height: 100%; width: 100%;" v-if="viewMap" v-content="map"></div>

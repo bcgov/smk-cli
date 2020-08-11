@@ -1,7 +1,8 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
-    './components/display-item.js'
+    './components/display-item.js',
+    './components/edit-layer.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
@@ -10,7 +11,9 @@ export default importComponents( [
                 selectedIds: [],
                 displayItems: this.$store.getters.configToolLayersDisplay(),
                 targetFolder: null,
-                newFolderTitle: null
+                newFolderTitle: null,
+                editItemId: null,
+                showEditItem: false
             }
         },
         computed: {
@@ -145,6 +148,12 @@ export default importComponents( [
                 this.$store.dispatch( 'configToolLayersDisplay', display ).then( function () {
                     self.displayItems = self.$store.getters.configToolLayersDisplay()
                 } )
+            },
+            editItem: function ( itemId ) {
+                this.editItemId = itemId
+                this.showEditItem = true
+            },
+            removeItem: function ( itemId ) {
             }
         },
         mounted: function () {

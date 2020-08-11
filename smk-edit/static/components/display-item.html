@@ -1,17 +1,22 @@
 <div class="display-item">
     <div class="display-select">
-        <label>
-            <input type="checkbox" class="filled-in"
-                v-model="selected"
-                v-bind:disabled="!enabled"
-            >
-            <span></span>
-        </label>
-
         <catalog-item
+            iconSize="1"
             v-bind:itemId="item.id"
             v-bind:key="item.id"
-        ></catalog-item>
+            v-on:edit-item="editItem"
+            v-on:remove-item="removeItem"
+        >
+            <template v-slot:prefix>
+                <label>
+                    <input type="checkbox" class="filled-in"
+                        v-model="selected"
+                        v-bind:disabled="!enabled"
+                    >
+                    <span></span>
+                </label>
+            </template>
+        </catalog-item>
     </div>
 
     <div class="display-collection" v-if="item.items">
@@ -22,6 +27,8 @@
             v-bind:selectedIds="selectedIds"
             v-bind:enabledIds="enabledIds"
             v-on:select-changed="selectionChanged"
+            v-on:edit-item="editItem"
+            v-on:remove-item="removeItem"
         ></display-item>
     </div>
 </div>

@@ -2,7 +2,8 @@ import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
     './components/catalog-item.js',
-    './components/catalog-tree.js'
+    './components/catalog-tree.js',
+    './components/edit-layer.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
@@ -10,6 +11,8 @@ export default importComponents( [
                 layerFilter: null,
                 appliedLayerFilter: null,
                 addCatalogUrl: null,
+                editItemId: null,
+                showEditItem: false
             }
         },
         computed: {
@@ -63,6 +66,12 @@ export default importComponents( [
             },
             catalogFiltered: function ( count ) {
                 M.toast( { html: `Found ${ count } WMS catalog items matching filter` } )
+            },
+            editItem: function ( itemId ) {
+                this.editItemId = itemId
+                this.showEditItem = true
+            },
+            removeItem: function ( itemId ) {
             }
         },
         mounted: function () {

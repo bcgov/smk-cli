@@ -18,7 +18,8 @@ export const store = new Vuex.Store( {
             'https://openmaps.gov.bc.ca/geo/pub/wms',
             'https://maps.th.gov.bc.ca/geoV05/ows',
             'https://geo.nrs.gov.bc.ca/pub/geoserver/wms'
-        ]
+        ],
+        version: 1
     },
     mutations: {
         // /^(?!serviceStatus)/ -- filter out these mutations from devtools
@@ -37,9 +38,13 @@ export const store = new Vuex.Store( {
         addWmsCatalogUrl: function ( state, url ) {
             if ( state.wmsCatalogUrls.includes( url ) ) return
             state.wmsCatalogUrls.push( url )
+        },
+        bumpVersion: function ( state ) {
+            state.version += 1
         }
     },
     getters: {
+        version: function ( state ) { return state.version }
     },
     actions: {
         loadConfig: function ( context ) {

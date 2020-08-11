@@ -6,13 +6,13 @@ export default {
         configLayers: function ( state ) {
             return state
         },
-        configHasLayer: function ( state ) {
-            return function ( id ) {
+        configHasLayer: function ( state, getters ) {
+            return getters.version && function ( id ) {
                 return !!state.find( function ( ly ) { return ly.id == id } )
             }
         },
-        configLayer: function ( state ) {
-            return function ( id ) {
+        configLayer: function ( state, getters ) {
+            return getters.version && function ( id ) {
                 var ly = state.find( function ( ly ) { return ly.id == id } )
                 if ( !ly ) throw Error( `Config layer "${ ly.id }" not defined` )
                 return ly
@@ -40,6 +40,20 @@ export default {
                 throw Error( `Layer "${ layer.title }" already exists` )
 
             state.push( layer )
+        },
+        configLayer: function ( state, layer ) {
+            var index = state.findIndex( function ( ly ) { return ly.id == layer.id } )
+            if ( index == -1 )
+                throw Error( `Layer "${ layer.id }" doesn't exist` )
+
+            Vue.set( state, index, layer )
         }
     },
+    actions: {
+        configLayer: function ( context, layer ) {
+            var old = context.getters.configLayer( layer.id )
+            context.commit( 'configLayer', Object.assign( old, layer ) )
+            context.commit( 'bumpVersion' )
+        }
+    }
 }

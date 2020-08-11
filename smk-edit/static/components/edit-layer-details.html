@@ -1,0 +1,60 @@
+<div>
+    <div class="row">
+        <div class="col s12 input-field">
+            <label>Title</label>
+            <input type="text" v-model="title">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <label>
+                <input type="checkbox" class="filled-in" v-model="isVisible" />
+                <span>Initially visible on map</span>
+            </label>
+
+            <label>
+                <input type="checkbox" class="filled-in" v-model="isQueryable" />
+                <span>Available for identify</span>
+            </label>
+        </div>
+
+        <div class="col s6 range-field">
+            <label>
+                <span>Opacity ( {{ Math.round( opacity * 100 ) }}% )</span>
+                <input type="range" v-model="opacity" min="0" max="1" step="0.05"/>
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            Show only in scale range from
+            1 :
+            <div class="input-field inline">
+                <label>Minimum Scale</label>
+                <input type="number" v-model="scaleMin" style="width: 14ex">
+            </div>
+            to
+            1 :
+            <div class="input-field inline">
+                <label>Maximum Scale</label>
+                <input type="number" v-model="scaleMax" style="width: 14ex">
+            </div>
+        </div>
+    </div>
+
+    <component
+        v-bind:is="layerDetailComponent"
+        v-bind:itemId="itemId"
+    ></component>
+
+    <div class="row">
+        <div class="col s12 input-field">
+            <label>Metadata URL</label>
+            <textarea class="materialize-textarea" ref="metadataUrl"
+                v-model="metadataUrl"
+            ></textarea>
+        </div>
+    </div>
+</div>

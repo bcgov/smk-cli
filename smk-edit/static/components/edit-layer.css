@@ -1,0 +1,37 @@
+
+.edit-layer .modal-content {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+}
+
+.edit-layer .modal-content .dialog-header {
+    flex-shrink: 0;
+}
+
+.edit-layer .modal-content .dialog-body {
+    flex-grow: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1em;
+}
+
+.edit-layer .tabs .tab a {
+    color: black;
+}
+
+.edit-layer .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: unset;
+}
+
+.edit-layer .modal-footer a.btn {
+    flex-shrink: 0;
+}
+
+.itemId {
+    font-family: monospace;
+}

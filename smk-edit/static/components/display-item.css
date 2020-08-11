@@ -1,23 +1,21 @@
-.display-collection .collection {
-    border: none;
-    border-top: 1px solid #e0e0e0;
-}
-
-.display-collection .collection-item {
-    border: none;
-}
-
 .display-collection .display-select {
     display: flex;
     align-items: center;
-    border-left: 1px solid #e0e0e0;
-    border-right: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
 }
 
-.display-collection .display-select > label {
-    position: relative;
-    left: 15px;
+.display-collection .display-select .card {
+    flex-grow: 1;
+    margin-top: 0;
+}
+
+.display-collection .display-select .card-image i {
+    margin-left: 20px;
+}
+
+.display-collection .display-select .card-image label {
+    position: absolute;
+    top: 12px;
+    left: 2px;
 }
 
 .display-collection .display-select > .collection-item {

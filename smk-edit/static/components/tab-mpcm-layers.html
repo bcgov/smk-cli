@@ -30,13 +30,20 @@
             <h5>DataBC Layers In App</h5>
         </header>
         <div>
-            <ul class="collection">
+            <div class="catalog-collection">
                 <catalog-item
                     v-for="layer in mpcmLayers"
                     v-bind:itemId="layer.id"
                     v-bind:key="layer.id"
+                    v-on:edit-item="editItem"
+                    v-on:remove-item="removeItem"
                 ></catalog-item>
-            </ul>
+            </div>
         </div>
     </section>
+
+    <edit-layer
+        v-bind:showDialog.sync="showEditItem"
+        v-bind:itemId="editItemId"
+    ></edit-layer>
 </article>

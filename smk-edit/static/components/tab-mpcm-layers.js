@@ -2,12 +2,15 @@ import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
     './components/catalog-item.js',
-    './components/catalog-tree.js'
+    './components/catalog-tree.js',
+    './components/edit-layer.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
             return {
-                layerFilter: null
+                layerFilter: null,
+                editItemId: null,
+                showEditItem: false
             }
         },
         computed: {
@@ -33,6 +36,12 @@ export default importComponents( [
             },
             clearFilter: function () {
                 this.layerFilter = null
+            },
+            editItem: function ( itemId ) {
+                this.editItemId = itemId
+                this.showEditItem = true
+            },
+            removeItem: function ( itemId ) {
             }
         }
     } )

@@ -1,0 +1,87 @@
+<div>
+    <div class="row">
+        <div class="col s12 input-field">
+            <label>Data URL</label>
+            <textarea class="materialize-textarea" ref="dataUrl"
+                v-model="dataUrl"
+            ></textarea>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col s6">
+            <label>
+                <input type="checkbox" class="filled-in" v-model="useClustering" />
+                <span>Display as Cluster</span>
+            </label>
+        <!-- </div> -->
+        <!-- <div class="col s4"> -->
+            <label>
+                <input type="checkbox" class="filled-in" v-model="useHeatmap" />
+                <span>Display as Heatmap</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col s4 input-field">
+            <input type="text" v-model="layer.style.strokeOpacity">
+            <label>Stroke Opacity</label>
+        </div>
+        <div class="col s4 input-field">
+            <input type="text" v-model="layer.style.fillOpacity">
+            <label>Fill Opacity</label>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col s4 input-field">
+            <input type="text" v-model="layer.style.strokeWidth">
+            <label>Stroke Width</label>
+        </div>
+        <div class="col s4 input-field">
+            <input type="text" v-model="layer.style.strokeStyle">
+            <label>Stroke Style</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s4">
+            <label class="black-text">Stroke Color</label>
+            <input type="color" v-model="layer.style.strokeColor">
+        </div>
+        <div class="col s4">
+            <label class="black-text">Fill Color</label>
+            <input type="color" v-model="layer.style.fillColor">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 input-field">
+            <input type="text" v-model="layer.style.markerSize[0]">
+            <label>Marker Size X</label>
+        </div>
+        <div class="col s6 input-field">
+            <input type="text" v-model="layer.style.markerSize[1]">
+            <label>Marker Size Y</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 input-field">
+            <input type="text" v-model="layer.style.markerOffset[0]">
+            <label>Marker Offset X</label>
+        </div>
+        <div class="col s6 input-field">
+            <input type="text" v-model="layer.style.markerOffset[1]">
+            <label>Marker Offset Y</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="file-field input-field">
+            <div class="btn blue-grey darken-2">
+                <span>Custom Point Marker</span>
+                <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+    </div>  -->
+</div>

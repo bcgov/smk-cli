@@ -1,7 +1,7 @@
 export default {
     getters: {
         configToolLayersDisplay: function ( state, getters ) {
-            return function () {
+            return getters.version && function () {
                 var d = getters.configTool( 'layers' ).display
                 if ( d ) return d
 
@@ -13,7 +13,7 @@ export default {
             }
         },
         configToolLayersDisplayItem: function ( state, getters ) {
-            return function ( itemId ) {
+            return getters.version && function ( itemId ) {
                 var items = displayItemsFind( getters.configToolLayersDisplay(), function ( item ) {
                     return item.id == itemId
                 } )
@@ -27,6 +27,17 @@ export default {
             var tool = context.getters.configTool( 'layers' )
             tool.display = display
             context.commit( 'configTool', tool )
+            context.commit( 'bumpVersion' )
+        },
+        configToolLayersDisplayItem: function ( context, item ) {
+            var display = context.getters.configToolLayersDisplay()
+            displayItemsFind( display, function ( displayItem ) {
+                if ( displayItem.id == item.id ) {
+                    Object.assign( displayItem, item )
+                    return true
+                }
+            } )
+            context.dispatch( 'configToolLayersDisplay', display )
         }
     },
 }

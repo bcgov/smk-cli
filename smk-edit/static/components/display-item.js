@@ -15,6 +15,12 @@ export default importComponents( [
         methods: {
             selectionChanged: function ( select, id ) {
                 this.$emit( 'select-changed', select, id || this.item.id )
+            },
+            editItem: function ( itemId ) {
+                this.$emit( 'edit-item', itemId )
+            },
+            removeItem: function ( itemId ) {
+                this.$emit( 'remove-item', itemId )
             }
         }
     } )

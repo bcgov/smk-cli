@@ -1,49 +1,48 @@
-Vue.component('edit-layer',
-{
-    props: ['editingLayer'],
-    template:
-        `<div class="row">
-            <h5 v-if="editingLayer.type ==='esri-dynamic'">DataBC Catalog Layer: {{editingLayer.title}}</h5>
-            <h5 v-if="editingLayer.type ==='wms'">WMS Layer: {{editingLayer.title}}</h5>
-            <h5 v-if="editingLayer.type ==='vector'">Vector Layer: {{editingLayer.title}}</h5>
-            <div class="row">
-                <div class="col s12" style="padding-bottom: 14px; padding-top: 14px;">
-                    <ul id="layerTabs" class="tabs">
-                        <li class="tab col s3"><a class="active" href="#details">Details</a></li>
-                        <li class="tab col s3"><a href="#attributes">Attributes</a></li>
-                        <li class="tab col s3"><a href="#popup">Popup Template</a></li>
-                        <li class="tab col s3"><a href="#queries">Queries</a></li>
-                    </ul>
-                </div>
-                <div id="details" class="col s12">
-                    <details-panel v-bind:layer="editingLayer"
-                                  v-bind:key="editingLayer.id">
-                    </details-panel>
-                </div>
-                <div id="attributes" class="col s12">
-                    <attribute-panel v-for="attribute in editingLayer.attributes"
-                                     v-bind:attribute="attribute"
-                                     v-bind:layer="editingLayer"
-                                     v-bind:key="attribute.id">
-                    </attribute-panel>
-                </div>
-                <div id="popup" class="col s12">
-                    <div class="row">
-                        <p>Add any HTML elements you need to customize your layers popup. SMK uses vue natively so you can use <a href="https://vuejs.org/" target="_blank">Vue</a> syntax to develop advanced popup templates.</p>
-                    </div>
-                    <div id="layer-popup-content">
-                    </div>
-                </div>
-                <div id="queries" class="col s12">
-                    <a class="waves-effect waves-light btn-small blue-grey darken-2" onclick="createQuery()" style="width: 130px;">Create Query</a>
-                    <ul class="collapsible">
-                        <query-panel v-for="query in editingLayer.queries"
-                                    v-bind:query="query"
-                                    v-bind:layer="editingLayer"
-                                    v-bind:key="query.id">
-                        </query-panel>
-                    </ul>
-                </div>
-            </div>
-        </div>`
-});
+import { vueComponent, importComponents } from '../vue-util.js'
+import itemTypePresentation from './item-type-presentation.js'
+
+export default importComponents( [
+    './components/catalog-item.js',
+    './components/edit-layer-details.js'
+] ).then( function () {
+    return vueComponent( import.meta.url, {
+        props: [ 'itemId', 'showDialog' ],
+        watch: {
+            showDialog: function ( val ) {
+                if ( val && this.itemId ) {
+                    M.Modal.getInstance( this.$refs.layerEditDialog ).open()
+                    M.Tabs.getInstance( this.$refs.tabs ).select( 'details' )
+                }
+                else {
+                    M.Modal.getInstance( this.$refs.layerEditDialog ).close()
+                }
+            }
+        },
+        computed: {
+            type: function () {
+                var item = this.$store.getters.configToolLayersDisplayItem( this.itemId )
+                if ( item.type && item.type != 'layer' ) return item.type
+                return this.$store.getters.configLayer( this.itemId ).type
+            },
+            typeTitle: function () { return itemTypePresentation[ this.type ].title }
+        },
+        methods: {
+        },
+        mounted: function () {
+            var self = this
+
+            M.Modal.init( this.$refs.layerEditDialog, {
+                onCloseEnd: function () {
+                    self.$emit( 'update:showDialog', false )
+                }
+            } )
+            M.Tabs.init( this.$refs.tabs, {} )
+        },
+        updated: function () {
+            var inst = M.Tabs.getInstance( this.$refs.tabs )
+            setTimeout( function () {
+                inst.updateTabIndicator()
+            }, 500 )
+        }
+    } )
+} )

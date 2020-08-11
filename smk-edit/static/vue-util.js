@@ -1,5 +1,13 @@
 export function vueComponent( url, opt ) {
     var m = url.match( /[/]([^/]+)[.]js$/ )
+    var componentName = m[ 1 ]
+
+    if ( !opt.mixins ) opt.mixins = []
+    opt.mixins.push( {
+        mounted: function () {
+            this.$el.classList.add( componentName )
+        }
+    } )
 
     if ( !opt.template ) {
         var template = url.replace( 'js', 'html' )
@@ -10,13 +18,13 @@ export function vueComponent( url, opt ) {
             } )
             .then( function ( html ) {
                 opt.template = html
-                console.log( 'component', m[ 1 ] )
+                console.log( 'component', componentName )
                 if ( opt.style !== false ) includeStyle( url.replace( 'js', 'css' ) )
-                return Vue.component( m[ 1 ], opt )
+                return Vue.component( componentName, opt )
             } )
     }
     else {
-        return Promise.resolve( Vue.component( m[ 1 ], opt ) )
+        return Promise.resolve( Vue.component( componentName, opt ) )
     }
 }
 
