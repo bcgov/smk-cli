@@ -56,6 +56,7 @@ function startService( opt ) {
 
     app.use( express.static( path.resolve( __dirname, 'static' ) ) )
     app.use( '/module', express.static( path.dirname( require.resolve( opt.smkPackage ) ) ) )
+    app.use( '/layers', express.static( app.get( 'smk layers' ) ) )
 
     app.use( function ( req, res, next ) {
         if ( ( '' + req.originalUrl ).endsWith( 'css' ) ) {
@@ -66,27 +67,35 @@ function startService( opt ) {
     } )
 
     const routes = app._router.stack
-        .filter( function ( r ) { return r.route } )
+        .filter( function ( r ) {
+            return r.route
+        } )
         .map( function ( r ) { return [
             Object.keys( r.route.methods ).map( function ( m ) { return m.toUpperCase() } ).join( ', ' ),
             r.route.path
         ] } )
         .sort( function( a, b ) { return a[ 1 ] > b[ 1 ] ? 1 : -1 } )
-    routes.unshift( [ 'GET', '/', '(index.html)' ] )
+    routes.unshift( [ 'GET', '/module', path.dirname( require.resolve( opt.smkPackage ) ) ] )
+    routes.unshift( [ 'GET', '/layers', app.get( 'smk layers' ) ] )
+    routes.unshift( [ 'GET', '/', path.resolve( __dirname, 'static' ) ] )
 
     app.listen( opt.port, () => {
         console.log( chalk.yellow( 'Endpoints available:' ) )
         console.log( routes.map( function ( r ) {
-            return `\t${ chalk.green( r[ 0 ] ) }\t${ chalk.blue( r[ 1 ] ) }   ${ r[ 2 ] || '' }`
+            return `\t${ chalk.green( r[ 0 ] ) }\t${ chalk.cyan( r[ 1 ] ) }\t${  r[ 2 ] ? chalk.yellow( '-> ' ) + chalk.blue( relativePath( r[ 2 ] ) ) : '' }`
         } ).join( '\n' ) )
-        console.log( chalk.yellow( `Base path is ${ chalk.blue( app.get( 'smk base' ) ) }` ) )
-        console.log( chalk.yellow( `Configuration path is ${ chalk.blue( app.get( 'smk config' ) ) }` ) )
-        console.log( chalk.yellow( `Layers catalog path is ${ chalk.blue( app.get( 'smk layers' ) ) }` ) )
-        console.log( chalk.yellow( `Temp path is ${ chalk.blue( app.get( 'smk temp' ) ) }` ) )
-        console.log( chalk.yellow( `Service listening at ${ chalk.blue( 'http://localhost:' + app.get( 'port' ) + '/' ) }` ) )
+        console.log( chalk.yellow( `Base path is ${ chalk.blue( relativePath( app.get( 'smk base' ) ) ) }` ) )
+        console.log( chalk.yellow( `Configuration path is ${ chalk.blue( relativePath( app.get( 'smk config' ) ) ) }` ) )
+        console.log( chalk.yellow( `Layers catalog path is ${ chalk.blue( relativePath( app.get( 'smk layers' ) ) ) }` ) )
+        console.log( chalk.yellow( `Temp path is ${ chalk.blue( relativePath( app.get( 'smk temp' ) ) ) }` ) )
+        console.log( chalk.yellow( `Service listening at ${ chalk.cyan( 'http://localhost:' + app.get( 'port' ) + '/' ) }` ) )
         console.log( chalk.yellow( `Hit Ctrl-C to exit` ) )
         console.log()
     } )
 
     return app
+}
+
+function relativePath( path ) {
+    return path.replace( process.cwd(), '.' )
 }
