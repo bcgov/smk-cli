@@ -1,3 +1,27 @@
+.app-header .sidenav .title-panel {
+    position: relative;
+    font-weight: lighter;
+    font-size: 24px;
+    line-height: initial;
+    margin: 1em 1em;
+}
+
+.app-header .title-panel .label {
+    margin: 0px;
+    padding-left: 10px;
+    color: white;
+    background: #546e7a;
+    max-width: 665px;
+}
+
+.app-header nav .brand-logo {
+  padding-left: 25px;
+}
+
+.app-header .sidenav .user-view {
+    padding: 64px 32px 0;
+}
+
 .app-header .sidenav .collapsible {
     padding-left: 16px;
 }

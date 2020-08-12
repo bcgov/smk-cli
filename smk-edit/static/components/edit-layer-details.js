@@ -47,7 +47,7 @@ export default importComponents( [
                     return this.$store.getters.configLayer( this.itemId ).scaleMin
                 },
                 set: function ( val ) {
-                    this.$store.dispatch( 'configLayer', { id: this.itemId, scaleMin: val } )
+                    this.$store.dispatch( 'configLayer', { id: this.itemId, scaleMin: Math.max( parseInt( this.scaleMax || 0 ), parseInt( val ) ) } )
                 }
             },
             scaleMax: {
@@ -55,7 +55,7 @@ export default importComponents( [
                     return this.$store.getters.configLayer( this.itemId ).scaleMax
                 },
                 set: function ( val ) {
-                    this.$store.dispatch( 'configLayer', { id: this.itemId, scaleMax: val } )
+                    this.$store.dispatch( 'configLayer', { id: this.itemId, scaleMax: Math.min( parseInt( this.scaleMin || 1e15 ), parseInt( val ) ) } )
                 }
             },
             metadataUrl: {
