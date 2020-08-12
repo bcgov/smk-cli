@@ -19,7 +19,8 @@ export const store = new Vuex.Store( {
             'https://maps.th.gov.bc.ca/geoV05/ows',
             'https://geo.nrs.gov.bc.ca/pub/geoserver/wms'
         ],
-        version: 1
+        version: 1,
+        smkUrl: '/module/smk.js'
     },
     mutations: {
         // /^(?!serviceStatus)/ -- filter out these mutations from devtools

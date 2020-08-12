@@ -8,7 +8,11 @@
     margin-right: 10px;
 }
 
-.app-footer .modal {
-    width: 70%;
-    height: 70%;
+.app-footer .dialog-box {
+    width: 80%;
+    height: 80%;
+}
+
+.app-footer .dialog-box .smk-map {
+    padding: 4px;
 }

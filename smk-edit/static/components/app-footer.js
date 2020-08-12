@@ -1,51 +1,30 @@
-import { vueComponent } from '../vue-util.js'
+import { importComponents, vueComponent } from '../vue-util.js'
 
-export default vueComponent( import.meta.url, {
-    data: function () {
-        return {
-            viewMap: false
-        }
-    },
-    computed: {
-        needsSave: function () {
-            return this.$store.state.dirtyConfig
-        },
-        map: function () {
-            var self = this
-
+export default importComponents( [
+    './components/dialog-box.js',
+    './components/smk-map.js',
+] ).then( function () {
+    return vueComponent( import.meta.url, {
+        data: function () {
             return {
-                create: function ( el ) {
-                    var map = this
-
-                    return SMK.INIT( {
-                        containerSel: el,
-                        config: [ self.$store.getters.config ],
-                    } ).then( function ( smk ) {
-                        map.smk = smk
-                    } )
-                },
-                destroy: function ( el ) {
-                    this.smk.destroy()
-                }
+                viewMap: false
             }
-        }
-    },
-    methods: {
-        save: function () {
-            this.$store.dispatch( 'saveConfig' )
         },
-        view: function () {
-            M.Modal.getInstance( this.$refs.mapDialog ).open()
-            this.viewMap = true
-        }
-    },
-    mounted: function () {
-        var self = this
-
-        M.Modal.init( this.$refs.mapDialog, {
-            onCloseEnd: function () {
-                self.viewMap = false
+        computed: {
+            needsSave: function () {
+                return this.$store.state.dirtyConfig
+            },
+            mapConfig: function () {
+                return this.$store.getters.config
             }
-        } )
-    }
+        },
+        methods: {
+            save: function () {
+                this.$store.dispatch( 'saveConfig' )
+            },
+            view: function () {
+                this.viewMap = true
+            }
+        },
+    } )
 } )
