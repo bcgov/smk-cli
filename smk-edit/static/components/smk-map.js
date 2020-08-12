@@ -29,14 +29,38 @@ vueComponent( import.meta.url, {
         <script>
             SMK.INIT( {
                 containerSel: '#smk-map-frame',
-                config: [ ${ JSON.stringify( this.config ) } ]
+                config: ${ JSON.stringify( [].concat( this.config ) ) }
             } )
             .then( function ( smk ) {
-                // SMK initialized
+                smk.$viewer.changedView( function () {
+                    emit( 'changed-view', smk.$viewer.getView() )
+                } )
             } )
+
+            function emit( event, arg ) {
+                window.parent.postMessage( {
+                    event: event,
+                    args: [].slice.call( arguments, 1 )
+                }, '*' )
+            }
         </script>
     </body>
 </html>
         ` }
+    },
+    methods: {
+        receiveMessage: function ( event ) {
+            // console.log( event )
+            if ( event.data.event )
+                this.$emit( event.data.event, ...event.data.args )
+        }
+    },
+    mounted: function () {
+        this.$messageListener = this.receiveMessage.bind( this )
+        window.addEventListener( 'message', this.$messageListener, false )
+    },
+    destroyed: function () {
+        if ( this.$messageListener )
+            window.removeEventListener( 'message', this.$messageListener, false )
     }
 } )

@@ -30,7 +30,11 @@
                 Pan and zoom the map to set the application's initial position.
             </h6>
         </header>
-        <div style="height: 100%; width: 100%;" v-content="map">
+        <div>
+            <smk-map
+                v-bind:config="mapConfig"
+                v-on:changed-view="changedView"
+            ></smk-map>
         </div>
     </section>
 </article>
