@@ -45,7 +45,7 @@ function startService( opt ) {
     app.use( cors() )
 
     require( './controllers' )( app, function ( req, res, next ) {
-        console.log( chalk.yellow( ( new Date() ).toISOString() ), chalk.green( req.method ), chalk.blue( req.originalUrl ) )
+        console.log( chalk.yellow( ( new Date() ).toISOString() ), chalk.green( req.method ), chalk.cyan( req.originalUrl ) )
         next()
     } )
 
