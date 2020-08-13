@@ -10,7 +10,7 @@ export default importComponents( [
                 get: function () { return this.selectedIds.includes( this.item.id ) },
                 set: function ( val ) { this.selectionChanged( val ) }
             },
-            enabled: function () { return this.enabledIds.includes( this.item.id ) },
+            enabled: function () { return !this.enabledIds || this.enabledIds.includes( this.item.id ) },
         },
         methods: {
             selectionChanged: function ( select, id ) {
