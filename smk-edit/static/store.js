@@ -8,11 +8,7 @@ export const store = new Vuex.Store( {
         serviceStatus: true,
         statusPingInterval: 5000,
         dirtyConfig: false,
-        // editingLayer: null,
-        // editingTool: null,
-        currentTab: null,
-        // tabs: ['init', 'identity', 'basemap', 'mpcm-layers', 'wms-layers', 'vector-layers', 'layers', 'tools', 'edit-layer'],
-        // mySelf: this,
+        activeTab: null,
         wmsCatalogUrl: 'https://openmaps.gov.bc.ca/geo/pub/wms',
         wmsCatalogUrls: [
             'https://openmaps.gov.bc.ca/geo/pub/wms',
@@ -27,8 +23,8 @@ export const store = new Vuex.Store( {
         serviceStatus: function ( state, status ) {
             state.serviceStatus = status
         },
-        currentTab: function ( state, tab ) {
-            state.currentTab = tab
+        activeTab: function ( state, tab ) {
+            state.activeTab = tab
         },
         dirtyConfig: function ( state, dirty ) {
             state.dirtyConfig = dirty

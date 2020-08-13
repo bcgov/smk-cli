@@ -9,29 +9,42 @@ export default importComponents( [
     './components/tab-organize-layers.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
-        data: function () {
-            return {
-                lastTab: null
+        components: {
+            navTab : {
+                template: `
+                    <li v-bind:class="{ active: isActive }">
+                        <a class="waves-effect"
+                            v-bind:class="[ disabled ? 'grey-text' : 'white-text' ]"
+                            v-on:click="openTab( name )"
+                        ><i class="material-icons">{{ icon }}</i>{{ title }}</a>
+                    </li>
+                `,
+                props: {
+                    name: String,
+                    title: String,
+                    icon: String,
+                    disabled: Boolean
+                },
+                methods: {
+                    openTab: function ( tab ) {
+                        if ( this.disabled ) return
+                        this.$store.commit( 'activeTab', tab )
+                    },
+                },
+                computed: {
+                    isActive: function () {
+                        return this.$store.state.activeTab == this.name;
+                    },
+                },
             }
         },
-        methods: {
-            tabSwitch: function (tab) {
-                this.lastTab = this.$store.state.currentTab;
-                this.$store.commit( 'currentTab', tab )
-                // this.$store.currentTab = tab;
-                // $('#contentPanel').show();
-            },
-        },
         computed: {
-            currentTabComponent: function () {
-                // this.componentKey += 1;
-                if ( this.$store.state.currentTab )
-                    return this.$store.state.currentTab.toLowerCase();
-            },
+            layersActive: function () {
+                return /layers/.test( this.$store.state.activeTab )
+            }
         },
         mounted: function () {
             M.Sidenav.init( this.$refs.sidenav )
-            M.Collapsible.init( this.$refs.collapsible )
         }
     } )
 } )

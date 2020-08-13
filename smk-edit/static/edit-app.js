@@ -16,7 +16,7 @@ importComponents( [
         },
     } )
 
-    app.$store.commit( 'currentTab', 'tab-application' )
+    app.$store.commit( 'activeTab', 'tab-application' )
 
     app.$store.dispatch( 'loadConfig' )
 

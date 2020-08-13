@@ -23,74 +23,21 @@
                 </div>
             </li>
 
-            <li v-bind:class="{active:currentTabComponent=='tab-application'}">
-                <a class="waves-effect white-text"
-                    v-on:click="tabSwitch('tab-application')"
-                >
-                    <i class="material-icons">assignment</i>Application
-                </a>
-            </li>
+            <navTab name="tab-application"      icon="assignment"   title="Application"></navTab>
+            <navTab name="tab-viewer"           icon="terrain"      title="Viewer"></navTab>
 
-            <li v-bind:class="{active:currentTabComponent=='tab-viewer'}">
-                <a class="waves-effect white-text"
-                    v-on:click="tabSwitch('tab-viewer')"
-                >
-                    <i class="material-icons">terrain</i>Viewer
-                </a>
-            </li>
+            <navTab name="tab-organize-layers"  icon="layers"       title="Layers"></navTab>
+            <navTab name="tab-mpcm-layers"      icon="description"  title="Manage DataBC Layers"
+                class="indented" v-if="layersActive"
+            ></navTab>
+            <navTab name="tab-wms-layers"       icon="backup"       title="Manage WMS Layers"
+                class="indented" v-if="layersActive"
+            ></navTab>
+            <navTab name="tab-vector-layers"    icon="timeline"     title="Manage Vector Layers"
+                class="indented" v-if="layersActive"
+            ></navTab>
 
-            <li class="no-padding">
-                <ul class="collapsible collapsible-accordian" ref="collapsible">
-                    <li>
-                        <a class="collapsible-header waves-effect white-text"><i class="material-icons">layers</i>Layers</a>
-                        <div class="collapsible-body blue-grey darken-2">
-                            <ul class="blue-grey darken-2">
-
-                                <li v-bind:class="{active:currentTabComponent=='tab-organize-layers'}">
-                                    <a class="waves-effect white-text"
-                                        v-on:click="tabSwitch('tab-organize-layers')"
-                                    >
-                                        <i class="material-icons">map</i>Organize Layers
-                                    </a>
-                                </li>
-
-                                <li v-bind:class="{active:currentTabComponent=='tab-mpcm-layers'}">
-                                    <a class="waves-effect white-text"
-                                        v-on:click="tabSwitch('tab-mpcm-layers')"
-                                    >
-                                        <i class="material-icons">description</i>Manage DataBC Layers
-                                    </a>
-                                </li>
-
-                                <li v-bind:class="{active:currentTabComponent=='tab-wms-layers'}">
-                                    <a class="waves-effect white-text"
-                                        v-on:click="tabSwitch('tab-wms-layers')"
-                                    >
-                                        <i class="material-icons">backup</i>Manage WMS Layers
-                                    </a>
-                                </li>
-
-                                <li v-bind:class="{active:currentTabComponent=='tab-vector-layers'}">
-                                    <a class="waves-effect white-text"
-                                        v-on:click="tabSwitch('tab-vector-layers')"
-                                    >
-                                        <i class="material-icons">timeline</i>Manage Vector Layers
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-
-            <li v-bind:class="{active:currentTabComponent=='tab-tools'}">
-                <a class="waves-effect grey-text"
-                    xv-on:click="tabSwitch('tab-tools')"
-                >
-                    <i class="material-icons">build</i>Tools
-                </a>
-            </li>
+            <navTab name="tab-tools"            icon="build"       title="Tools" disabled></navTab>
 
             <li>
                 <div class="subheader white-text title-panel">
