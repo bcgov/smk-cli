@@ -16,7 +16,7 @@
     padding: 1em;
 }
 
-.edit-layer .tabs .tab a {
+.edit-layer .tabs .tab:not(.disabled) a {
     color: black;
 }
 

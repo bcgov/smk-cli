@@ -21,4 +21,10 @@ vueComponent( import.meta.url, {
             }
         } )
     },
+    updated: function () {
+        if ( this.showDialog )
+            this.$emit( 'opened' )
+        else
+           this.$emit( 'closed' )
+    }
 } )

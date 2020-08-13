@@ -1,77 +1,84 @@
-<div class="modal modal-fixed-footer" ref="layerEditDialog">
-    <div class="modal-content">
-        <div class="dialog-header">
-            <div class="catalog-collection">
-                <catalog-item
-                    iconSize="1"
-                    v-if="itemId"
-                    v-bind:itemId="itemId"
-                    v-bind:allowed="{ edit: false, remove: false }"
-                    v-bind:key="itemId"
-                ></catalog-item>
-            </div>
-
-            <ul class="tabs black-text" ref="tabs">
-                <li class="tab col s4">
-                    <a href="#details">Details</a>
-                </li>
-                <li class="tab col s4 disabled">
-                    <a href="#style">Style</a>
-                </li>
-                <li class="tab col s4 disabled">
-                    <a href="#attributes">Attributes</a>
-                </li>
-                <!-- <li class="tab col s3"> -->
-                    <!-- <a href="#popup">Popup Template</a> -->
-                <!-- </li> -->
-                <li class="tab col s4 disabled">
-                    <a href="#queries">Queries</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="dialog-body">
-            <div id="details">
-                <edit-layer-details
-                    v-if="itemId"
-                    v-bind:itemId="itemId"
-                ></edit-layer-details>
-            </div>
-
-            <div id="attributes" class="col s12">
-                <!-- <attribute-panel v-for="attribute in editingLayer.attributes"
-                                    v-bind:attribute="attribute"
-                                    v-bind:layer="editingLayer"
-                                    v-bind:key="attribute.id">
-                </attribute-panel> -->
-            </div>
-
-            <div id="popup" class="col s12">
-                <!-- <div class="row">
-                    <p>Add any HTML elements you need to customize your layers popup. SMK uses vue natively so you can use <a href="https://vuejs.org/" target="_blank">Vue</a> syntax to develop advanced popup templates.</p>
+<dialog-box class="modal-fixed-footer"
+    v-bind:showDialog="showDialog"
+    v-on:update:showDialog="$emit( 'update:showDialog', $event )"
+    v-on:opened="openDialog"
+>
+    <template v-if="showDialog">
+        <div class="modal-content" >
+            <div class="dialog-header">
+                <div class="catalog-collection">
+                    <catalog-item
+                        iconSize="1"
+                        v-bind:itemId="itemId"
+                        v-bind:allowed="{ edit: false, remove: false }"
+                        v-bind:key="itemId"
+                    ></catalog-item>
                 </div>
-                <div id="layer-popup-content">
-                </div> -->
+
+                <ul class="tabs black-text" ref="tabs">
+                    <li class="tab col s4">
+                        <a href="#details">Details</a>
+                    </li>
+
+                    <li class="tab col s4 disabled"
+                        v-if="hasStyle"
+                    ><a href="#style">Style</a></li>
+
+                    <li class="tab col s4 disabled"
+                        v-if="hasAttributes"
+                    ><a href="#attributes">Attributes</a></li>
+                    <!-- <li class="tab col s3"> -->
+                        <!-- <a href="#popup">Popup Template</a> -->
+                    <!-- </li> -->
+
+                    <li class="tab col s4 disabled"
+                        v-if="hasQueries"
+                    ><a href="#queries">Queries</a></li>
+                </ul>
             </div>
 
-            <div id="queries" class="col s12">
-                <!-- <a class="waves-effect waves-light btn-small blue-grey darken-2" onclick="createQuery()" style="width: 130px;">Create Query</a>
-                <ul class="collapsible">
-                    <query-panel v-for="query in editingLayer.queries"
-                                v-bind:query="query"
-                                v-bind:layer="editingLayer"
-                                v-bind:key="query.id">
-                    </query-panel>
-                </ul> -->
-            </div>
-        </div>        <!-- </div> -->
-    </div>
-    <div class="modal-footer">
-        <div class="grey-text darken-4" v-if="itemId">
-            Editing {{ typeTitle }} <span class="itemId">{{ itemId }}</span>
+            <div class="dialog-body">
+                <div id="details">
+                    <edit-layer-details
+                        v-bind:itemId="itemId"
+                    ></edit-layer-details>
+                </div>
+
+                <div id="attributes" class="col s12">
+                    <!-- <attribute-panel v-for="attribute in editingLayer.attributes"
+                                        v-bind:attribute="attribute"
+                                        v-bind:layer="editingLayer"
+                                        v-bind:key="attribute.id">
+                    </attribute-panel> -->
+                </div>
+
+                <div id="popup" class="col s12">
+                    <!-- <div class="row">
+                        <p>Add any HTML elements you need to customize your layers popup. SMK uses vue natively so you can use <a href="https://vuejs.org/" target="_blank">Vue</a> syntax to develop advanced popup templates.</p>
+                    </div>
+                    <div id="layer-popup-content">
+                    </div> -->
+                </div>
+
+                <div id="queries" class="col s12">
+                    <!-- <a class="waves-effect waves-light btn-small blue-grey darken-2" onclick="createQuery()" style="width: 130px;">Create Query</a>
+                    <ul class="collapsible">
+                        <query-panel v-for="query in editingLayer.queries"
+                                    v-bind:query="query"
+                                    v-bind:layer="editingLayer"
+                                    v-bind:key="query.id">
+                        </query-panel>
+                    </ul> -->
+                </div>
+            </div>        <!-- </div> -->
         </div>
-        <a class="waves-effect waves-light btn blue-grey darken-2 disabled"
-            v-on:click="test()"
-        ><i class="material-icons left">cloud_done</i>Test</a>
-    </div>
-</div>
+        <div class="modal-footer">
+            <div class="grey-text darken-4">
+                Editing {{ typeTitle }} <span class="itemId">{{ itemId }}</span>
+            </div>
+            <a class="waves-effect waves-light btn blue-grey darken-2 disabled"
+                v-on:click="test()"
+            ><i class="material-icons left">cloud_done</i>Test</a>
+        </div>
+    </template>
+</dialog-box>
