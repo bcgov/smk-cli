@@ -1,6 +1,6 @@
-import viewer from './configViewer.js'
-import layers from './configLayers.js'
-import tools from './configTools.js'
+import viewer from './config-viewer.js'
+import layers from './config-layers.js'
+import tools from './config-tools.js'
 
 export default {
     state: function () {

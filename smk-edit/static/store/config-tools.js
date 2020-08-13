@@ -1,5 +1,4 @@
-import configToolLayers from './configToolLayers.js'
-import { vueComponent } from '../vue-util.js'
+import configToolLayers from './config-tool-layers.js'
 
 export default mix( {
     state: function () {
