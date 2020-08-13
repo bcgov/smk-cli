@@ -20,6 +20,14 @@
                 v-if="metadataUrl"
             ><i class="material-icons">open_in_new</i></a>
 
+            <div class="switch tooltipped" ref="visibility">
+                <label>
+                    <input type="checkbox" v-model="isVisible">
+                    <span class="lever"></span>
+                </label>
+                <div>{{ isVisible ? 'Show' : 'Hide' }}</div>
+            </div>
+
             <a class="btn-flat blue-text"
                 v-if="allowedEdit"
                 v-on:click="edit"

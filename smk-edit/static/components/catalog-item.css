@@ -55,3 +55,8 @@
 .catalog-collection {
     padding: 5px
 }
+
+.catalog-item .card-action .switch div {
+    font-size: smaller;
+    text-align: center;
+}
