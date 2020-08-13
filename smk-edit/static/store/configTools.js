@@ -6,13 +6,13 @@ export default mix( {
         return []
     },
     getters: {
-        configHasTool: function ( state ) {
-            return function ( type ) {
+        configHasTool: function ( state, getters ) {
+            return getters.version && function ( type ) {
                 return !!state.find( function ( t ) { return t.type == type } )
             }
         },
-        configTool: function ( state ) {
-            return function ( type ) {
+        configTool: function ( state, getters ) {
+            return getters.version && function ( type ) {
                 var t = state.find( function ( t ) { return t.type == type } )
                 if ( !t ) throw Error( `Config tool "${ t.type }" not defined` )
                 return t

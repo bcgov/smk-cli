@@ -58,7 +58,7 @@ export default {
         configToolLayersDisplayItem: function ( context, item ) {
             var display = context.getters.configToolLayersDisplay()
 
-            displayItemsFind( display, function ( displayItem ) {
+            displayItemsFind( display.items, function ( displayItem ) {
                 if ( displayItem.id == item.id ) {
                     Object.assign( displayItem, item )
                     return true
