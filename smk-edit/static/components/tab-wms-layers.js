@@ -72,6 +72,7 @@ export default importComponents( [
                 this.showEditItem = true
             },
             removeItem: function ( itemId ) {
+                this.$store.dispatch( 'configToolLayersDisplayItemRemove', itemId )
             }
         },
         mounted: function () {

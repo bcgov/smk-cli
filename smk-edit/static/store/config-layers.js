@@ -47,12 +47,24 @@ export default {
                 throw Error( `Layer "${ layer.id }" doesn't exist` )
 
             Vue.set( state, index, layer )
+        },
+        configLayerRemove: function ( state, layer ) {
+            var index = state.findIndex( function ( ly ) { return ly.id == layer.id } )
+            if ( index == -1 )
+                throw Error( `Layer "${ layer.id }" doesn't exist` )
+
+            state.splice( index, 1 )
+            // Vue.set( state, index, layer )
         }
     },
     actions: {
         configLayer: function ( context, layer ) {
             var old = context.getters.configLayer( layer.id )
             context.commit( 'configLayer', Object.assign( old, layer ) )
+            context.commit( 'bumpVersion' )
+        },
+        configLayerRemove: function ( context, layer ) {
+            context.commit( 'configLayerRemove', layer )
             context.commit( 'bumpVersion' )
         }
     }

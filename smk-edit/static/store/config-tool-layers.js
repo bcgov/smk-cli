@@ -76,6 +76,24 @@ export default {
             col.items = collection.items
 
             context.dispatch( 'configToolLayersDisplay', display )
+        },
+        configToolLayersDisplayItemRemove: function ( context, itemId ) {
+            var item = context.getters.configToolLayersDisplayItem( itemId )
+            var parentCollection = context.getters.configToolLayersDisplayItemParent( itemId )
+
+            var pos
+            parentCollection.items = parentCollection.items.filter( function ( item, index ) {
+                if ( item.id == itemId ) pos = index
+                return item.id != itemId
+            } )
+
+            if ( item.items )
+                parentCollection.items.splice( pos, 0, ...item.items )
+
+            context.dispatch( 'configToolLayersDisplayCollection', parentCollection )
+
+            if ( context.getters.configHasLayer( itemId ) )
+                context.dispatch( 'configLayerRemove', { id: itemId } )
         }
     },
 }
