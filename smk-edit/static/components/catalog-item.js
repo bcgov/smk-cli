@@ -24,7 +24,7 @@ vueComponent( import.meta.url, {
         isVisible: {
             get: function () {
                 var item = this.$store.getters.configToolLayersDisplayItem( this.itemId )
-                if ( item.isVisible != null ) return item.isVisible
+                if ( item.isVisible != null || itemTypePresentation[ this.type ].collection ) return item.isVisible
                 return this.$store.getters.configLayer( this.itemId ).isVisible
             },
             set: function ( val ) {
