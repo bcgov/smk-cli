@@ -4,6 +4,7 @@ import itemTypePresentation from './item-type-presentation.js'
 export default importComponents( [
     './components/catalog-item.js',
     './components/edit-item-details.js',
+    './components/edit-item-attributes.js',
     './components/dialog-box.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {

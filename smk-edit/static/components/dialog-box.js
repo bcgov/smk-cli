@@ -6,9 +6,11 @@ vueComponent( import.meta.url, {
         showDialog: function ( val ) {
             if ( val ) {
                 M.Modal.getInstance( this.$refs.dialog ).open()
+                this.$onUpdate = function () { this.$emit( 'opened' ) }
             }
             else {
                 M.Modal.getInstance( this.$refs.dialog ).close()
+                this.$onUpdate = function () { this.$emit( 'closed' ) }
             }
         }
     },
@@ -22,9 +24,9 @@ vueComponent( import.meta.url, {
         } )
     },
     updated: function () {
-        if ( this.showDialog )
-            this.$emit( 'opened' )
-        else
-           this.$emit( 'closed' )
+        if ( !this.$onUpdate ) return
+
+        this.$onUpdate.call( this )
+        this.$onUpdate = null
     }
 } )

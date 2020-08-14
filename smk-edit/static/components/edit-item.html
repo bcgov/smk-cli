@@ -24,9 +24,10 @@
                         v-if="hasStyle"
                     ><a href="#style">Style</a></li>
 
-                    <li class="tab col s4 disabled"
+                    <li class="tab col s4"
                         v-if="hasAttributes"
                     ><a href="#attributes">Attributes</a></li>
+
                     <!-- <li class="tab col s3"> -->
                         <!-- <a href="#popup">Popup Template</a> -->
                     <!-- </li> -->
@@ -45,6 +46,10 @@
                 </div>
 
                 <div id="attributes" class="col s12">
+                    <edit-item-attributes
+                        v-if="hasAttributes"
+                        v-bind:itemId="itemId"
+                    ></edit-item-attributes>
                     <!-- <attribute-panel v-for="attribute in editingLayer.attributes"
                                         v-bind:attribute="attribute"
                                         v-bind:layer="editingLayer"
