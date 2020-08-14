@@ -1,7 +1,7 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
-    './components/edit-layer.js'
+    './components/edit-item.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {

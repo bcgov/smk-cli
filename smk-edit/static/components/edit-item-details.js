@@ -1,9 +1,9 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
-    './components/edit-layer-details-layer.js',
-    './components/edit-layer-details-folder.js',
-    // './components/edit-layer-details-group.js'
+    './components/edit-item-details-layer.js',
+    './components/edit-item-details-folder.js',
+    // './components/edit-item-details-group.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         props: [ 'itemId' ],
@@ -19,7 +19,7 @@ export default importComponents( [
             },
             layerDetailComponent: function () {
                 var item = this.$store.getters.configToolLayersDisplayItem( this.itemId )
-                return 'edit-layer-details-' + ( item.type || 'layer' )
+                return 'edit-item-details-' + ( item.type || 'layer' )
             }
         },
         mounted: function () {

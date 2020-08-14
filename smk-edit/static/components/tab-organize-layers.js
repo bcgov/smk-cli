@@ -2,7 +2,7 @@ import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
     './components/display-item.js',
-    './components/edit-layer.js',
+    './components/edit-item.js',
     './components/dialog-box.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {

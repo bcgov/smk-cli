@@ -1,9 +1,9 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
-    './components/edit-layer-details-layer-wms.js',
-    './components/edit-layer-details-layer-esri-dynamic.js',
-    './components/edit-layer-details-layer-vector.js'
+    './components/edit-item-details-layer-wms.js',
+    './components/edit-item-details-layer-esri-dynamic.js',
+    './components/edit-item-details-layer-vector.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         props: [ 'itemId' ],
@@ -59,7 +59,7 @@ export default importComponents( [
                 }
             },
             layerDetailComponent: function () {
-                return 'edit-layer-details-layer-' + this.$store.getters.configLayer( this.itemId ).type
+                return 'edit-item-details-layer-' + this.$store.getters.configLayer( this.itemId ).type
             }
         },
         mounted: function () {

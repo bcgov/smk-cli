@@ -1,26 +1,26 @@
 
-.edit-layer .modal-content {
+.edit-item .modal-content {
     display: flex;
     min-height: 0;
     flex-direction: column;
 }
 
-.edit-layer .modal-content .dialog-header {
+.edit-item .modal-content .dialog-header {
     flex-shrink: 0;
 }
 
-.edit-layer .modal-content .dialog-body {
+.edit-item .modal-content .dialog-body {
     flex-grow: 0;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 1em;
 }
 
-.edit-layer .tabs .tab:not(.disabled) a {
+.edit-item .tabs .tab:not(.disabled) a {
     color: black;
 }
 
-.edit-layer .modal-footer {
+.edit-item .modal-footer {
     display: flex;
     justify-content: space-between;
     padding-left: 1em;
@@ -28,7 +28,7 @@
     text-align: unset;
 }
 
-.edit-layer .modal-footer a.btn {
+.edit-item .modal-footer a.btn {
     flex-shrink: 0;
 }
 

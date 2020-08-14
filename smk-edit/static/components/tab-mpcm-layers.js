@@ -3,7 +3,7 @@ import { vueComponent, importComponents } from '../vue-util.js'
 export default importComponents( [
     './components/catalog-item.js',
     './components/catalog-tree.js',
-    './components/edit-layer.js'
+    './components/edit-item.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
