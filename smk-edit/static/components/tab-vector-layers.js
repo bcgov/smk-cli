@@ -157,7 +157,7 @@ export default importComponents( [
             removeItem: function ( itemId ) {
                 this.$store.dispatch( 'configToolLayersDisplayItemRemove', itemId )
             }
-     },
+        },
         watch: {
             importType: function () {
                 this.resetImport()

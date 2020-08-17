@@ -5,6 +5,7 @@ const path = require( 'path' )
 const fs = require( 'fs' )
 const multer = require( 'multer' )
 const fetch = require( 'node-fetch' )
+// const sizeOf = require( 'image-size' )
 
 // move these into an external config
 const DATABC_SERVICE_URL = 'https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer'
@@ -22,13 +23,6 @@ const MPCM_OPTIONS = {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 module.exports = function( app, logger ) {
-    var upload = multer( {
-        dest: path.resolve( app.get( 'smk layers' ) ),
-        limits: {
-            fieldSize: Number.POSITIVE_INFINITY
-        }
-    } ).single( 'file' )
-
     app.use(    '/catalog', logger )
 
     app.get(    '/catalog/mpcm',            getMpcmCatalog )
@@ -37,10 +31,27 @@ module.exports = function( app, logger ) {
     app.get(    '/catalog/wms/:url',        getWmsCatalog )
     app.get(    '/catalog/wms/:url/:id',    getWmsCatalogLayerConfig )
 
+    var uploadLayer = multer( {
+        dest: path.resolve( app.get( 'smk layers' ) ),
+        limits: {
+            fieldSize: Number.POSITIVE_INFINITY
+        }
+    } ).single( 'file' )
+
     app.get(    '/catalog/local',           getLocalCatalog )
     app.get(    '/catalog/local/:id',       getLocalCatalogLayerConfig )
-    app.post(   '/catalog/local',           upload, postLocalCatalog )
-    // app.delete( '/catalog/local/:id',       deleteLocalCatalog )
+    app.post(   '/catalog/local',           uploadLayer, postLocalCatalog )
+
+    var uploadAsset = multer( {
+        dest: path.resolve( app.get( 'smk assets' ) ),
+        limits: {
+            fieldSize: Number.POSITIVE_INFINITY
+        }
+    } ).single( 'file' )
+
+    app.get(    '/catalog/asset',           getAssetCatalog )
+    app.get(    '/catalog/asset/:id',       getAssetCatalogItem )
+    app.post(   '/catalog/asset',           uploadAsset, postAssetCatalog )
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -362,7 +373,68 @@ function postLocalCatalog( req, res, next ) {
     console.log('    Success!');
 }
 
-function deleteLocalCatalog( req, res, next ) {
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function getAssetCatalog( req, res, next ) {
+    var assetDir = path.resolve( req.app.get( 'smk assets' ) )
+
+    if ( !fs.existsSync( assetDir ) ) {
+        console.log( `    No catalog at ${ assetDir }` );
+        fs.mkdirSync( assetDir )
+    }
+
+    console.log( `    Reading catalog from ${ assetDir }` );
+    var assets = fs.readdirSync( assetDir, { encoding: 'utf8' } )
+
+    var out = assets.map( function ( a ) {
+        return catalogItem( 'assets/' + a, { id: slugify( a ) } )
+    } )
+
+    res.json( out )
+    console.log('    Success!');
+}
+
+function getAssetCatalogItem( req, res, next ) {
+    var id = req.params.id
+    var assetDir = path.resolve( req.app.get( 'smk assets' ) )
+
+    if ( !fs.existsSync( assetDir ) ) {
+        console.log( `    No catalog at ${ assetDir }` );
+        fs.mkdirSync( assetDir )
+    }
+
+    console.log( `    Reading catalog from ${ assetDir }` );
+    var assets = fs.readdirSync( assetDir, { encoding: 'utf8' } )
+
+    var asset = assets.find( function ( a ) { return id == slugify( a ) } )
+    if ( !asset ) {
+        console.log( `    No asset for ${ id } in ${ assetDir }` );
+        res.status( 404 ).json( { error: `No asset for ${ id } in ${ assetDir }` } )
+        return
+    }
+
+    // var dim = sizeOf( path.resolve( assetDir, asset ) )
+    var out = {
+        id: slugify( asset ),
+        title: 'assets/' + asset,
+        // width: dim.width,
+        // height: dim.height,
+    }
+
+    res.json( out )
+    console.log('    Success!');
+}
+
+function postAssetCatalog( req, res, next ) {
+    var id
+    if ( req.file ) {
+        id = slugify( req.file.originalname )
+        console.log( `    Adding ${ id } to assets from ${ req.file.originalname }` )
+        fs.renameSync( req.file.path, path.resolve( req.app.get( 'smk assets' ), req.file.originalname ) )
+    }
+
+    res.json( { ok: true, message: `Successfully added ${ id }`, id: id, title: 'assets/' + req.file.originalname } )
+    console.log('    Success!');
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

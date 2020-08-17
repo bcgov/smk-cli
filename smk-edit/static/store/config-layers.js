@@ -18,6 +18,11 @@ export default {
                 return ly
             }
         },
+        configLayerStyle: function ( state, getters ) {
+            return getters.version && function ( id ) {
+                return getters.configLayer( id ).style || {}
+            }
+        },
         mpcmLayers: function ( state ) {
             return state.filter( function ( ly ) {
                 return !!ly.mpcmId
@@ -66,6 +71,14 @@ export default {
         configLayerRemove: function ( context, layer ) {
             context.commit( 'configLayerRemove', layer )
             context.commit( 'bumpVersion' )
-        }
+        },
+        configLayerStyle: function ( context, layerStyle ) {
+            var ly = context.getters.configLayer( layerStyle.id )
+            if ( !ly.style ) ly.style = {}
+            delete layerStyle.id
+            Object.assign( ly.style, layerStyle )
+            context.commit( 'configLayer', ly )
+            context.commit( 'bumpVersion' )
+        },
     }
 }
