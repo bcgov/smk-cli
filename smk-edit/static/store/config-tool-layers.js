@@ -13,6 +13,15 @@ export default {
                 }
             }
         },
+        configToolLayersDisplayHasItem: function ( state, getters ) {
+            return getters.version && function ( itemId ) {
+                if ( itemId == '-top-' ) return true
+
+                return displayItemsFind( getters.configToolLayersDisplay().items, function ( item ) {
+                    return item.id == itemId
+                } ).length == 1
+            }
+        },
         configToolLayersDisplayItem: function ( state, getters ) {
             return getters.version && function ( itemId ) {
                 if ( itemId == '-top-' ) return getters.configToolLayersDisplay()
@@ -20,7 +29,8 @@ export default {
                 var items = displayItemsFind( getters.configToolLayersDisplay().items, function ( item ) {
                     return item.id == itemId
                 } )
-                if ( items.length != 1 ) throw Error( `Display item "${ itemId }" not found` )
+                if ( items.length != 1 )
+                    throw Error( `Display item "${ itemId }" not found` )
 
                 return items[ 0 ]
             }
