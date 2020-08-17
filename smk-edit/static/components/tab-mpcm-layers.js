@@ -15,7 +15,7 @@ export default importComponents( [
         },
         computed: {
             mpcmLayers: function () {
-                return this.$store.getters.mpcmLayers
+                return this.$store.getters.configLayersMpcm
             },
         },
         methods: {

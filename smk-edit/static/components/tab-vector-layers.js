@@ -18,7 +18,7 @@ export default importComponents( [
         },
         computed: {
             vectorLayers: function () {
-                return this.$store.getters.vectorLayers
+                return this.$store.getters.configLayersVector
             },
             acceptFileTypes: function () {
                 return ( {

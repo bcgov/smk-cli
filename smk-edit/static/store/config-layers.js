@@ -6,6 +6,21 @@ export default {
         configLayers: function ( state ) {
             return state
         },
+        configLayersMpcm: function ( state ) {
+            return state.filter( function ( ly ) {
+                return !!ly.mpcmId
+            } )
+        },
+        configLayersWms: function ( state ) {
+            return state.filter( function ( ly ) {
+                return ly.type == 'wms'
+            } )
+        },
+        configLayersVector: function ( state ) {
+            return state.filter( function ( ly ) {
+                return ly.type == 'vector'
+            } )
+        },
         configHasLayer: function ( state, getters ) {
             return getters.version && function ( id ) {
                 return !!state.find( function ( ly ) { return ly.id == id } )
@@ -23,21 +38,6 @@ export default {
                 return getters.configLayer( id ).style || {}
             }
         },
-        mpcmLayers: function ( state ) {
-            return state.filter( function ( ly ) {
-                return !!ly.mpcmId
-            } )
-        },
-        wmsLayers: function ( state ) {
-            return state.filter( function ( ly ) {
-                return ly.type == 'wms'
-            } )
-        },
-        vectorLayers: function ( state ) {
-            return state.filter( function ( ly ) {
-                return ly.type == 'vector'
-            } )
-        }
     },
     mutations: {
         configLayersAppend: function ( state, layer ) {

@@ -17,7 +17,7 @@ export default importComponents( [
         },
         computed: {
             wmsLayers: function () {
-                return this.$store.getters.wmsLayers
+                return this.$store.getters.configLayersWms
             },
             catalogUrl: {
                 get: function () { return this.$store.state.wmsCatalogUrl },
