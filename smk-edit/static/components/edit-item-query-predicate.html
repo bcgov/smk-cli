@@ -1,0 +1,114 @@
+<div>
+    <div class="row">
+        <input-select class="col s12"
+            v-model="predicateOperator"
+        >Operator
+            <template v-slot:options>
+                <option value="and">AND: All of these conditions</option>
+                <option value="or">OR: Any of these conditions</option>
+                <option value="not">NOT</option>
+                <!-- <option value="equals">EQUALS</option> -->
+                <!-- <option value="less-than">LESS THAN</option> -->
+                <!-- <option value="greater-than">GREATER THAN</option> -->
+                <!-- <option value="contains">CONTAINS</option> -->
+                <!-- <option value="starts-with">STARTS WITH</option> -->
+                <!-- <option value="ends-with">ENDS WITH</option> -->
+            </template>
+        </input-select>
+    </div>
+
+    <ul class="collapsible popout" ref="collapsible"
+        xxv-bind:key="queriesKey"
+        xxv-if="clauses.length > 0"
+    >
+        <li v-for="clause,i in clauses"
+            v-bind:data-index="i"
+        >
+            <div class="collapsible-header">
+                <i class="material-icons">article</i>
+                <span>{{ getClauseSummary( clause ) }}</span>
+
+                <div class="widgets">
+                    <a class="btn-flat red-text"
+                        v-on:click.stop="removeClause( i )"
+                    ><i class="material-icons">delete_forever</i></a>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <div v-if="activeClauseIndex == i"
+                    v-bind:key="activeClauseIndex"
+                >
+                    <div class="row">
+                        <input-select class="col s12"
+                            v-model="clauseOperator"
+                            xxv-bind:value="getClauseOperator( i )"
+                            xxv-on:input="setClauseOperator( i, $event )"
+                        >Operator
+                            <template v-slot:options>
+                                <!-- <option value="and">AND: All of these conditions</option> -->
+                                <!-- <option value="or">OR: Any of these conditions</option> -->
+                                <!-- <option value="not">NOT</option> -->
+                                <option value="equals">EQUALS</option>
+                                <option value="less-than">LESS THAN</option>
+                                <option value="greater-than">GREATER THAN</option>
+                                <option value="contains">CONTAINS</option>
+                                <option value="starts-with">STARTS WITH</option>
+                                <option value="ends-with">ENDS WITH</option>
+                            </template>
+                        </input-select>
+                    </div>
+
+                    <div class="row" v-if="clauseOperatorMode == 1">
+                        <input-select class="col s6"
+                            v-model="clauseOperand1"
+                        >First Operand
+                            <template v-slot:options>
+                                <option value="{}" disabled>Choose operand</option>
+                                <optgroup label="Parameters">
+                                    <option v-for="operand in clauseParameterOperands"
+                                        v-bind:value="operand.op">{{ operand.title }}</option>
+                                </optgroup>
+                                <optgroup label="Attributes">
+                                    <option v-for="operand in clauseAttributeOperands"
+                                        v-bind:value="operand.op">{{ operand.title }}</option>
+                                </optgroup>
+                            </template>
+                        </input-select>
+
+                        <input-select class="col s6"
+                            v-model="clauseOperand2"
+                        >Second Operand
+                            <template v-slot:options>
+                                <option value="{}" disabled>Choose operand</option>
+                                <optgroup label="Parameters">
+                                    <option v-for="operand in clauseParameterOperands"
+                                        v-bind:value="operand.op">{{ operand.title }}</option>
+                                </optgroup>
+                                <optgroup label="Attributes">
+                                    <option v-for="operand in clauseAttributeOperands"
+                                        v-bind:value="operand.op">{{ operand.title }}</option>
+                                </optgroup>
+                            </template>
+                        </input-select>
+                    </div>
+
+                    <div class="row" v-if="clauseOperatorMode == 2">
+                        <edit-item-query-predicate
+                            v-bind:itemId="itemId"
+                            v-bind:queryId="queryId"
+                            v-bind:argumentIndexes="clauseArgumentIndexes"
+                        ></edit-item-query-predicate>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col s12 xxright-align">
+            <a class="waves-effect waves-light btn blue-grey darken-2"
+                v-on:click="addClause"
+            ><i class="material-icons left">playlist_add</i>Add New Clause</a>
+        </div>
+    </div>
+</div>

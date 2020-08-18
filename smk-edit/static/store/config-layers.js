@@ -38,6 +38,25 @@ export default {
                 return getters.configLayer( id ).style || {}
             }
         },
+        configLayerQueries: function ( state, getters ) {
+            return getters.version && function ( id ) {
+                return getters.configLayer( id ).queries || []
+            }
+        },
+        configLayerQueryParameters: function ( state, getters ) {
+            return getters.version && function ( id, queryId ) {
+                var q = getters.configLayerQueries( id ).find( function ( q ) { return q.id == queryId } )
+                if ( !q ) throw Error( `Query "${ queryId }" doesn't exist` )
+                return q.parameters || []
+            }
+        },
+        configLayerQueryPredicate: function ( state, getters ) {
+            return getters.version && function ( id, queryId ) {
+                var q = getters.configLayerQueries( id ).find( function ( q ) { return q.id == queryId } )
+                if ( !q ) throw Error( `Query "${ queryId }" doesn't exist` )
+                return q.predicate || []
+            }
+        }
     },
     mutations: {
         configLayersAppend: function ( state, layer ) {
@@ -77,6 +96,30 @@ export default {
             if ( !ly.style ) ly.style = {}
             delete layerStyle.id
             Object.assign( ly.style, layerStyle )
+            context.commit( 'configLayer', ly )
+            context.commit( 'bumpVersion' )
+        },
+        configLayerQueries: function ( context, layerQueries ) {
+            var ly = context.getters.configLayer( layerQueries.id )
+            // if ( !ly.queries ) ly.queries = []
+            // delete layerQueries.id
+            ly.queries = layerQueries.queries
+            context.commit( 'configLayer', ly )
+            context.commit( 'bumpVersion' )
+        },
+        configLayerQueryParameters: function ( context, layerQueryParameters ) {
+            var ly = context.getters.configLayer( layerQueryParameters.id )
+            var q = ly.queries.find( function ( q ) { return q.id == layerQueryParameters.queryId } )
+            if ( !q ) throw Error( `Query "${ layerQueryParameters.queryId }" doesn't exist` )
+            q.parameters = layerQueryParameters.parameters
+            context.commit( 'configLayer', ly )
+            context.commit( 'bumpVersion' )
+        },
+        configLayerQueryPredicate: function ( context, layerQueryPredicate ) {
+            var ly = context.getters.configLayer( layerQueryPredicate.id )
+            var q = ly.queries.find( function ( q ) { return q.id == layerQueryPredicate.queryId } )
+            if ( !q ) throw Error( `Query "${ layerQueryPredicate.queryId }" doesn't exist` )
+            q.predicate = layerQueryPredicate.predicate
             context.commit( 'configLayer', ly )
             context.commit( 'bumpVersion' )
         },
