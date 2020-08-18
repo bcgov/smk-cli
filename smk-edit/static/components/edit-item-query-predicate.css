@@ -1,0 +1,8 @@
+.edit-item-query-predicate .dialog-box {
+    width: 90%;
+    max-height: 90%;
+}
+
+.edit-item-query-predicate .dialog-box .dialog-header .row {
+    margin-bottom: 0;
+}

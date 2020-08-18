@@ -102,7 +102,7 @@ Vue.component( 'input-select', {
             <label v-bind:for="id" class="active"><slot></slot></label>
             <select v-bind:id="id" ref="select"
                 v-bind:value="value"
-                v-on:change="$emit( 'input', $event.target.value )"
+                v-on:change.stop="$emit( 'input', $event.target.value )"
             >
                 <slot name="options"></slot>
             </select>
@@ -110,7 +110,12 @@ Vue.component( 'input-select', {
     `,
     props: [ 'value' ],
     mounted: function () {
-        M.FormSelect.init( this.$refs.select )
+        M.FormSelect.init( this.$refs.select, {
+            dropdownOptions: {
+                constrainWidth: false,
+                container: document.getElementsByTagName( 'body' )[ 0 ]
+            }
+        } )
     }
 } )
 
@@ -147,9 +152,9 @@ Vue.component( 'input-textarea', {
         uniqueId
     ],
     template: `
-        <div class="col s12 input-field">
+        <div class="input-field">
             <label v-bind:for="id"><slot></slot></label>
-            <textarea v-bind:id="id" class="materialize-textarea"
+            <textarea v-bind:id="id" class="materialize-textarea" ref="text"
                 v-bind:value="value"
                 v-on:input="$emit( 'input', $event.target.value )"
             ></textarea>
@@ -158,6 +163,32 @@ Vue.component( 'input-textarea', {
     props: [ 'value' ],
     mounted: function () {
         M.updateTextFields()
+        M.textareaAutoResize( this.$refs.text )
+    },
+    updated: function () {
+        M.textareaAutoResize( this.$refs.text )
+    }
+} )
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Vue.component( 'input-checkbox', {
+    mixins: [
+        uniqueId
+    ],
+    template: `
+        <div>
+            <label>
+                <input type="checkbox" class="filled-in"
+                    v-bind:checked="value"
+                    v-on:change="$emit( 'input', $event.target.checked )"
+                />
+                <span><slot></slot></span>
+            </label>
+        </div>
+    `,
+    props: [ 'value' ],
+    mounted: function () {
     }
 } )
 

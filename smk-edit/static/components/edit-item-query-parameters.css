@@ -1,0 +1,4 @@
+.edit-item-query-parameters .collapsible-header select {
+    display: block;
+    width: unset;
+}

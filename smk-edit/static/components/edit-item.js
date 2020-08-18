@@ -6,6 +6,7 @@ export default importComponents( [
     './components/edit-item-details.js',
     './components/edit-item-style.js',
     './components/edit-item-attributes.js',
+    './components/edit-item-queries.js',
     './components/dialog-box.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
