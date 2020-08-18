@@ -248,8 +248,50 @@ function getWmsCatalogLayerConfig( req, res, next ) {
     if ( !( id in wmsLayerCache[ serviceUrl ] ) )
         throw Error( `${ id } not in WMS Catalog cache for ${ serviceUrl }` )
 
-    res.json( wmsLayerCache[ serviceUrl ][ id ] )
-    console.log('    Success!');
+    var ly = wmsLayerCache[ serviceUrl ][ id ]
+
+    if ( ly.attributes || ly.attributes === false ) {
+        console.log('    Success!');
+        return res.json( ly )
+    }
+
+    var url = new URL( serviceUrl )
+    url.search = `?service=wfs&version=2.0.0&request=DescribeFeatureType&typeName=${ ly.layerName }&outputFormat=application/json`
+
+    console.log( '    Attempting to populate attributes' );
+    return fetch( url )
+        .then( function ( resp ) {
+            return resp.json()
+        } )
+        .then( function ( ft ) {
+            if ( ft.featureTypes && ( ft.featureTypes[ 0 ].typeName == ly.layerName || `${ ft.targetPrefix }:${ ft.featureTypes[ 0 ].typeName }` == ly.layerName ) ) {
+                ly.attributes = ft.featureTypes[ 0 ].properties.map( function ( p ) {
+                    return {
+                        id: slugify( p.name ),
+                        name: p.name,
+                        title: p.name.replace( /_/g, ' ' ),
+                        visible: true
+                    }
+                } )
+                console.log( `    Got ${ ly.attributes.length } attributes` )
+            }
+            else {
+                console.log( ly )
+                console.log( ft )
+                ly.attributes = false
+            }
+            res.json( ly )
+            console.log( '    Success!' )
+            next()
+        } )
+        .catch( function ( err ) {
+            console.log( err )
+
+            ly.attributes = false
+            res.json( ly )
+            console.log( '    Success!' )
+            next()
+        } )
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
