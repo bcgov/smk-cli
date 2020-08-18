@@ -20,7 +20,6 @@ export default importComponents( [
         props: [ 'itemId', 'queryId' ],
         data: function () {
             return {
-                // queriesKey: 1,
                 editPredicate: false,
                 activeClauseIndex: null
             }
@@ -29,11 +28,6 @@ export default importComponents( [
             predicate: function () {
                 return this.$store.getters.configLayerQueryPredicate( this.itemId, this.queryId )
             },
-            // predicateOperator: attributeAccessor( 'operator' ),
-            // predicateArguments: attributeAccessor( 'arguments' ),
-            // attributes: function () {
-                // return this.$store.getters.configLayer( this.itemId ).attributes
-            // },
             summary: function () {
                 return JSON.stringify( this.predicate )
             },
@@ -45,7 +39,9 @@ export default importComponents( [
                     return this.predicate.operator
                 },
                 set: function ( val ) {
-                    this.predicate.operator = val
+                    var pred = this.predicate
+                    pred.operator = val
+                    this.$store.dispatch( 'configLayerQueryPredicate', { id: this.itemId, queryId: this.queryId, predicate: pred } )
                 }
             },
             clauseOperator: {
@@ -55,7 +51,9 @@ export default importComponents( [
                 },
                 set: function ( val ) {
                     if ( this.activeClauseIndex == null ) return
-                    this.clauses[ this.activeClauseIndex ].operator = val
+                    var pred = this.predicate
+                    pred.arguments[ this.activeClauseIndex ].operator = val
+                    this.$store.dispatch( 'configLayerQueryPredicate', { id: this.itemId, queryId: this.queryId, predicate: pred } )
                 }
             },
             clauseOperatorMode: function () {
@@ -65,31 +63,35 @@ export default importComponents( [
             clauseOperand1: {
                 get: function () {
                     if ( this.activeClauseIndex == null ) return
-                    return this.clauses[ this.activeClauseIndex ].arguments[ 0 ]
+                    return fromOperand( this.clauses[ this.activeClauseIndex ].arguments[ 0 ] )
                 },
                 set: function ( val ) {
                     if ( this.activeClauseIndex == null ) return
-                    this.clauses[ this.activeClauseIndex ].arguments[ 0 ] = val
+                    var pred = this.predicate
+                    pred.arguments[ this.activeClauseIndex ].arguments[ 0 ] = JSON.parse( val )
+                    this.$store.dispatch( 'configLayerQueryPredicate', { id: this.itemId, queryId: this.queryId, predicate: pred } )
                 }
             },
             clauseOperand2: {
                 get: function () {
                     if ( this.activeClauseIndex == null ) return
-                    return this.clauses[ this.activeClauseIndex ].arguments[ 1 ]
+                    return fromOperand( this.clauses[ this.activeClauseIndex ].arguments[ 1 ] )
                 },
                 set: function ( val ) {
                     if ( this.activeClauseIndex == null ) return
-                    this.clauses[ this.activeClauseIndex ].arguments[ 1 ] = val
+                    var pred = this.predicate
+                    pred.arguments[ this.activeClauseIndex ].arguments[ 1 ] = JSON.parse( val )
+                    this.$store.dispatch( 'configLayerQueryPredicate', { id: this.itemId, queryId: this.queryId, predicate: pred } )
                 }
             },
             clauseParameterOperands: function () {
                 return this.$store.getters.configLayerQueryParameters( this.itemId, this.queryId ).map( function ( p ) {
-                    return { operand: 'parameter', id: p.id }
+                    return { op: fromOperand( { operand: 'parameter', id: p.id } ), title: p.title }
                 } )
             },
             clauseAttributeOperands: function () {
                 return this.$store.getters.configLayer( this.itemId ).attributes.map( function ( a ) {
-                    return { operand: 'attribute', name: a.name }
+                    return { op: fromOperand( { operand: 'attribute', name: a.name } ), title: a.name }
                 } )
             },
             clauseArgumentIndexes: function () {},
@@ -101,28 +103,22 @@ export default importComponents( [
             openDialog: function () {
 
             },
-            removeClause: function () {
-
+            removeClause: function ( index ) {
+                var pred = this.predicate
+                pred.arguments.splice( index, 1 )
+                this.$store.dispatch( 'configLayerQueryPredicate', { id: this.itemId, queryId: this.queryId, predicate: pred } )
             },
             addClause: function () {
-                var cl = {
+                var pred = this.predicate
+                pred.arguments.push( {
                     operator: 'equals',
                     arguments: [ {}, {} ]
-                }
-                // var cls = this.clauses
-                // cls.push( cl )
-                var pred = this.predicate
-                pred.arguments.push( cl )
+                } )
                 this.$store.dispatch( 'configLayerQueryPredicate', { id: this.itemId, queryId: this.queryId, predicate: pred } )
             },
             getClauseSummary: function ( clause ) {
                 return `${ clause.arguments[ 0 ].id || clause.arguments[ 0 ].name } ${ clause.operator } ${ clause.arguments[ 1 ].id || clause.arguments[ 1 ].name }`
             },
-            operandSummary: function ( op ) {
-                return `${ op.operand }: ${ op.name || op.id }`
-            }
-            // getClauseOperator: function () {},
-            // setClauseOperator: function () {},
         },
         mounted: function () {
             var self = this
@@ -139,26 +135,21 @@ export default importComponents( [
 
             M.updateTextFields()
             M.Collapsible.init( this.$refs.collapsible, {
-                onOpenStart: function ( el ) {
+                onOpenEnd: function ( el ) {
                     self.activeClauseIndex = 1 * el.dataset.index
                 },
+                onCloseStart: function () {
+                    self.activeClauseIndex = null
+                }
             } )
         },
     } )
 } )
 
-function attributeAccessor( prop ) {
-    return {
-        get: function () {
-            if ( this.activePredicateIndex == null ) return
-            return this.parameters[ this.activePredicateIndex ][ prop ]
-        },
-        set: function ( val ) {
-            if ( this.activePredicateIndex == null ) return
-            var ps = this.parameters
-            ps[ this.activePredicateIndex ][ prop ] = val
-            this.$store.dispatch( 'configLayerQueryParameters', { id: this.itemId, queryId: this.queryId, parameters: ps } )
-        }
-    }
+function fromOperand( op ) {
+    if ( op.operand == 'attribute' )
+        return JSON.stringify( { operand: 'attribute', name: op.name } )
+    if ( op.operand == 'parameter' )
+        return JSON.stringify( { operand: 'parameter', id: op.id } )
+    return '{}'
 }
-
