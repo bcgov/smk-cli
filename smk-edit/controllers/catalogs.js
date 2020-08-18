@@ -354,6 +354,7 @@ function getLocalCatalogLayerConfig( req, res, next ) {
         // attributes:  [ ],
         // queries: [],
         dataUrl: ly.dataUrl,
+        attributes: ly.attributes,
     } )
 
     res.json( out )
@@ -400,7 +401,28 @@ function postLocalCatalog( req, res, next ) {
         console.log( `    Adding ${ ly.id } to catalog from geojson` )
         // console.log( req.body.file )
 
-        fs.writeFileSync( outputFile, req.body.file )
+        var geojson = JSON.parse( req.body.file )
+        var fts
+        if ( geojson.type == 'FeatureCollection' ) {
+            fts = geojson.features
+        }
+        else {
+            console.log(geojson)
+        }
+
+        if ( fts ) {
+            ly.attributes = Object.keys( fts[ 0 ].properties ).map( function ( p ) {
+                return {
+                    id: slugify( p ),
+                    name: p,
+                    title: p,
+                    visible: true
+                }
+            } )
+            console.log( `    Found ${ ly.attributes.length } attributes` )
+        }
+
+        fs.writeFileSync( outputFile, JSON.stringify( geojson ) )
         ly.dataUrl = `./layers/${ ly.id }.geojson`
     }
     else {
