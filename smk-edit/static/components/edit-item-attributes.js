@@ -1,6 +1,7 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
+    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         props: [ 'itemId' ],
@@ -18,6 +19,22 @@ export default importComponents( [
             // attributeVisible: attributeAccessor( 'visible' ),
             canMoveUp: function () { return this.activeAttributeIndex > 0 },
             canMoveDown: function () { return this.activeAttributeIndex < ( this.attributes.length - 1 ) },
+            titleAttribute: {
+                get: function () {
+                    return this.$store.getters.configLayer( this.itemId ).titleAttribute
+                },
+                set: function ( val ) {
+                    this.$store.dispatch( 'configLayer', { id: this.itemId, titleAttribute: val } )
+                },
+            },
+            geometryAttribute: {
+                get: function () {
+                    return this.$store.getters.configLayer( this.itemId ).geometryAttribute
+                },
+                set: function ( val ) {
+                    this.$store.dispatch( 'configLayer', { id: this.itemId, geometryAttribute: val } )
+                },
+            }
         },
         methods: {
             isAttributeVisible: function ( index ) {

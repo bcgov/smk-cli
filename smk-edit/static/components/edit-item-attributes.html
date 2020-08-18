@@ -1,4 +1,28 @@
 <div>
+    <div class="row">
+        <input-select class="col s6"
+            v-model="titleAttribute"
+        >Title Attribute
+            <template v-slot:options>
+                <option value="" disabled>Choose attribute</option>
+                <option v-for="a in attributes"
+                    v-bind:value="a.name"
+                >{{ a.name }}</option>
+            </template>
+        </input-select>
+
+        <input-select class="col s6"
+            v-model="geometryAttribute"
+        >Geometry Attribute
+            <template v-slot:options>
+                <option value="" disabled>Choose attribute</option>
+                <option v-for="a in attributes"
+                    v-bind:value="a.name"
+                >{{ a.name }}</option>
+            </template>
+        </input-select>
+    </div>
+
     <ul class="collapsible popout" ref="collapsible">
         <li v-for="attr,i in attributes"
             v-bind:data-index="i"
