@@ -34,37 +34,34 @@ export default importComponents( [
                 if ( !this.$store.getters.configHasLayer( this.itemId ) ) return
                 var ly = this.$store.getters.configLayer( this.itemId )
 
-                if ( ly.attributes && ly.attributes.length > 0 )
-                    var q = {
-                        tools: [ {
-                            type: 'query',
-                            instance: ly.id + '--1',
-                            enabled: true,
-                            position: 'toolbar',
-                            // showTitle: true,
-                            // title: 'All features',
-                            onActivate: 'execute'
-                        } ],
-                        layers: [ {
-                            id: ly.id,
-                            queries: [ {
-                                id: '1',
-                                title: 'All features',
-                                parameters: [ { id: 'p1', type: 'constant', value: 1 } ],
-                                predicate: {
-                                    operator: 'and',
-                                    arguments: [
-                                        { operator: 'equals', arguments: [ { operand: 'parameter', id: 'p1' }, { operand: 'parameter', id: 'p1' } ] }
-                                    ]
-                                }
-                            } ]
+                var q = {
+                    tools: [ {
+                        type: 'query',
+                        instance: ly.id + '--all',
+                        enabled: true,
+                        position: 'toolbar',
+                        onActivate: 'execute'
+                    } ],
+                    layers: [ {
+                        id: ly.id,
+                        queries: [ {
+                            id: 'all',
+                            title: 'All features',
+                            parameters: [ { id: 'p1', type: 'constant', value: 1 } ],
+                            predicate: {
+                                operator: 'and',
+                                arguments: [
+                                    { operator: 'equals', arguments: [ { operand: 'parameter', id: 'p1' }, { operand: 'parameter', id: 'p1' } ] }
+                                ]
+                            }
                         } ]
-                    }
+                    } ]
+                }
 
                 return [
                     'hide-tool=all',
                     'show-tool=pan,zoom,toolbar,layers,identify,scale,coordinate,baseMaps,legend',
-                    q || {},
+                    q,
                     {
                         viewer: {
                             baseMap: 'StamenTonerLight'
