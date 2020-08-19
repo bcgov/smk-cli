@@ -67,9 +67,23 @@
             <div class="grey-text darken-4">
                 Editing {{ typeTitle }} <span class="itemId">{{ itemId }}</span>
             </div>
-            <a class="waves-effect waves-light btn blue-grey darken-2 disabled"
-                v-on:click="test()"
+            <a class="waves-effect waves-light btn blue-grey darken-2"
+                v-if="hasAttributes"
+                v-on:click="testLayer"
             ><i class="material-icons left">cloud_done</i>Test</a>
         </div>
+
+        <dialog-box
+            v-bind:showDialog.sync="viewMap"
+        >
+            <div class="map-content">
+                <h6>Test Map for {{ typeTitle }} "{{ title }}"</h6>
+                <smk-map
+                    v-if="viewMap"
+                    v-bind:config="mapConfig"
+                ></smk-map>
+            </div>
+        </dialog-box>
+
     </template>
 </dialog-box>

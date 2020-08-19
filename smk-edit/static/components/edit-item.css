@@ -35,3 +35,29 @@
 .itemId {
     font-family: monospace;
 }
+
+.edit-item.dialog-box {
+    transform: none !important;
+}
+
+.edit-item .dialog-box {
+    width: min( 80vh, 80vw );
+    height: min( 80vh, 80vw );
+    max-height: min( 80vh, 80vw );
+}
+
+.edit-item .dialog-box .map-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.edit-item .dialog-box h6 {
+    text-align: center;
+}
+
+.edit-item .dialog-box .smk-map {
+    flex-grow: 1;
+    padding: 4px;
+    padding-top: 0;
+}

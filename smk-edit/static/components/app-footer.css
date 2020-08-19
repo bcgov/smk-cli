@@ -9,8 +9,11 @@
 }
 
 .app-footer .dialog-box {
-    width: 80%;
-    height: 80%;
+    /* width: 80%;
+    height: 80%; */
+    width: min( 80vh, 80vw );
+    height: min( 80vh, 80vw );
+    max-height: min( 80vh, 80vw );
 }
 
 .app-footer .dialog-box .smk-map {
