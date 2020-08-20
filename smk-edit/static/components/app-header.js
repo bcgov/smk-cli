@@ -7,6 +7,7 @@ export default importComponents( [
     './components/tab-wms-layers.js',
     './components/tab-vector-layers.js',
     './components/tab-organize-layers.js',
+    './components/tab-tools.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         components: {

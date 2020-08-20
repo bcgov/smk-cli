@@ -1,5 +1,5 @@
 import { vueComponent, importComponents } from '../vue-util.js'
-import itemTypePresentation from './item-type-presentation.js'
+import { itemTypePresentation } from './presentation.js'
 
 export default importComponents( [
     './components/catalog-item.js',

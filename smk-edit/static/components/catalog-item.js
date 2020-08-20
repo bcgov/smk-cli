@@ -1,5 +1,5 @@
 import { vueComponent } from '../vue-util.js'
-import itemTypePresentation from './item-type-presentation.js'
+import { itemTypePresentation } from './presentation.js'
 
 vueComponent( import.meta.url, {
     props: [ 'itemId', 'allowed', 'iconSize' ],

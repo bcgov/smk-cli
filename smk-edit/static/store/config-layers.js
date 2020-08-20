@@ -43,18 +43,21 @@ export default {
                 return getters.configLayer( id ).queries || []
             }
         },
-        configLayerQueryParameters: function ( state, getters ) {
+        configLayerQuery: function ( state, getters ) {
             return getters.version && function ( id, queryId ) {
                 var q = getters.configLayerQueries( id ).find( function ( q ) { return q.id == queryId } )
                 if ( !q ) throw Error( `Query "${ queryId }" doesn't exist` )
-                return q.parameters || []
+                return q
+            }
+        },
+        configLayerQueryParameters: function ( state, getters ) {
+            return getters.version && function ( id, queryId ) {
+                return getters.configLayerQuery( id, queryId ).parameters || []
             }
         },
         configLayerQueryPredicate: function ( state, getters ) {
             return getters.version && function ( id, queryId ) {
-                var q = getters.configLayerQueries( id ).find( function ( q ) { return q.id == queryId } )
-                if ( !q ) throw Error( `Query "${ queryId }" doesn't exist` )
-                return q.predicate || []
+                return getters.configLayerQuery( id, queryId ).predicate || []
             }
         }
     },
@@ -101,8 +104,6 @@ export default {
         },
         configLayerQueries: function ( context, layerQueries ) {
             var ly = context.getters.configLayer( layerQueries.id )
-            // if ( !ly.queries ) ly.queries = []
-            // delete layerQueries.id
             ly.queries = layerQueries.queries
             context.commit( 'configLayer', ly )
             context.commit( 'bumpVersion' )
