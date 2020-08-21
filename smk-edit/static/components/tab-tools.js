@@ -55,7 +55,7 @@ export default importComponents( [
         },
         methods: {
             enableTool: function ( type, instance ) {
-                if ( instance == '-new-' )
+                if ( instance == 'NEW' )
                     instance = `${ type }-${ nextCounter() }`
 
                 this.$store.dispatch( 'configToolEnable', { type, instance } )
