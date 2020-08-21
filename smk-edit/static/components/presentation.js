@@ -42,7 +42,7 @@ export const toolTypePresentation = {
     },
     'bespoke': {
         title: 'Bespoke',
-        instance: '-new-'
+        instance: 'NEW'
     },
     'coordinate': {
         title: 'Coordinate',

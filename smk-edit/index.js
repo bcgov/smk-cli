@@ -63,7 +63,7 @@ function startService( opt ) {
 
     app.use( function ( req, res, next ) {
         if ( ( '' + req.originalUrl ).endsWith( 'css' ) ) {
-            console.log( `Returned dummy content for ${ req.originalUrl }` )
+            // console.log( `Returned dummy content for ${ req.originalUrl }` )
             res.type( 'text/css' ).send( `/* ${ req.originalUrl } */` ).end()
         }
         next()

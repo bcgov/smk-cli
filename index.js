@@ -22,7 +22,7 @@ console.log( chalk.yellow( title ) + chalk.gray( ver ) )
 
 if ( !opt.package ) {
     var smkDeps = Object.keys( package.dependencies ).filter( function ( d ) {
-        return /[/]smk$/.test( d )
+        return /(^|[/])smk$/.test( d )
     } )
     if ( smkDeps.length != 1 )
         throw Error( "Can't determine the dependency information for smk" )
