@@ -1,0 +1,10 @@
+<main>
+    <div class="content-panel black-text white"
+        v-bind:class="activeTabComponent"
+    >
+        <component
+            v-bind:is="activeTabComponent"
+            v-bind:key="activeTabComponent"
+        ></component>
+    </div>
+</main>

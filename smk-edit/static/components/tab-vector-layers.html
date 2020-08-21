@@ -1,0 +1,143 @@
+<article>
+    <section>
+        <header>
+            <h5>Vector Catalog</h5>
+
+            <ul class="collapsible" ref="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">place</i>Import Vector Dataset into Catalog
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select ref="vectorType" v-model="importType">
+                                    <option value="" disabled selected>Choose vector file type</option>
+                                    <option value="geojson">GeoJSON</option>
+                                    <option value="kml">KML</option>
+                                    <!-- <option value="kmz">KMZ</option> -->
+                                    <option value="shape">Shapefile</option>
+                                    <!--option value="pgdb">PGDB</option-->
+                                    <!-- <option value="fgdb">FGDB (zip only, v10 and lower)</option> -->
+                                    <option value="csv">CSV</option>
+                                    <option value="wfs">WFS</option>
+                                </select>
+                                <label>Vector Layer Type</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form class="col s12" ref="fileInputForm">
+                                <div class="file-field input-field">
+                                    <div class="btn blue-grey darken-2"
+                                        v-bind:class="{ disabled: !importType }"
+                                    >
+                                        <span>File</span>
+                                        <input type="file"
+                                            ref="fileInput"
+                                            v-on:change="readFile( $event )"
+                                            v-bind:accept="acceptFileTypes"
+                                        >
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 input-field">
+                                <label>Title</label>
+                                <textarea class="materialize-textarea"
+                                    v-model="importTitle"
+                                    v-bind:disabled="!importFile"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 right-align">
+                                <a class="waves-effect waves-light btn blue-grey darken-2"
+                                    v-on:click="importLayer"
+                                    v-bind:class="{ disabled: !importFile }"
+                                >
+                                    <i class="material-icons right">keyboard_arrow_right</i>
+                                    Import Layer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">filter_drama</i>Add Vector Dataset URL to Catalog
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="col s12">
+                                <h6>The external vector file that the URL references must be in GeoJSON format.</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 input-field">
+                                <label>External URL</label>
+                                <textarea class="materialize-textarea"
+                                    v-model="externalUrl"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 input-field">
+                                <label>Title</label>
+                                <textarea class="materialize-textarea"
+                                    v-model="externalTitle"
+                                    v-bind:disabled="!externalUrl"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 right-align">
+                                <a class="waves-effect waves-light btn blue-grey darken-2"
+                                    v-on:click="addExternalLayer"
+                                    v-bind:class="{ disabled: !externalUrl }"
+                                >
+                                    <i class="material-icons right">keyboard_arrow_right</i>
+                                    Add Layer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </header>
+        <div>
+            <catalog-tree
+                src="/catalog/local"
+                v-on:select-item="addLayer"
+                v-on:load-error="catalogError"
+                v-bind:key="catalogKey"
+            ></catalog-tree>
+        </div>
+    </section>
+    <section>
+        <header>
+            <h5>Vector Layers in App</h5>
+        </header>
+        <div>
+            <div class="catalog-collection">
+                <catalog-item
+                    v-for="layer in vectorLayers"
+                    v-bind:itemId="layer.id"
+                    v-bind:key="layer.id"
+                    v-on:edit-item="editItem"
+                    v-on:remove-item="removeItem"
+                ></catalog-item>
+            </div>
+        </div>
+    </section>
+
+    <edit-item
+        v-bind:showDialog.sync="showEditItem"
+        v-bind:itemId="editItemId"
+    ></edit-item>
+</article>

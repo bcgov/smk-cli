@@ -1,0 +1,13 @@
+{
+    "name": "test5",
+    "version": "0.0.1",
+    "description": "My Simple Map Kit application.",
+    "author": "SMK Developer",
+    "dependencies": {
+        "@qqnluaq/smk": "0.9.0-beta.2",
+        "http-server": "^0.12.3"
+    },
+    "scripts": {
+        "browse": "http-server -o -c-1"
+    }
+}

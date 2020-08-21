@@ -1,0 +1,75 @@
+.tool-item {
+    margin: 10px;
+}
+
+.tool-item .card-image {
+    padding: 5px;
+}
+
+
+.tool-item.size-1 .card-image i {
+    font-size: 20px;
+    padding: 0;
+}
+
+.tool-item.size-1 .card-stacked {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.tool-item.size-1 .card-content {
+    padding-bottom: 0;
+}
+
+
+.tool-item.size-2 .card-image {
+    width: 40px;
+}
+
+.tool-item.size-2 .card-image i {
+    font-size: 32px;
+    padding: 4px;
+}
+
+.tool-item.size-2 .card-image .type-instance {
+    white-space: nowrap
+}
+
+.tool-item.size-2 .card-stacked {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.tool-item.size-2 .card-content {
+    padding-bottom: 0;
+    align-self: flex-start;
+}
+
+
+.tool-item .type-instance .instance {
+    font-size: 10px;
+}
+
+.tool-item .card-content {
+    padding: 12px;
+    padding-top: 0;
+}
+
+.tool-item .card-action {
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 0;
+}
+
+.tool-item .card-stacked .card-action .btn-flat {
+    margin-right: 0 !important;
+    padding-left: 0;
+}
+
+.tool-item .card-stacked .card-action .btn-flat i {
+    font-size: 25px;
+}

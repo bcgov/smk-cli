@@ -1,0 +1,49 @@
+<header>
+    <div>
+        <nav>
+            <div class="nav-wrapper blue-grey darken-2">
+                <a href="index.html" class="brand-logo">Simple Map Kit Editor</a>
+                <a data-target="slide-out" class="sidenav-trigger">
+                    <i class="material-icons">menu</i>
+                </a>
+            </div>
+        </nav>
+
+        <ul id="slide-out" class="sidenav sidenav-fixed blue-grey darken-2" ref="sidenav">
+            <li>
+                <div class="user-view">
+                    <div class="background blue-grey darken-1"><img src="assets/images/bc_gov_logo_transparent.png" style="padding-left: 30px;"/></div>
+                </div>
+            </li>
+
+            <li>
+                <div class="subheader white-text title-panel">
+                    <p>Welcome to the SMK Configuration Utility</p>
+                    <p>Use this tool to modify your application's map configuration.</p>
+                </div>
+            </li>
+
+            <navTab name="tab-application"      icon="assignment"   title="Application"></navTab>
+            <navTab name="tab-viewer"           icon="terrain"      title="Viewer"></navTab>
+
+            <navTab name="tab-organize-layers"  icon="layers"       title="Layers"></navTab>
+            <navTab name="tab-mpcm-layers"      icon="description"  title="Manage DataBC Layers"
+                class="indented" v-if="layersActive"
+            ></navTab>
+            <navTab name="tab-wms-layers"       icon="backup"       title="Manage WMS Layers"
+                class="indented" v-if="layersActive"
+            ></navTab>
+            <navTab name="tab-vector-layers"    icon="timeline"     title="Manage Vector Layers"
+                class="indented" v-if="layersActive"
+            ></navTab>
+
+            <navTab name="tab-tools"            icon="build"       title="Tools"></navTab>
+
+            <li>
+                <div class="subheader white-text title-panel">
+                    <p>Click <b>Save</b> at any time to commit your changes</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</header>

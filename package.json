@@ -1,0 +1,49 @@
+{
+    "name": "smk-cli",
+    "version": "1.0.0-beta",
+    "description": "A utility for creating and configuring a Simple Map Kit project",
+    "main": "index.js",
+    "author": "Ben Jubb <benjubb@gmail.com>",
+    "license": "(MIT OR Apache-2.0)",
+    "bin": {
+      "smk": "./index.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/bcgov/smk-cli.git"
+    },
+    "scripts": {
+      "debug": "./index.js edit --open no --base build/test-app --ping 300000"
+    },
+    "dependencies": {
+      "smk": "^1.0.0-beta.2",
+      "@tmcw/togeojson": "^4.1.0",
+      "chalk": "^4.1.0",
+      "cors": "^2.8.5",
+      "express": "^4.17.1",
+      "fgdb": "^1.0.0",
+      "figlet": "^1.5.0",
+      "glob": "^7.1.2",
+      "inquirer": "^7.3.3",
+      "lodash": "^4.17.19",
+      "minimist": "^1.2.5",
+      "multer": "^1.4.2",
+      "node-fetch": "^2.6.0",
+      "open": "^7.1.0",
+      "proj4": "^2.6.2",
+      "semver": "^7.3.2",
+      "shapefile": "^0.6.6",
+      "shelljs": "^0.8.4",
+      "touch": "^3.1.0",
+      "unzipper": "^0.10.11",
+      "xml2js": "^0.4.23",
+      "xmldom": "^0.3.0"
+    },
+    "devDependencies": {
+      "connect-livereload": "^0.6.0",
+      "grunt": "^1.0.3",
+      "grunt-contrib-connect": "^1.0.0",
+      "grunt-contrib-watch": "^1.1.0",
+      "load-grunt-tasks": "~4.0.0"
+    }
+  }

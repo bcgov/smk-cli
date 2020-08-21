@@ -1,0 +1,92 @@
+<article>
+    <section>
+        <header>
+            <h5>Organize Layers</h5>
+            <div class="row">
+                <div class="col s12">
+                    <a class="waves-effect waves-light btn blue-grey darken-2"
+                        v-bind:class="{ disabled: !canMoveUp }"
+                        v-on:click="moveUp"
+                    ><i class="material-icons left">arrow_upward</i>Move Up</a>
+
+                    <a class="waves-effect waves-light btn blue-grey darken-2"
+                        v-bind:class="{ disabled: !canMoveDown }"
+                        v-on:click="moveDown"
+                    ><i class="material-icons left">arrow_downward</i>Move Down</a>
+
+                    <a class="waves-effect waves-light btn blue-grey darken-2"
+                        v-bind:class="{ disabled: !hasSelected }"
+                        v-on:click="moveToFolder"
+                    ><i class="material-icons left">folder</i>Move to folder</a>
+
+                    <a class="waves-effect waves-light btn blue-grey darken-2"
+                        v-bind:class="{ disabled: !hasSelected }"
+                        v-on:click="selectNone"
+                    ><i class="material-icons left">check_box_outline_blank</i>Select none</a>
+                </div>
+            </div>
+        </header>
+        <div class="display-collection">
+            <div class="catalog-collection">
+                <display-item
+                    v-for="item in displayItems.items"
+                    v-bind:item="item"
+                    v-bind:key="item.id"
+                    v-bind:selectedIds="selectedIds"
+                    v-bind:enabledIds="enabledIds"
+                    v-on:select-changed="layerSelected"
+                    v-on:edit-item="editItem"
+                    v-on:remove-item="removeItem"
+                ></display-item>
+            </div>
+        </div>
+    </section>
+
+    <dialog-box v-bind:showDialog.sync="showMoveToFolder">
+        <div class="modal-content"
+            v-if="showMoveToFolder"
+        >
+            <h4>Move items to this folder:</h4>
+            <ul class="collection">
+                <li class="collection-item" v-for="folder in targetFolders">
+                    <label>
+                        <input type="radio"
+                            v-bind:value="folder.id"
+                            v-model="targetFolderId"
+                        >
+                        <span>{{ folder.title }}</span>
+                    </label>
+                </li>
+                <li class="collection-item">
+                    <label>
+                        <input type="radio"
+                            value="-new-"
+                            v-model="targetFolderId"
+                            v-on:click="selectNewFolder"
+                        >
+                        <span>New Folder:</span>
+                    </label>
+                    <div class="input-field inline">
+                        <input type="text"
+                            ref="folderName"
+                            v-model="newFolderTitle"
+                            v-bind:disabled="targetFolderId != '-new-'"
+                        >
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a class="modal-close waves-effect waves-green btn"
+                v-bind:class="{ disabled: !targetFolderId }"
+                v-on:click="completeMoveToFolder"
+            >Agree</a>
+        </div>
+    </dialog-box>
+
+    <edit-item
+        v-bind:showDialog.sync="showEditItem"
+        v-bind:itemId="editItemId"
+    ></edit-item>
+</article>

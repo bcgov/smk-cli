@@ -1,0 +1,116 @@
+
+{
+    "version": "<%= app.smkVersion %>",
+    "name": "<%= app.name %>",
+    "createdBy": "<%= app.author %>",
+    "createdDate": "<%= app.createdDate %>",
+    "viewer": {
+        "type": "<%= app.viewer %>",
+        "location": {
+            "extent": [
+                -140.80078125000004,
+                61.62728646147466,
+                -108.72070312500002,
+                46.13417004624326
+            ],
+            "center": [
+                -124.76074218750003,
+                51.88072825385896
+            ],
+            "zoom": 6.0
+        },
+        "baseMap": "<%= app.baseMap %>"
+    },
+    "tools": [
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "list-menu",
+            "enabled": true,
+            "title": "<%= app.title %>"
+        },
+        {
+            "type": "pan",
+            "enabled": <%= !!app.tool.pan %>
+        },
+        {
+            "type": "zoom",
+            "enabled": <%= !!app.tool.zoom %>
+        },
+        {
+            "type": "about",
+            "enabled": <%= !!app.tool.about %>,
+            "title": "About <%= app.title %>",
+            "position": "list-menu",
+            "content": "<p>Welcome to SMK!</p><p><%= app.description %></p>"
+        },
+        {
+            "type": "layers",
+            "enabled": <%= !!app.tool.layers %>
+        },
+        {
+            "type": "baseMaps",
+            "enabled": <%= !!app.tool.baseMaps %>
+        },
+        {
+            "type": "identify",
+            "enabled": <%= !!app.tool.identify %>,
+            "showPanel": true,
+            "showWidget": true,
+            "style": {
+                "strokeWidth": 1.0,
+                "strokeStyle": "1, 1",
+                "strokeColor": "#000000",
+                "strokeOpacity": 0.8,
+                "fillColor": "#000000",
+                "fillOpacity": 0.5,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "search",
+            "enabled": <%= !!app.tool.search %>
+        },
+        {
+            "type": "coordinate",
+            "enabled": <%= !!app.tool.coordinate %>
+        },
+        {
+            "type": "measure",
+            "enabled": <%= !!app.tool.measure %>
+        },
+        {
+            "type": "markup",
+            "enabled": <%= !!app.tool.markup %>
+        },
+        {
+            "type": "scale",
+            "enabled": <%= !!app.tool.scale %>
+        },
+        {
+            "type": "minimap",
+            "enabled": <%= !!app.tool.minimap %>
+        },
+        {
+            "type": "directions",
+            "enabled": <%= !!app.tool.directions %>
+        },
+        {
+            "type": "location",
+            "enabled": <%= !!app.tool.location %>
+        },
+        {
+            "type": "select",
+            "enabled": <%= !!app.tool.select %>
+        }
+    ]
+}

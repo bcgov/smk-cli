@@ -1,0 +1,42 @@
+<div class="card horizontal lighten-5 hoverable"
+    v-bind:class="[ 'size-' + ( iconSize || 2 ), typeColour ]"
+>
+    <div class="card-image">
+        <i class="material-icons circle lighten-2"
+            v-bind:class="[ typeColour ]"
+            v-bind:title="typeTitle"
+        >{{ typeIcon }}</i>
+        <slot name="prefix"></slot>
+    </div>
+
+    <div class="card-stacked">
+        <div class="card-content">
+            <span class="title">{{ title }}</span>
+        </div>
+        <div class="card-action">
+            <a class="btn-flat"
+                target="_blank"
+                v-bind:href="metadataUrl"
+                v-if="metadataUrl"
+            ><i class="material-icons">open_in_new</i></a>
+
+            <div class="switch tooltipped" ref="visibility">
+                <label>
+                    <input type="checkbox" v-model="isVisible">
+                    <span class="lever"></span>
+                </label>
+                <div>{{ isVisible ? 'Show' : 'Hide' }}</div>
+            </div>
+
+            <a class="btn-flat blue-text"
+                v-if="allowedEdit"
+                v-on:click="edit"
+            ><i class="material-icons">edit</i></a>
+
+            <a class="btn-flat red-text"
+                v-if="allowedRemove"
+                v-on:click="remove"
+            ><i class="material-icons">delete_forever</i></a>
+        </div>
+    </div>
+</div>
