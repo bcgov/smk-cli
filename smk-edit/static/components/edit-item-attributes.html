@@ -1,0 +1,101 @@
+<div>
+    <div class="row">
+        <input-select class="col s6"
+            v-model="titleAttribute"
+        >Title Attribute
+            <template v-slot:options>
+                <option value="" disabled>Choose attribute</option>
+                <option v-for="a in attributes"
+                    v-bind:value="a.name"
+                >{{ a.name }}</option>
+            </template>
+        </input-select>
+
+        <input-select class="col s6"
+            v-model="geometryAttribute"
+        >Geometry Attribute
+            <template v-slot:options>
+                <option value="" disabled>Choose attribute</option>
+                <option v-for="a in attributes"
+                    v-bind:value="a.name"
+                >{{ a.name }}</option>
+            </template>
+        </input-select>
+    </div>
+
+    <ul class="collapsible popout" ref="collapsible">
+        <li v-for="attr,i in attributes"
+            v-bind:data-index="i"
+        >
+            <div class="collapsible-header">
+                <i class="material-icons">article</i>
+                <span>{{ attr.title }}</span>
+                <div class="widgets">
+                    <div class="switch tooltipped" ref="visibility">
+                        <label>
+                            <input type="checkbox"
+                                v-bind:checked="isAttributeVisible( i )"
+                                v-on:change="setAtributeVisible( i, $event.target.checked )"
+                            >
+                            <span class="lever"></span>
+                        </label>
+                        <div>{{ isAttributeVisible( i ) ? 'Show' : 'Hide' }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <div v-if="activeAttributeIndex == i"
+                    v-bind:key="activeAttributeIndex"
+                >
+                    <div class="row">
+                        <div class="col s10 input-field">
+                            <label>Name</label>
+                            <input type="text" v-model="attributeName" disabled>
+                        </div>
+
+                        <div class="col s2 right-align">
+                            <a class="waves-effect waves-light btn-flat"
+                                v-bind:class="{ disabled: !canMoveUp }"
+                                v-on:click="moveUp"
+                            ><i class="material-icons right">arrow_upward</i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s10 input-field">
+                            <label>Title</label>
+                            <input type="text" v-model="attributeTitle">
+                        </div>
+
+                        <div class="col s2 right-align">
+                            <a class="waves-effect waves-light btn-flat"
+                                v-bind:class="{ disabled: !canMoveDown }"
+                                v-on:click="moveDown"
+                            ><i class="material-icons right">arrow_downward</i></a>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col s6">
+                            <label>
+                                <input type="checkbox" class="filled-in" v-model="attributeVisible" />
+                                <span>Attribute is visible</span>
+                            </label>
+                        </div>
+                    </div> -->
+                    <!-- <div class="row">
+                        <div class="col s12 right-align">
+                            <a class="waves-effect waves-light btn-flat"
+                                v-bind:class="{ disabled: !canMoveUp }"
+                                v-on:click="moveUp"
+                            ><i class="material-icons right">arrow_upward</i></a>
+
+                            <a class="waves-effect waves-light btn-flat"
+                                v-bind:class="{ disabled: !canMoveDown }"
+                                v-on:click="moveDown"
+                            ><i class="material-icons right">arrow_downward</i></a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

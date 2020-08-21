@@ -1,0 +1,21 @@
+.app-footer .content-panel {
+    position: relative;
+    padding: 1em;
+    height: 100%;
+}
+
+.app-footer .content-panel .btn {
+    margin-right: 10px;
+}
+
+.app-footer .dialog-box {
+    /* width: 80%;
+    height: 80%; */
+    width: min( 80vh, 80vw );
+    height: min( 80vh, 80vw );
+    max-height: min( 80vh, 80vw );
+}
+
+.app-footer .dialog-box .smk-map {
+    padding: 4px;
+}

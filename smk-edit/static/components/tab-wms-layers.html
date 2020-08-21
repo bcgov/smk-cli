@@ -1,0 +1,122 @@
+<article>
+    <section>
+        <header>
+            <h5>WMS Layer Catalog</h5>
+            <h6>{{ catalogUrl }}</h6>
+
+            <ul class="collapsible" ref="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">place</i>Select WMS Catalog
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="col s12">
+                                <h6>Select the WMS Catalog to show:</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 input-field">
+                                <label class="active">WMS Catalog URL</label>
+                                <select ref="catalogs" v-model="catalogUrl">
+                                    <option v-for="url in catalogUrls"
+                                        v-bind:value="url"
+                                    >{{ url }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <h6>Or, enter the URL of a catalog and click View:</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 input-field">
+                                <label>WMS Catalog URL</label>
+                                <textarea class="materialize-textarea"
+                                    v-model="addCatalogUrl"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 right-align">
+                                <a class="waves-effect waves-light btn blue-grey darken-2"
+                                    v-on:click="viewCatalog"
+                                    v-bind:class="{ disabled: !addCatalogUrl }"
+                                >
+                                    <i class="material-icons right">keyboard_arrow_right</i>
+                                    View WMS Catalog
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">filter_drama</i>Filter WMS Catalog
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="col s12 input-field">
+                                <label>Filter</label>
+                                <input type="text"
+                                    v-model="layerFilter"
+                                    v-on:keyup.enter="applyFilter"
+                                >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 right-align">
+                                <a class="waves-effect waves-light btn blue-grey darken-2"
+                                    v-on:click="clearFilter"
+                                >
+                                    <i class="material-icons right">cancel</i>
+                                    Clear
+                                </a>
+                                <a class="waves-effect waves-light btn blue-grey darken-2"
+                                    v-on:click="applyFilter"
+                                >
+                                    <i class="material-icons right">filter_alt</i>
+                                    Filter
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </header>
+        <div>
+            <catalog-tree
+                v-bind:src="'/catalog/wms/' + encodeURIComponent( catalogUrl )"
+                v-bind:filter="appliedLayerFilter"
+                v-on:select-item="addLayer"
+                v-on:load-error="catalogError"
+                v-on:loaded="catalogLoaded"
+                v-on:filtered="catalogFiltered"
+            ></catalog-tree>
+        </div>
+    </section>
+    <section>
+        <header>
+            <h5>WMS Layers In App</h5>
+        </header>
+        <div>
+            <div class="catalog-collection">
+                <catalog-item
+                    v-for="layer in wmsLayers"
+                    v-bind:itemId="layer.id"
+                    v-bind:key="layer.id"
+                    v-on:edit-item="editItem"
+                    v-on:remove-item="removeItem"
+                ></catalog-item>
+            </div>
+        </div>
+    </section>
+
+    <edit-item
+        v-bind:showDialog.sync="showEditItem"
+        v-bind:itemId="editItemId"
+    ></edit-item>
+</article>

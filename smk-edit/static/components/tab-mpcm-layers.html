@@ -1,0 +1,49 @@
+<article>
+    <section>
+        <header>
+            <h5>DataBC Catalog</h5>
+            <div class="row">
+                <div class="col s10 input-field">
+                    <label>Filter DataBC Layers</label>
+                    <input type="text" v-model="layerFilter">
+                </div>
+                <div class="col s2" >
+                    <a class="waves-effect waves-light blue-grey darken-2 btn-small"
+                        v-on:click="clearFilter"
+                        style="margin-top: 20px;"
+                    >
+                        <i class="material-icons center">cancel</i>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <div>
+            <catalog-tree
+                src="/catalog/mpcm"
+                v-bind:filter="layerFilter"
+                v-on:select-item="addLayer"
+            ></catalog-tree>
+        </div>
+    </section>
+    <section>
+        <header>
+            <h5>DataBC Layers In App</h5>
+        </header>
+        <div>
+            <div class="catalog-collection">
+                <catalog-item
+                    v-for="layer in mpcmLayers"
+                    v-bind:itemId="layer.id"
+                    v-bind:key="layer.id"
+                    v-on:edit-item="editItem"
+                    v-on:remove-item="removeItem"
+                ></catalog-item>
+            </div>
+        </div>
+    </section>
+
+    <edit-item
+        v-bind:showDialog.sync="showEditItem"
+        v-bind:itemId="editItemId"
+    ></edit-item>
+</article>

@@ -1,0 +1,29 @@
+.display-collection .display-select {
+    display: flex;
+    align-items: center;
+}
+
+.display-collection .display-select .card {
+    flex-grow: 1;
+    margin-top: 0;
+}
+
+.display-collection .display-select .card-image i {
+    margin-left: 20px;
+}
+
+.display-collection .display-select .card-image label {
+    position: absolute;
+    top: 12px;
+    left: 2px;
+}
+
+.display-collection .display-select > .collection-item {
+    flex-grow: 1;
+    padding-bottom: 0;
+    min-height: 72px;
+}
+
+.display-item .display-collection {
+    padding-left: 50px;
+}

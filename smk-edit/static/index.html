@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Simple Map Kit configuration utility">
+        <meta name="author" content="Vivid Solutions Inc.">
+
+        <title>SMK Editor</title>
+
+        <!-- JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <!-- Lato Font -->
+        <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+
+        <!-- Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- Materialize CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+        <!-- Materialize -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <!-- Fancy Tree for layer viewers -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fancytree/2.28.0/jquery.fancytree-all-deps.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.fancytree/2.28.0/skin-lion/ui.fancytree.min.css" rel="stylesheet">
+
+        <!-- Vue Dev -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- VueX -->
+        <script src="https://unpkg.com/vuex"></script>
+
+        <!-- Spectrum -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css" rel="stylesheet">
+
+        <!-- SMK -->
+        <script src="/module/smk.js"></script>
+
+        <link href="edit-app.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="app" v-bind:class="{ 'service-no-response': !serviceStatus }">
+            <app-header></app-header>
+            <app-main></app-main>
+            <app-footer></app-footer>
+        </div>
+
+        <script type="module">
+            import './edit-app.js'
+        </script>
+    </body>
+</html>
+
+

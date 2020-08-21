@@ -1,0 +1,89 @@
+<dialog-box class="modal-fixed-footer"
+    v-bind:showDialog="showDialog"
+    v-on:update:showDialog="$emit( 'update:showDialog', $event )"
+    v-on:opened="openDialog"
+>
+    <template v-if="showDialog">
+        <div class="modal-content" >
+            <div class="dialog-header">
+                <div class="catalog-collection">
+                    <catalog-item
+                        iconSize="1"
+                        v-bind:itemId="itemId"
+                        v-bind:allowed="{ edit: false, remove: false }"
+                        v-bind:key="itemId"
+                    ></catalog-item>
+                </div>
+
+                <ul class="tabs black-text" ref="tabs">
+                    <li class="tab col s4">
+                        <a href="#details">Details</a>
+                    </li>
+
+                    <li class="tab col s4"
+                        v-if="hasStyle"
+                    ><a href="#style">Style</a></li>
+
+                    <li class="tab col s4"
+                        v-if="hasAttributes"
+                    ><a href="#attributes">Attributes</a></li>
+
+                    <li class="tab col s4"
+                        v-if="hasQueries"
+                    ><a href="#queries">Queries</a></li>
+                </ul>
+            </div>
+
+            <div class="dialog-body">
+                <div id="details">
+                    <edit-item-details
+                        v-bind:itemId="itemId"
+                    ></edit-item-details>
+                </div>
+
+                <div id="style">
+                    <edit-item-style
+                        v-if="hasStyle"
+                        v-bind:itemId="itemId"
+                    ></edit-item-style>
+                </div>
+
+                <div id="attributes">
+                    <edit-item-attributes
+                        v-if="hasAttributes"
+                        v-bind:itemId="itemId"
+                    ></edit-item-attributes>
+                </div>
+
+                <div id="queries">
+                    <edit-item-queries
+                        v-if="hasQueries"
+                        v-bind:itemId="itemId"
+                    ></edit-item-queries>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="grey-text darken-4">
+                Editing {{ typeTitle }} <span class="itemId">{{ itemId }}</span>
+            </div>
+            <a class="waves-effect waves-light btn blue-grey darken-2"
+                v-if="hasAttributes"
+                v-on:click="testLayer"
+            ><i class="material-icons left">cloud_done</i>Test</a>
+        </div>
+
+        <dialog-box
+            v-bind:showDialog.sync="viewMap"
+        >
+            <div class="map-content">
+                <h6>Test Map for {{ typeTitle }} "{{ title }}"</h6>
+                <smk-map
+                    v-if="viewMap"
+                    v-bind:config="mapConfig"
+                ></smk-map>
+            </div>
+        </dialog-box>
+
+    </template>
+</dialog-box>

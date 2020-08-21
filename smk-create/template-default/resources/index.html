@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><%= app.title %></title>
+        <link rel="stylesheet" type="text/css" href="./assets/style.css"/>
+    </head>
+
+    <body>
+        <header><%= app.title %></header>
+
+        <article>
+            <div id="smk-map-frame"></div>
+        </article>
+
+        <footer>Application constructed by smk-cli at <%= app.createdDate %></footer>
+
+        <script src="<%= app.smkDistPath %>"></script>
+        <script src="./smk-init.js"></script>
+    </body>
+</html>
