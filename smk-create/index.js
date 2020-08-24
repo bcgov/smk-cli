@@ -26,7 +26,7 @@ module.exports = async function ( args ) {
     }
 
     app.createdDate = ( new Date() ).toISOString()
-    app.smkDistPath = './node_modules/@qqnluaq/smk/dist/smk.js'
+    app.smkDistPath = `./node_modules/${ app.smkPackage }/dist/smk.js`
 
     console.log()
     console.log( chalk.green( `Creating application directory ${ app.absoluteDir.replace( process.cwd(), '.' ) } with template "${ app.template }"...` ) )
@@ -36,27 +36,29 @@ module.exports = async function ( args ) {
 
     console.log(chalk.green('Your application has been created.'));
 
-    const viewApp = await inquirer.prompt( [ {
+    const editApp = await inquirer.prompt( [ {
         name: 'answer',
         type: 'input',
-        message: 'Would you like to view the application now? ',
+        message: 'Would you like to edit the application now? ',
         suffix: 'y/n',
         validate: function ( answer ) {
             if ( !/^[yn]/i.test( answer ) ) return false
             return true
         }
     } ] )
-    if ( viewApp.answer.toLowerCase() == 'y' )
-        viewApplication()
+    if ( editApp.answer.toLowerCase() == 'y' ) {
+        args.base = app.absoluteDir
+        return require( '../smk-edit' )( args )
+    }
 
     console.log()
     console.log( chalk.green( 'To view this application:' ) )
     console.log( chalk.blueBright( `  cd ${ app.name }` ) )
-    console.log( chalk.blueBright( '  npm run browse' ) )
+    console.log( chalk.blueBright( '  npm run view' ) )
     console.log()
     console.log( chalk.green( 'To modify the configuration for this application:' ) )
     console.log( chalk.blueBright( `  cd ${ app.name }` ) )
-    console.log( chalk.blueBright( '  smk edit' ) )
+    console.log( chalk.blueBright( `  ${ args.exec } edit` ) )
     console.log()
 
     function installApplication() {
@@ -72,15 +74,6 @@ module.exports = async function ( args ) {
         }
 
         shell.exec( 'npm ls --depth=0' )
-    }
-
-    function viewApplication() {
-        console.log()
-        console.log( chalk.green( 'Launching application...' ) )
-
-        shell.cd( app.absoluteDir )
-
-        shell.exec( 'npm run browse' )
     }
 }
 
