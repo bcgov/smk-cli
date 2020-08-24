@@ -88,6 +88,7 @@ function startService( opt ) {
         console.log( routes.map( function ( r ) {
             return `\t${ chalk.green( r[ 0 ] ) }\t${ chalk.cyan( r[ 1 ] ) }\t${  r[ 2 ] ? chalk.yellow( '-> ' ) + chalk.blue( relativePath( r[ 2 ] ) ) : '' }`
         } ).join( '\n' ) )
+        console.log( chalk.yellow( `Current path is ${ chalk.blue( process.cwd() ) }` ) )
         console.log( chalk.yellow( `Base path is ${ chalk.blue( relativePath( app.get( 'smk base' ) ) ) }` ) )
         console.log( chalk.yellow( `Configuration path is ${ chalk.blue( relativePath( app.get( 'smk config' ) ) ) }` ) )
         console.log( chalk.yellow( `Layers catalog path is ${ chalk.blue( relativePath( app.get( 'smk layers' ) ) ) }` ) )
@@ -101,6 +102,20 @@ function startService( opt ) {
     return app
 }
 
-function relativePath( path ) {
-    return path.replace( process.cwd(), '.' )
+function relativePath( p ) {
+    var rp = path.relative( process.cwd(), p )
+
+    var cwdDepth = '', cwd = process.cwd()
+    while ( 1 ) {
+        var d = path.dirname( cwd )
+        if ( d == cwd ) break
+        cwd = d
+        cwdDepth += '..' + path.sep
+    }
+
+    if ( rp.startsWith( cwdDepth ) ) return p
+
+    if ( rp.startsWith( '..' ) ) return rp
+
+    return `.${ path.sep }${ rp }`
 }
