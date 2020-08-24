@@ -4,12 +4,11 @@
             <h5>Available Tools</h5>
         </header>
         <div>
-            <tool-item icon-size="1"
+            <tool-item
                 v-for="tool in availableTools"
                 v-bind:key="tool.type + tool.instance"
                 v-bind:toolType="tool.type"
                 v-bind:toolInstance="tool.instance"
-                v-bind:toolInstanceTitle="tool.instanceTitle"
                 v-bind:allowed="{ enable: true, edit: false, remove: !tool.proto, disable: false }"
                 v-on:enable-tool="enableTool"
                 v-on:remove-tool="removeTool"
@@ -21,7 +20,7 @@
             <h5>Tools In App</h5>
         </header>
         <div>
-            <tool-item icon-size="2"
+            <tool-item summary
                 v-for="tool in enabledTools"
                 v-bind:key="tool.type + tool.instance"
                 v-bind:toolType="tool.type"

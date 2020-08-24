@@ -2,19 +2,15 @@ import { vueComponent } from '../vue-util.js'
 import { toolTypePresentation } from './presentation.js'
 
 vueComponent( import.meta.url, {
-    props: [ 'toolType', 'toolInstance', 'toolInstanceTitle', 'allowed', 'iconSize' ],
+    props: {
+        toolType: String,
+        toolInstance: String,
+        allowed: Object,
+        summary: Boolean
+    },
     computed: {
-        type: function () {
-            return this.toolType
-        },
         typeTitle: function () { return toolTypePresentation[ this.toolType ].title },
         typeIcon: function () { return toolTypePresentation[ this.toolType ].icon || 'build' },
-        title: function () {
-            if ( this.$store.getters.configHasTool( this.toolType, this.toolInstance ) )
-                return this.$store.getters.configTool( this.toolType, this.toolInstance ).title
-
-            return toolTypePresentation[ this.toolType ].title
-        },
         allowedEdit: function () { return !this.allowed || this.allowed.edit !== false },
         allowedRemove: function () { return !this.allowed || this.allowed.remove !== false },
         allowedEnable: function () { return !this.allowed || this.allowed.enable !== false },
@@ -40,8 +36,10 @@ var summaryMixin = {
 Vue.component( 'tool-summary', {
     mixins: [ summaryMixin ],
     template: `
-        <h6 class="title" v-if="title">"{{ title }}"</h6>
-        <pre v-else>{{ config }}</pre>
+        <div>
+            <h6 class="title" v-if="title">"{{ title }}"</h6>
+            <pre v-if="!title && config">{{ config }}</pre>
+        </div>
     `,
     computed: {
         title: function () {
@@ -54,7 +52,7 @@ Vue.component( 'tool-summary', {
             delete cfg.instance
             delete cfg.title
             delete cfg.enabled
-            return JSON.stringify( cfg, null, '  ' ).slice( 2, -2 )
+            return JSON.stringify( cfg, null, '  ' ).slice( 2, -2 ).trim()
         }
     }
 } )

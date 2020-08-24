@@ -1,49 +1,41 @@
-<div class="card horizontal brown lighten-5 hoverable"
-    v-bind:class="[ 'size-' + ( iconSize ) ]"
->
-    <div class="card-image">
-        <i class="material-icons">{{ typeIcon }}</i>
-        <div class="type-instance" v-if="iconSize == 2">
-            {{ typeTitle }}
-            <span class="instance" v-if="toolInstance">&mdash; {{ toolInstance }}</span>
-        </div>
-    </div>
+<div class="card horizontal brown lighten-5 hoverable">
+    <div class="card-content" >
+        <div class="top-row">
+            <i class="material-icons">{{ typeIcon }}</i>
 
-    <div class="card-stacked">
-        <div class="card-content" v-if="iconSize == 1">
             <div class="type-instance">
                 {{ typeTitle }}
                 <span class="instance" v-if="toolInstance">&mdash; {{ toolInstance }}</span>
             </div>
+
+            <div class="card-action">
+                <a class="btn-flat blue-text"
+                    v-if="allowedEdit"
+                    v-on:click="edit"
+                ><i class="material-icons">edit</i></a>
+
+                <a class="btn-flat red-text text-darken-2"
+                    v-if="allowedRemove"
+                    v-on:click="remove"
+                ><i class="material-icons">delete_forever</i></a>
+
+                <a class="btn-flat green-text"
+                    v-if="allowedEnable"
+                    v-on:click="enable"
+                ><i class="material-icons">toggle_on</i></a>
+
+                <a class="btn-flat red-text text-lighten-1"
+                    v-if="allowedDisable"
+                    v-on:click="disable"
+                ><i class="material-icons">toggle_off</i></a>
+            </div>
         </div>
-        <div class="card-content" v-if="iconSize == 2">
-            <component v-bind:is="toolSummary"
-                v-bind:toolType="toolType"
-                v-bind:toolInstance="toolInstance"
-            ></component>
-        </div>
 
-        <div class="card-action">
-            <a class="btn-flat blue-text"
-                v-if="allowedEdit"
-                v-on:click="edit"
-            ><i class="material-icons">edit</i></a>
-
-            <a class="btn-flat red-text text-darken-2"
-                v-if="allowedRemove"
-                v-on:click="remove"
-            ><i class="material-icons">delete_forever</i></a>
-
-            <a class="btn-flat green-text"
-                v-if="allowedEnable"
-                v-on:click="enable"
-            ><i class="material-icons">toggle_on</i></a>
-
-            <a class="btn-flat red-text text-lighten-1"
-                v-if="allowedDisable"
-                v-on:click="disable"
-            ><i class="material-icons">toggle_off</i></a>
-        </div>
+        <component v-if="summary"
+            v-bind:is="toolSummary"
+            v-bind:toolType="toolType"
+            v-bind:toolInstance="toolInstance"
+        ></component>
     </div>
 
 </div>
