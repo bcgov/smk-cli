@@ -1,0 +1,24 @@
+<dialog-box class="modal-fixed-footer"
+    v-bind:showDialog="showDialog"
+    v-on:update:showDialog="$emit( 'update:showDialog', $event )"
+>
+    <template v-if="showDialog">
+        <div class="modal-content" >
+            <div class="dialog-header">
+            </div>
+
+            <div class="dialog-body">
+                <div class="icons">
+                    <span
+                        v-for="ic in icons"
+                        v-bind:class="{ selected: ic == icon }"
+                        v-on:click="selectIcon( ic )"
+                    >
+                        <i class="material-icons">{{ ic }}</i>
+                        <div class="a"><div class="b">{{ ic }}</div></div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </template>
+</dialog-box>

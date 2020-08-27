@@ -3,14 +3,15 @@ import { toolTypePresentation, availableTools } from './presentation.js'
 
 export default importComponents( [
     './components/tool-item.js',
-    // './components/edit-item.js'
+    './components/edit-tool.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
             return {
-                layerFilter: null,
-                editItemId: null,
-                showEditItem: false
+                editToolType: null,
+                editToolInstance: null,
+                showEditTool: false,
+                editToolComponent: null
             }
         },
         computed: {
@@ -21,7 +22,7 @@ export default importComponents( [
                     } )
                     .map( function ( ly ) {
                         return ly.queries.map( function ( q ) {
-                            return { type: 'query', instance: `${ ly.id }--${ q.id }`, instanceTitle: q.title, proto: true }
+                            return { type: 'query', instance: `${ ly.id }--${ q.id }`, proto: true }
                         } )
                     } )
                     .reduce( function ( acc, a ) {
@@ -52,6 +53,7 @@ export default importComponents( [
             enabledTools: function () {
                 return this.$store.getters.configEnabledTools.sort( sortTools )
             },
+
         },
         methods: {
             enableTool: function ( type, instance ) {
@@ -61,6 +63,11 @@ export default importComponents( [
                 this.$store.dispatch( 'configToolEnable', { type, instance } )
             },
             editTool: function ( type, instance ) {
+                this.editToolType = type
+                this.editToolInstance = instance
+                // this.editToolComponent = toolTypePresentation[ type ].details
+
+                this.showEditTool = true
             },
             removeTool: function ( type, instance ) {
                 this.$store.dispatch( 'configToolRemove', { type, instance } )

@@ -7,3 +7,12 @@
 .input-spectrum .sp-replacer .sp-preview {
     width: calc( 100% - 14px );
 }
+
+.row.tight {
+    margin-bottom: 0;
+}
+
+.input-toggle {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
