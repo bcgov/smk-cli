@@ -1,0 +1,63 @@
+
+.edit-tool .modal-content {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+}
+
+.edit-tool .modal-content .dialog-header {
+    flex-shrink: 0;
+}
+
+.edit-tool .modal-content .dialog-body {
+    flex-grow: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1em;
+}
+
+.edit-tool .tabs .tab:not(.disabled) a {
+    color: black;
+}
+
+.edit-tool .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: unset;
+}
+
+.edit-tool .modal-footer a.btn {
+    flex-shrink: 0;
+}
+
+.itemId {
+    font-family: monospace;
+}
+
+.edit-tool.dialog-box {
+    transform: none !important;
+}
+
+.edit-tool .dialog-box {
+    width: min( 80vh, 80vw );
+    height: min( 80vh, 80vw );
+    max-height: min( 80vh, 80vw );
+}
+
+.edit-tool .dialog-box .map-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.edit-tool .dialog-box h6 {
+    text-align: center;
+}
+
+.edit-tool .dialog-box .smk-map {
+    flex-grow: 1;
+    padding: 4px;
+    padding-top: 0;
+}

@@ -134,7 +134,7 @@ Vue.component( 'input-text', {
                 v-on:input="$emit( 'input', $event.target.value )"
                 v-bind:pattern="pattern"
             />
-            <span class="helper-text"
+            <span class="helper-text" v-if="$slots.helper || error || success"
                 v-bind:data-error="error"
                 v-bind:data-success="success"
             ><slot name="helper"></slot></span>
@@ -173,21 +173,68 @@ Vue.component( 'input-textarea', {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Vue.component( 'input-checkbox', {
-    mixins: [
-        uniqueId
-    ],
     template: `
         <div>
             <label>
                 <input type="checkbox" class="filled-in"
                     v-bind:checked="value"
                     v-on:change="$emit( 'input', $event.target.checked )"
+                    v-bind:disabled="disabled"
                 />
                 <span><slot></slot></span>
             </label>
         </div>
     `,
-    props: [ 'value' ],
+    props: {
+        value: Boolean,
+        disabled: Boolean
+    },
+    mounted: function () {
+    }
+} )
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Vue.component( 'input-toggle', {
+    template: `
+        <div class="switch input-toggle">
+            <div><slot></slot></div>
+            <label>
+                {{ off }}
+                <input type="checkbox"
+                    v-bind:checked="checked"
+                    v-on:change="$emit( 'input', valueOut( $event.target.checked ) )"
+                    v-bind:disabled="disabled"
+                >
+                <span class="lever"></span>
+                {{ on }}
+            </label>
+        </div>
+    `,
+    props: {
+        value: [ Boolean, String ],
+        disabled: Boolean,
+        on: String,
+        off: String,
+        onValue: String,
+        offValue: String,
+    },
+    computed: {
+        checked: function () {
+            if ( this.onValue == null || this.offValue == null )
+                return this.value
+
+            return this.value == this.onValue ? true : this.value == this.offValue ? false : null
+        }
+    },
+    methods: {
+        valueOut: function ( checked ) {
+            if ( this.onValue == null || this.offValue == null )
+                return checked
+
+            return checked ? this.onValue : this.offValue
+        }
+    },
     mounted: function () {
     }
 } )

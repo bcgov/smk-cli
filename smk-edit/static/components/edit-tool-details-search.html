@@ -1,0 +1,17 @@
+<div>
+    <edit-tool-details
+        v-bind:toolType="toolType"
+        v-bind:toolInstance="toolInstance"
+    ></edit-tool-details>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="showPanel"
+        >Show results in a panel</input-checkbox>
+
+        <input-checkbox class="col s6"
+            v-model="showLocation"
+            v-bind:disabled="!showPanel"
+        >Show selected location in panel</input-checkbox>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 import { vueComponent } from '../vue-util.js'
+import { baseMaps } from './presentation.js'
 
 Vue.directive( 'content', {
     bind: function ( el, binding ) {
@@ -14,44 +15,7 @@ export default vueComponent( import.meta.url, {
         var self = this
         return {
             location: this.$store.getters.configViewerLocation,
-            baseMaps: [
-                {
-                    id: 'Topographic',
-                    title: 'Topographic',
-                },
-                {
-                    id: 'Streets',
-                    title: 'Streets'
-                },
-                {
-                    id: 'Imagery',
-                    title: 'Imagery',
-                },
-                {
-                    id: 'Oceans',
-                    title: 'Oceans'
-                },
-                {
-                    id: 'NationalGeographic',
-                    title: 'National Geographic'
-                },
-                {
-                    id: 'ShadedRelief',
-                    title: 'Shaded Relief'
-                },
-                {
-                    id: 'DarkGray',
-                    title: 'Dark Gray'
-                },
-                {
-                    id: 'Gray',
-                    title: 'Gray'
-                },
-                {
-                    id: 'StamenTonerLight',
-                    title: 'Stamen Toner Light'
-                },
-            ],
+            baseMaps: baseMaps
         }
     },
     computed: {

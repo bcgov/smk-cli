@@ -16,7 +16,6 @@
     "debug": "./index.js edit --open no --base build/test-app --ping 300000"
   },
   "dependencies": {
-    "smk": "^1.0.0-beta.2",
     "@tmcw/togeojson": "^4.1.0",
     "chalk": "^4.1.0",
     "cors": "^2.8.5",
@@ -26,6 +25,7 @@
     "glob": "^7.1.2",
     "inquirer": "^7.3.3",
     "lodash": "^4.17.19",
+    "material-design-icons-iconfont": "^5.0.1",
     "minimist": "^1.2.5",
     "multer": "^1.4.2",
     "node-fetch": "^2.6.0",
@@ -34,6 +34,7 @@
     "semver": "^7.3.2",
     "shapefile": "^0.6.6",
     "shelljs": "^0.8.4",
+    "smk": "^1.0.0-beta.2",
     "touch": "^3.1.0",
     "unzipper": "^0.10.11",
     "xml2js": "^0.4.23",

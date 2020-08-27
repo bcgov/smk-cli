@@ -10,11 +10,16 @@ vueComponent( import.meta.url, {
     },
     computed: {
         typeTitle: function () { return toolTypePresentation[ this.toolType ].title },
-        typeIcon: function () { return toolTypePresentation[ this.toolType ].icon || 'build' },
-        allowedEdit: function () { return !this.allowed || this.allowed.edit !== false },
-        allowedRemove: function () { return !this.allowed || this.allowed.remove !== false },
-        allowedEnable: function () { return !this.allowed || this.allowed.enable !== false },
-        allowedDisable: function () { return !this.allowed || this.allowed.disable !== false },
+        typeIcon: function () {
+            return this.$store.getters.configHasTool( this.toolType, this.toolInstance ) &&
+                this.$store.getters.configTool( this.toolType, this.toolInstance ).icon ||
+                toolTypePresentation[ this.toolType ] && toolTypePresentation[ this.toolType ].default.icon ||
+                'build'
+        },
+        allowedEdit: function () { return toolTypePresentation[ this.toolType ].details !== false && this.allowed && this.allowed.edit !== false },
+        allowedRemove: function () { return this.allowed && this.allowed.remove !== false },
+        allowedEnable: function () { return this.allowed && this.allowed.enable !== false },
+        allowedDisable: function () { return this.allowed && this.allowed.disable !== false },
         toolSummary: function () {
             var comp = 'tool-summary-' + this.toolType
             if ( Vue.component( comp ) ) return comp
