@@ -1,0 +1,48 @@
+.dialog-choose-icon .dialog-body .icons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dialog-choose-icon .dialog-body .icons span {
+    padding: 5px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform .2s;
+    background-color: white;
+    width: 40px;
+    position: relative;
+}
+
+.dialog-choose-icon .dialog-body .icons span div.a {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 42px;
+}
+
+.dialog-choose-icon .dialog-body .icons span div.a div.b {
+    position: relative;
+    font-size: 10px;
+    left: -50%;
+    background-color: white;
+    padding: 2px;
+    border-radius: 4px;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.dialog-choose-icon .dialog-body .icons span.selected {
+    background-color: red;
+}
+
+.dialog-choose-icon .dialog-body .icons span:hover {
+    border: 2px solid black;
+    border-radius: 5px;
+    transform: scale( 2 );
+    z-index: 2;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.dialog-choose-icon .dialog-body .icons span:hover div.a {
+    display: block;
+}

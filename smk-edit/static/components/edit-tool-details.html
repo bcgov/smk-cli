@@ -1,0 +1,43 @@
+<div>
+    <div class="row">
+        <div class="col s6">
+            <input-text
+                v-model="toolTitle"
+            >Title</input-text>
+
+            <input-checkbox
+                v-model="showTitle"
+            >Show title in toolbar</input-checkbox>
+        </div>
+
+        <div class="col s6">
+            <div class="row tight">
+                <input-select class="col s8"
+                    v-model="toolPosition"
+                >Position
+                    <template v-slot:options>
+                        <option v-for="pos in positions"
+                            v-bind:value="pos">{{ pos }}</option>
+                    </template>
+                </input-select>
+
+                <input-text class="col s4"
+                    v-model="order"
+                >Order</input-text>
+            </div>
+
+            <div class="row">
+                <a class="waves-effect waves-light btn blue-grey darken-2 col s6 offset-s6"
+                    v-on:click="setIcon"
+                ><i class="material-icons left tool-icon">{{ icon }}</i>Set Icon</a>
+            </div>
+        </div>
+    </div>
+
+    <dialog-choose-icon
+        v-bind:showDialog.sync="showIcons"
+        v-bind:icon="icon"
+        v-on:select-icon="selectIcon( $event )"
+    ></dialog-choose-icon>
+
+</div>

@@ -1,4 +1,25 @@
 export default {
+    filters: {
+        'layers': {
+            get: function ( tool ) {
+                return Object.assign( {
+                    order: 3,
+                    position: [ 'shortcut-menu', 'list-menu' ],
+                    icon: 'layers',
+                    title: 'Layers',
+                    command: {
+                        allVisibility: true,
+                        filter: true,
+                        legend: true,
+                    },
+                    glyph: {
+                        visible: 'visibility',
+                        hidden: 'visibility_off',
+                    }
+                }, tool )
+            }
+        }
+    },
     getters: {
         configToolLayersDisplay: function ( state, getters ) {
             return getters.version && function () {
