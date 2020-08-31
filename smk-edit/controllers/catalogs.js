@@ -170,6 +170,7 @@ function getWmsCatalog( req, res, next ) {
 
     var url = new URL( serviceUrl )
     url.search = '?version=1.3.0&service=wms&request=GetCapabilities'
+    var layerCache = {}
 
     return fetch( url )
         .then( function ( resp ) {
@@ -184,43 +185,44 @@ function getWmsCatalog( req, res, next ) {
             } )
         } )
         .then( function ( capabilities ) {
-            var layerCache = {}
-            var layers = assertOne( assertOne( capabilities.WMS_Capabilities.Capability ).Layer ).Layer
-            var catalog = layers.map( function ( ly ) {
-                var title = assertOne( ly.Title ),
-                    lyName = assertOne( ly.Name )
+            var catalog = convertLayer( assertOne( assertOne( capabilities.WMS_Capabilities.Capability ).Layer ) )
 
-                return catalogItem( title, null,
-                    ly.Style.map( function ( st ) {
-                        var stName = assertOne( st.Name ),
-                            lyTitle = `${ title } ( ${ stName } )`,
-                            id = slugify( lyName, stName )
+            // var layers = assertOne( assertOne( capabilities.WMS_Capabilities.Capability ).Layer ).Layer
+            // var catalog = layers.map( function ( ly ) {
+            //     var title = assertOne( ly.Title ),
+            //         lyName = assertOne( ly.Name )
 
-                        if ( layerCache[ id ] ) return
+            //     return catalogItem( title, null,
+            //         ly.Style.map( function ( st ) {
+            //             var stName = assertOne( st.Name ),
+            //                 lyTitle = `${ title } ( ${ stName } )`,
+            //                 id = slugify( lyName, stName )
 
-                        layerCache[ id ] = layer.WMS( {
-                            id: id,
-                            title: lyTitle,
-                            isQueryable: true,
-                            opacity: 0.65,
-                            // attribution: "",
-                            // minScale: null,
-                            // maxScale: null,
-                            // titleAttribute: null,
-                            metadataUrl: ly.MetadataURL && ly.MetadataURL[ 0 ].OnlineResource && ly.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
-                            // attributes:  [ ],
-                            // queries: [],
-                            serviceUrl: serviceUrl,
-                            layerName: lyName,
-                            styleName: stName
-                        } )
+            //             if ( layerCache[ id ] ) return
 
-                        return catalogItem( lyTitle, { id: id } )
-                    } ).filter( function ( i ) { return i } )
-                )
-            } )
+            //             layerCache[ id ] = layer.WMS( {
+            //                 id: id,
+            //                 title: lyTitle,
+            //                 isQueryable: true,
+            //                 opacity: 0.65,
+            //                 // attribution: "",
+            //                 // minScale: null,
+            //                 // maxScale: null,
+            //                 // titleAttribute: null,
+            //                 metadataUrl: ly.MetadataURL && ly.MetadataURL[ 0 ].OnlineResource && ly.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
+            //                 // attributes:  [ ],
+            //                 // queries: [],
+            //                 serviceUrl: serviceUrl,
+            //                 layerName: lyName,
+            //                 styleName: stName
+            //             } )
 
-            catalog = pruneCatalog( catalog )
+            //             return catalogItem( lyTitle, { id: id } )
+            //         } ).filter( function ( i ) { return i } )
+            //     )
+            // } )
+
+            catalog = pruneCatalog( catalog.children )
 
             catalog.sort( function ( a, b ) {
                 return a.title > b.title ? 1 : -1
@@ -234,6 +236,51 @@ function getWmsCatalog( req, res, next ) {
         .catch( function ( err ) {
             next( err )
         } )
+
+    function convertLayer( wmsLayer ) {
+        // console.log(wmsLayer)
+        var title = assertOne( wmsLayer.Title )
+
+        if ( wmsLayer.Layer ) {
+            console.log('folder',title)
+            return catalogItem( title, null, wmsLayer.Layer.map( function ( ly ) {
+                return convertLayer( ly )
+            } ) )
+        }
+        else if ( wmsLayer.Style ) {
+            var lyName = assertOne( wmsLayer.Name )
+            console.log('layer',title)
+
+            return catalogItem( title, null,
+                wmsLayer.Style.map( function ( st ) {
+                    var stName = assertOne( st.Name ),
+                        lyTitle = `${ title } ( ${ stName } )`,
+                        id = slugify( lyName, stName )
+
+                    if ( layerCache[ id ] ) return
+
+                    layerCache[ id ] = layer.WMS( {
+                        id: id,
+                        title: lyTitle,
+                        isQueryable: true,
+                        opacity: 0.65,
+                        // attribution: "",
+                        // minScale: null,
+                        // maxScale: null,
+                        // titleAttribute: null,
+                        metadataUrl: wmsLayer.MetadataURL && wmsLayer.MetadataURL[ 0 ].OnlineResource && wmsLayer.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
+                        // attributes:  [ ],
+                        // queries: [],
+                        serviceUrl: serviceUrl,
+                        layerName: lyName,
+                        styleName: stName
+                    } )
+
+                    return catalogItem( lyTitle, { id: id } )
+                } ).filter( function ( i ) { return i } )
+            )
+        }
+    }
 }
 
 function getWmsCatalogLayerConfig( req, res, next ) {
