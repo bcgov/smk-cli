@@ -222,7 +222,7 @@ function getWmsCatalog( req, res, next ) {
             //     )
             // } )
 
-            catalog = pruneCatalog( catalog )
+            catalog = pruneCatalog( catalog.children )
 
             catalog.sort( function ( a, b ) {
                 return a.title > b.title ? 1 : -1
@@ -238,14 +238,18 @@ function getWmsCatalog( req, res, next ) {
         } )
 
     function convertLayer( wmsLayer ) {
+        // console.log(wmsLayer)
+        var title = assertOne( wmsLayer.Title )
+
         if ( wmsLayer.Layer ) {
-            return catalogItem( assertOne( wmsLayer.Title ), null, wmsLayer.Layer.map( function ( ly ) {
-                return convertLayerItem( ly )
+            console.log('folder',title)
+            return catalogItem( title, null, wmsLayer.Layer.map( function ( ly ) {
+                return convertLayer( ly )
             } ) )
         }
         else if ( wmsLayer.Style ) {
-            var title = assertOne( wmsLayer.Title ),
-                lyName = assertOne( wmsLayer.Name )
+            var lyName = assertOne( wmsLayer.Name )
+            console.log('layer',title)
 
             return catalogItem( title, null,
                 wmsLayer.Style.map( function ( st ) {
