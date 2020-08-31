@@ -187,41 +187,6 @@ function getWmsCatalog( req, res, next ) {
         .then( function ( capabilities ) {
             var catalog = convertLayer( assertOne( assertOne( capabilities.WMS_Capabilities.Capability ).Layer ) )
 
-            // var layers = assertOne( assertOne( capabilities.WMS_Capabilities.Capability ).Layer ).Layer
-            // var catalog = layers.map( function ( ly ) {
-            //     var title = assertOne( ly.Title ),
-            //         lyName = assertOne( ly.Name )
-
-            //     return catalogItem( title, null,
-            //         ly.Style.map( function ( st ) {
-            //             var stName = assertOne( st.Name ),
-            //                 lyTitle = `${ title } ( ${ stName } )`,
-            //                 id = slugify( lyName, stName )
-
-            //             if ( layerCache[ id ] ) return
-
-            //             layerCache[ id ] = layer.WMS( {
-            //                 id: id,
-            //                 title: lyTitle,
-            //                 isQueryable: true,
-            //                 opacity: 0.65,
-            //                 // attribution: "",
-            //                 // minScale: null,
-            //                 // maxScale: null,
-            //                 // titleAttribute: null,
-            //                 metadataUrl: ly.MetadataURL && ly.MetadataURL[ 0 ].OnlineResource && ly.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
-            //                 // attributes:  [ ],
-            //                 // queries: [],
-            //                 serviceUrl: serviceUrl,
-            //                 layerName: lyName,
-            //                 styleName: stName
-            //             } )
-
-            //             return catalogItem( lyTitle, { id: id } )
-            //         } ).filter( function ( i ) { return i } )
-            //     )
-            // } )
-
             catalog = pruneCatalog( catalog.children )
 
             catalog.sort( function ( a, b ) {
@@ -238,18 +203,15 @@ function getWmsCatalog( req, res, next ) {
         } )
 
     function convertLayer( wmsLayer ) {
-        // console.log(wmsLayer)
         var title = assertOne( wmsLayer.Title )
 
         if ( wmsLayer.Layer ) {
-            console.log('folder',title)
             return catalogItem( title, null, wmsLayer.Layer.map( function ( ly ) {
                 return convertLayer( ly )
             } ) )
         }
         else if ( wmsLayer.Style ) {
             var lyName = assertOne( wmsLayer.Name )
-            console.log('layer',title)
 
             return catalogItem( title, null,
                 wmsLayer.Style.map( function ( st ) {
