@@ -109,14 +109,18 @@ Vue.component( 'input-select', {
         </div>
     `,
     props: [ 'value' ],
-    mounted: function () {
-        M.FormSelect.init( this.$refs.select, {
-            dropdownOptions: {
-                constrainWidth: false,
-                container: document.getElementsByTagName( 'body' )[ 0 ]
-            }
-        } )
-    }
+    created: function () {
+        this.onUpdate = function () {
+            M.FormSelect.init( this.$refs.select, {
+                dropdownOptions: {
+                    constrainWidth: false,
+                    container: document.getElementsByTagName( 'body' )[ 0 ]
+                }
+            } )
+        }
+    },
+    mounted: function () { this.onUpdate() },
+    updated: function () { this.onUpdate() },
 } )
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -156,18 +160,34 @@ Vue.component( 'input-textarea', {
             <label v-bind:for="id"><slot></slot></label>
             <textarea v-bind:id="id" class="materialize-textarea" ref="text"
                 v-bind:value="value"
+                v-bind:disabled="disabled"
                 v-on:input="$emit( 'input', $event.target.value )"
             ></textarea>
         </div>
     `,
-    props: [ 'value' ],
-    mounted: function () {
-        M.updateTextFields()
-        M.textareaAutoResize( this.$refs.text )
+    props: {
+        value: String,
+        hasFocus: Boolean,
+        disabled: Boolean
     },
-    updated: function () {
-        M.textareaAutoResize( this.$refs.text )
-    }
+    watch: {
+        hasFocus: function ( val ) {
+            if ( val ) this.onUpdate()
+        }
+    },
+    created: function () {
+        this.onUpdate = function () {
+            var self = this
+
+            M.updateTextFields()
+            M.textareaAutoResize( this.$refs.text )
+
+            if ( this.hasFocus )
+                Vue.nextTick( function () { self.$refs.text.focus() } )
+        }
+    },
+    mounted: function () { this.onUpdate() },
+    updated: function () { this.onUpdate() },
 } )
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

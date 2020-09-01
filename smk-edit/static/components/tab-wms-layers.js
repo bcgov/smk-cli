@@ -3,7 +3,8 @@ import { vueComponent, importComponents } from '../vue-util.js'
 export default importComponents( [
     './components/catalog-item.js',
     './components/catalog-tree.js',
-    './components/edit-item.js'
+    './components/edit-item.js',
+    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
@@ -12,7 +13,9 @@ export default importComponents( [
                 appliedLayerFilter: null,
                 addCatalogUrl: null,
                 editItemId: null,
-                showEditItem: false
+                showEditItem: false,
+                showAddCatalogUrl: false,
+                addingCatalog: false
             }
         },
         computed: {
@@ -20,8 +23,20 @@ export default importComponents( [
                 return this.$store.getters.configLayersWms
             },
             catalogUrl: {
-                get: function () { return this.$store.state.wmsCatalogUrl },
-                set: function ( url ) { this.$store.commit( 'wmsCatalogUrl', url ) }
+                get: function () {
+                    if ( this.showAddCatalogUrl )
+                        return '-other-'
+
+                    return this.$store.state.wmsCatalogUrl
+                },
+                set: function ( url ) {
+                    if ( url == '-other-' ) {
+                        this.showAddCatalogUrl = true
+                        return
+                    }
+                    this.showAddCatalogUrl = false
+                    this.$store.commit( 'wmsCatalogUrl', url )
+                }
             },
             catalogUrls: function () {
                 return this.$store.state.wmsCatalogUrls
@@ -29,9 +44,13 @@ export default importComponents( [
         },
         methods: {
             loadCatalog: function () {
-            },
-            viewCatalog: function () {
-                this.$store.commit( 'wmsCatalogUrl', this.addCatalogUrl )
+                try {
+                    new URL( this.addCatalogUrl )
+                    this.addingCatalog = true
+                }
+                catch ( e ) {
+                    M.toast( { html: 'Invalid URL' } )
+                }
             },
             addLayer: function ( item ) {
                 var self = this
@@ -56,13 +75,28 @@ export default importComponents( [
                 this.appliedLayerFilter = null
             },
             catalogError: function ( err ) {
-                M.toast( { html: 'Failed to loaded WMS catalog from ' + this.catalogUrl } )
+                if ( this.addingCatalog ) {
+                    M.toast( { html: 'Failed to loaded WMS catalog from ' + this.addCatalogUrl } )
+                    this.addingCatalog = false
+                }
+                else {
+                    M.toast( { html: 'Failed to loaded WMS catalog from ' + this.catalogUrl } )
+                }
             },
             catalogLoaded: function () {
-                M.toast( { html: 'Loaded WMS catalog from ' + this.catalogUrl } )
-                this.$store.commit( 'addWmsCatalogUrl', this.catalogUrl )
-                this.addCatalogUrl = null
-                M.Collapsible.getInstance( this.$refs.collapsible ).close( 0 )
+                if ( this.addingCatalog ) {
+                    M.toast( { html: 'Loaded WMS catalog from ' + this.addCatalogUrl } )
+                    this.$store.commit( 'addWmsCatalogUrl', this.addCatalogUrl )
+                    this.addingCatalog = false
+                    this.showAddCatalogUrl = false
+                    this.catalogUrl = this.addCatalogUrl
+                    this.addCatalogUrl = null
+                    M.Collapsible.getInstance( this.$refs.collapsible ).close( 0 )
+                }
+                else {
+                    M.toast( { html: 'Loaded WMS catalog from ' + this.catalogUrl } )
+                    M.Collapsible.getInstance( this.$refs.collapsible ).close( 0 )
+                }
             },
             catalogFiltered: function ( count ) {
                 M.toast( { html: `Found ${ count } WMS catalog items matching filter` } )
