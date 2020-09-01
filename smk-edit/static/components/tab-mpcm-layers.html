@@ -2,26 +2,47 @@
     <section>
         <header>
             <h5>DataBC Catalog</h5>
-            <div class="row">
-                <div class="col s10 input-field">
-                    <label>Filter DataBC Layers</label>
-                    <input type="text" v-model="layerFilter">
-                </div>
-                <div class="col s2" >
-                    <a class="waves-effect waves-light blue-grey darken-2 btn-small"
-                        v-on:click="clearFilter"
-                        style="margin-top: 20px;"
-                    >
-                        <i class="material-icons center">cancel</i>
-                    </a>
-                </div>
-            </div>
+
+            <ul class="collapsible" ref="collapsible">
+                <li data-index="1">
+                    <div class="collapsible-header">
+                        <i class="material-icons">filter_list</i>
+                        {{ appliedLayerFilter ? `Filter: "${ appliedLayerFilter }"` : 'Filter catalog' }}
+                        <div class="collapsible-action">
+                            <a class="btn-flat"
+                                v-if="appliedLayerFilter"
+                                v-on:click.stop="clearFilter"
+                            ><i class="material-icons">cancel</i></a>
+                        </div>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row tight">
+                            <input-text class="col s12"
+                                v-model="layerFilter"
+                                v-bind:hasFocus="showFilter"
+                                v-on:keyEnter="applyFilter"
+                            >Show catalog entries containing</input-text>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 right-align">
+                                <a class="waves-effect waves-light btn blue-grey darken-2"
+                                    v-on:click="applyFilter"
+                                ><i class="material-icons right">filter_list</i>Filter</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </header>
+
         <div>
             <catalog-tree
                 src="/catalog/mpcm"
-                v-bind:filter="layerFilter"
+                v-bind:filter="appliedLayerFilter"
                 v-on:select-item="addLayer"
+                v-on:load-error="catalogError"
+                v-on:loaded="catalogLoaded"
+                v-on:filtered="catalogFiltered"
             ></catalog-tree>
         </div>
     </section>

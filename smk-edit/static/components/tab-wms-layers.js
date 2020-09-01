@@ -9,14 +9,14 @@ export default importComponents( [
     return vueComponent( import.meta.url, {
         data: function () {
             return {
-                layerFilter: null,
-                appliedLayerFilter: null,
                 addCatalogUrl: null,
-                editItemId: null,
-                showEditItem: false,
                 showAddCatalogUrl: false,
                 addingCatalog: false,
-                showFilter: false
+                showFilter: false,
+                layerFilter: null,
+                appliedLayerFilter: null,
+                editItemId: null,
+                showEditItem: false,
             }
         },
         computed: {
