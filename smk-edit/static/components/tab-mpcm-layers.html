@@ -7,7 +7,7 @@
                 <li data-index="1">
                     <div class="collapsible-header">
                         <i class="material-icons">filter_list</i>
-                        {{ appliedLayerFilter ? `Filter: "${ appliedLayerFilter }"` : 'Filter catalog' }}
+                        {{ appliedLayerFilter ? `Filter: "${ appliedLayerFilter }"` : 'Filter Catalog' }}
                         <div class="collapsible-action">
                             <a class="btn-flat"
                                 v-if="appliedLayerFilter"
@@ -21,7 +21,7 @@
                                 v-model="layerFilter"
                                 v-bind:hasFocus="showFilter"
                                 v-on:keyEnter="applyFilter"
-                            >Show catalog entries containing</input-text>
+                            >Show Catalog Entries Containing</input-text>
                         </div>
                         <div class="row">
                             <div class="col s12 right-align">
