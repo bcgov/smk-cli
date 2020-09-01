@@ -20,3 +20,20 @@
 .collapsible-body {
     padding: 1rem;
 }
+
+.collapsible-header .collapsible-action {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+}
+
+.collapsible-header .collapsible-action a {
+    padding: 0;
+    line-height: 1;
+}
+
+.collapsible-header .collapsible-action a i {
+    margin-right: 0;
+    margin-left: 1rem;
+}

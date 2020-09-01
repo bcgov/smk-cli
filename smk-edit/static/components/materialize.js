@@ -132,11 +132,13 @@ Vue.component( 'input-text', {
     template: `
         <div class="input-field">
             <label v-bind:for="id"><slot></slot></label>
-            <input v-bind:id="id" type="text"
+            <input v-bind:id="id" type="text" ref="text"
                 class="validate"
                 v-bind:value="value"
+                v-bind:disabled="disabled"
                 v-on:input="$emit( 'input', $event.target.value )"
                 v-bind:pattern="pattern"
+                v-on:keyup.enter="$emit( 'keyEnter' )"
             />
             <span class="helper-text" v-if="$slots.helper || error || success"
                 v-bind:data-error="error"
@@ -144,9 +146,30 @@ Vue.component( 'input-text', {
             ><slot name="helper"></slot></span>
         </div>
     `,
-    props: [ 'value', 'pattern', 'error', 'success' ],
-    mounted: function () {
-    }
+    props: {
+        value: String,
+        hasFocus: Boolean,
+        disabled: Boolean,
+        pattern: String,
+        error: String,
+        success: String
+    },
+    watch: {
+        hasFocus: function ( val ) {
+            if ( val ) this.onUpdate()
+        }
+    },
+    created: function () {
+        this.onUpdate = function () {
+            var self = this
+
+            M.updateTextFields()
+            if ( this.hasFocus )
+                Vue.nextTick( function () { self.$refs.text.focus() } )
+        }
+    },
+    mounted: function () { this.onUpdate() },
+    updated: function () { this.onUpdate() },
 } )
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

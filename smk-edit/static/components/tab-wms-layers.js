@@ -15,7 +15,8 @@ export default importComponents( [
                 editItemId: null,
                 showEditItem: false,
                 showAddCatalogUrl: false,
-                addingCatalog: false
+                addingCatalog: false,
+                showFilter: false
             }
         },
         computed: {
@@ -73,6 +74,7 @@ export default importComponents( [
             clearFilter: function () {
                 this.layerFilter = null
                 this.appliedLayerFilter = null
+                M.Collapsible.getInstance( this.$refs.collapsible ).close( 1 )
             },
             catalogError: function ( err ) {
                 if ( this.addingCatalog ) {
@@ -110,7 +112,18 @@ export default importComponents( [
             }
         },
         mounted: function () {
-            M.Collapsible.init( this.$refs.collapsible )
+            var self = this
+
+            M.Collapsible.init( this.$refs.collapsible, {
+                onOpenEnd: function ( el ) {
+                    if ( el.dataset.index == 1 )
+                        self.showFilter = true
+                },
+                onCloseEnd: function () {
+                    self.showFilter = false
+                    self.showAddCatalogUrl = false
+                }
+            } )
             M.FormSelect.init( this.$refs.catalogs )
         },
         updated: function () {
