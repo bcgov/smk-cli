@@ -15,6 +15,7 @@ module.exports = async function ( args ) {
             assets: args.assets || 'assets',
             temp:   args.temp || '.temp',
             ping:   args.ping || 10 * 1000,
+            packageVersion: args.packageVersion
         } )
 
         if ( !args.open || !/^(no|none|false|0)$/i.test( args.open ) ) {
@@ -43,6 +44,7 @@ function startService( opt ) {
     app.set( 'smk assets', path.resolve( opt.base, opt.assets ) )
     app.set( 'smk temp', path.resolve( opt.base, opt.temp ) )
     app.set( 'smk ping', opt.ping )
+    app.set( 'smk version', opt.packageVersion )
 
     app.use( cors() )
 

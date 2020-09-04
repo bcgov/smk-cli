@@ -40,6 +40,8 @@ if ( !opt.version ) {
     opt.version = package.dependencies[ opt.package ]
 }
 
+opt.packageVersion = package.version
+
 if ( command == 'edit' )
     return require( './smk-edit' )( opt )
 

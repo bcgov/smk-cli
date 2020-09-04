@@ -5,6 +5,7 @@ export const store = new Vuex.Store( {
         config: config
     },
     state: {
+        packageVersion: null,
         serviceStatus: true,
         statusPingInterval: 5000,
         dirtyConfig: false,
@@ -96,6 +97,9 @@ export const store = new Vuex.Store( {
 
                     if ( obj.next )
                         context.state.statusPingInterval = obj.next
+
+                    if ( obj.version )
+                        context.state.packageVersion = obj.version
 
                     context.commit( 'serviceStatus', true )
                 } )
