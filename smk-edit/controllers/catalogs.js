@@ -408,42 +408,64 @@ function postLocalCatalog( req, res, next ) {
     }
     else if ( req.body.file ) {
         console.log( `    Adding ${ ly.id } to catalog from geojson` )
-        // console.log( req.body.file )
 
         var geojson = JSON.parse( req.body.file )
-        var fts
-        if ( geojson.type == 'FeatureCollection' ) {
-            fts = geojson.features
-        }
-        else {
-            console.log(geojson)
-        }
-
-        if ( fts ) {
-            ly.attributes = Object.keys( fts[ 0 ].properties ).map( function ( p ) {
-                return {
-                    id: slugify( p ),
-                    name: p,
-                    title: p,
-                    visible: true
-                }
-            } )
+        ly.attributes = extractGeoJsonAttributes( geojson )
+        if ( ly.attributes )
             console.log( `    Found ${ ly.attributes.length } attributes` )
-        }
 
         fs.writeFileSync( outputFile, JSON.stringify( geojson ) )
         ly.dataUrl = `./layers/${ ly.id }.geojson`
+        finish()
     }
     else {
-        console.log( `    Adding ${ ly.id } to catalog` )
+        console.log( `    Adding ${ ly.id } to catalog from ${ ly.dataUrl }` )
+
+        fetch( ly.dataUrl )
+            .then( function ( resp ) {
+                if ( !resp.ok ) throw Error( 'request failed' )
+                return resp.json()
+            } )
+            .then( function ( geojson ) {
+                ly.attributes = extractGeoJsonAttributes( geojson )
+                if ( ly.attributes )
+                    console.log( `    Found ${ ly.attributes.length } attributes` )
+
+                finish()
+                next()
+            } )
     }
 
-    catalog.layers.push( ly )
+    function finish() {
+        catalog.layers.push( ly )
 
-    fs.writeFileSync( catalogFile, JSON.stringify( catalog, null, '    ' ) )
+        fs.writeFileSync( catalogFile, JSON.stringify( catalog, null, '    ' ) )
 
-    res.json( { ok: true, message: `Successfully added ${ ly.id } to ${ catalogFile }` } )
-    console.log('    Success!');
+        res.json( { ok: true, message: `Successfully added ${ ly.id } to ${ catalogFile }` } )
+        console.log('    Success!');
+    }
+}
+
+function extractGeoJsonAttributes( geojson ) {
+    var fts
+
+    if ( geojson.type == 'FeatureCollection' ) {
+        fts = geojson.features
+    }
+    else {
+        console.log(geojson)
+    }
+
+    if ( fts ) {
+        return Object.keys( fts[ 0 ].properties ).map( function ( p ) {
+            return {
+                id: slugify( p ),
+                name: p,
+                title: p,
+                visible: true
+            }
+        } )
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
