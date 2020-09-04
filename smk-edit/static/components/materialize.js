@@ -147,7 +147,7 @@ Vue.component( 'input-text', {
         </div>
     `,
     props: {
-        value: String,
+        value: [ String, Number ],
         hasFocus: Boolean,
         disabled: Boolean,
         pattern: String,
