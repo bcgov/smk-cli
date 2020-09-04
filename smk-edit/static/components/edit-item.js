@@ -44,6 +44,7 @@ export default importComponents( [
                     } ],
                     layers: [ {
                         id: ly.id,
+                        title: this.title,
                         queries: [ {
                             id: 'all',
                             title: 'All features',
@@ -61,7 +62,6 @@ export default importComponents( [
                 return [
                     'hide-tool=all',
                     'show-tool=pan,zoom,toolbar,layers,identify,scale,coordinate,baseMaps,legend',
-                    q,
                     {
                         viewer: {
                             baseMap: 'StamenTonerLight'
@@ -72,7 +72,8 @@ export default importComponents( [
                         tools: [
                             { type: 'legend', order: 10 },
                         ]
-                    }
+                    },
+                    q,
                 ]
             }
         },
