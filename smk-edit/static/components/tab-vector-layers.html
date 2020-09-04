@@ -73,32 +73,23 @@
                     </div>
                     <div class="collapsible-body">
                         <div class="row tight">
-                            <div class="col s12">
-                                <h6>The external vector file that the URL references must be in GeoJSON format.</h6>
-                            </div>
+                            <input-textarea class="col s12"
+                                v-model="externalUrl"
+                            >External URL</input-textarea>
                         </div>
                         <div class="row tight">
-                            <div class="col s12 input-field">
-                                <label>External URL</label>
-                                <textarea class="materialize-textarea"
-                                    v-model="externalUrl"
-                                ></textarea>
-                            </div>
+                            <input-textarea class="col s12"
+                                v-model="externalTitle"
+                            >Title</input-textarea>
                         </div>
                         <div class="row tight">
-                            <div class="col s12 input-field">
-                                <label>Title</label>
-                                <textarea class="materialize-textarea"
-                                    v-model="externalTitle"
-                                    v-bind:disabled="!externalUrl"
-                                ></textarea>
+                            <div class="col s8">
+                                The external vector file that the URL references must be in GeoJSON format.
                             </div>
-                        </div>
-                        <div class="row tight">
-                            <div class="col s12 right-align">
+                            <div class="col s4 right-align">
                                 <a class="waves-effect waves-light btn blue-grey darken-2"
                                     v-on:click="addExternalLayer"
-                                    v-bind:class="{ disabled: !externalUrl }"
+                                    v-bind:class="{ disabled: !externalUrl || !externalTitle }"
                                 >
                                     <i class="material-icons right">keyboard_arrow_right</i>
                                     Add Layer

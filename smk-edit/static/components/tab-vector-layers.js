@@ -1,7 +1,8 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
-    './components/edit-item.js'
+    './components/edit-item.js',
+    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
@@ -101,6 +102,14 @@ export default importComponents( [
             addExternalLayer: function () {
                 var self = this
 
+                try {
+                    new URL( this.externalUrl )
+                }
+                catch ( e ) {
+                    M.toast( { html: 'Invalid URL' } )
+                    return
+                }
+
                 var formData = new FormData()
                 formData.append( 'layer', JSON.stringify( {
                     title: this.externalTitle.trim(),
@@ -128,7 +137,7 @@ export default importComponents( [
             },
             resetExternal: function () {
                 this.externalUrl = null
-                this.externalUrl = null
+                this.externalTitle = null
             },
             addLayer: function ( item ) {
                 var self = this
