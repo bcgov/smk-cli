@@ -26,7 +26,7 @@ Vue.component( 'input-range', {
         uniqueId
     ],
     template: `
-        <div class="range-field">
+        <div class="materialize range-field">
             <label v-bind:for="id"><slot></slot></label>
             <input v-bind:id="id" type="range"
                 v-bind:value="value"
@@ -50,7 +50,7 @@ Vue.component( 'input-spectrum', {
         uniqueId
     ],
     template: `
-        <div class="input-spectrum">
+        <div class="materialize input-spectrum">
             <label v-bind:for="id"><slot></slot></label>
             <input v-bind:id="id" type="text" ref="color">
             <span><slot name="output">{{ value }}</slot></span>
@@ -98,7 +98,7 @@ Vue.component( 'input-select', {
         uniqueId
     ],
     template: `
-        <div class="input-field">
+        <div class="materialize input-field">
             <label v-bind:for="id" class="active"><slot></slot></label>
             <select v-bind:id="id" ref="select"
                 v-bind:value="value"
@@ -130,7 +130,7 @@ Vue.component( 'input-text', {
         uniqueId
     ],
     template: `
-        <div class="input-field">
+        <div class="materialize input-field">
             <label v-bind:for="id"><slot></slot></label>
             <input v-bind:id="id" type="text" ref="text"
                 class="validate"
@@ -179,7 +179,7 @@ Vue.component( 'input-textarea', {
         uniqueId
     ],
     template: `
-        <div class="input-field">
+        <div class="materialize input-field">
             <label v-bind:for="id"><slot></slot></label>
             <textarea v-bind:id="id" class="materialize-textarea" ref="text"
                 v-bind:value="value"
@@ -217,7 +217,7 @@ Vue.component( 'input-textarea', {
 
 Vue.component( 'input-checkbox', {
     template: `
-        <div>
+        <div class="materialize">
             <label>
                 <input type="checkbox" class="filled-in"
                     v-bind:checked="value"
@@ -240,7 +240,7 @@ Vue.component( 'input-checkbox', {
 
 Vue.component( 'input-toggle', {
     template: `
-        <div class="switch input-toggle">
+        <div class="materialize switch input-toggle">
             <div><slot></slot></div>
             <label>
                 {{ off }}

@@ -23,6 +23,9 @@ export default {
         },
         configName: function ( state ) {
             return state.name
+        },
+        hasConfig: function ( state ) {
+            return !!state.name
         }
     },
     mutations: {

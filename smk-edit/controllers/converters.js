@@ -14,7 +14,7 @@ const rmdir = promisify( fs.rmdir )
 const unlink = promisify( fs.unlink )
 
 module.exports = function( app, logger ) {
-    var tempPath = path.resolve( app.get( 'smk temp' ) )
+    var tempPath = path.resolve( app.get( 'temp' ) )
     rmdirs( tempPath ).then( function () {
         fs.mkdirSync( tempPath )
     } ).catch( function () {} )

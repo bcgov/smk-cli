@@ -1,0 +1,15 @@
+.tab-application dl {
+    margin: 0;
+    padding: 0 0.75rem;
+}
+
+.tab-application dl dt {
+    color:#333;
+    cursor: text;
+    font-size: 12px;
+}
+
+.tab-application dl dd {
+    margin-left: 0;
+    margin-bottom: 1rem;
+}

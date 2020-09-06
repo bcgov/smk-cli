@@ -32,7 +32,7 @@ module.exports = function( app, logger ) {
     app.get(    '/catalog/wms/:url/:id',    getWmsCatalogLayerConfig )
 
     var uploadLayer = multer( {
-        dest: path.resolve( app.get( 'smk layers' ) ),
+        dest: path.resolve( app.get( 'layers' ) ),
         limits: {
             fieldSize: Number.POSITIVE_INFINITY
         }
@@ -43,7 +43,7 @@ module.exports = function( app, logger ) {
     app.post(   '/catalog/local',           uploadLayer, postLocalCatalog )
 
     var uploadAsset = multer( {
-        dest: path.resolve( app.get( 'smk assets' ) ),
+        dest: path.resolve( app.get( 'assets' ) ),
         limits: {
             fieldSize: Number.POSITIVE_INFINITY
         }
@@ -306,7 +306,7 @@ function getWmsCatalogLayerConfig( req, res, next ) {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function getLocalCatalog( req, res, next ) {
-    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
 
     if ( !fs.existsSync( catalogFile ) ) {
         console.log( `    No catalog at ${ catalogFile }` );
@@ -330,7 +330,7 @@ function getLocalCatalog( req, res, next ) {
 
 function getLocalCatalogLayerConfig( req, res, next ) {
     var id = req.params.id
-    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
 
     if ( !fs.existsSync( catalogFile ) ) {
         console.log( `    No catalog at ${ catalogFile }` );
@@ -371,11 +371,11 @@ function getLocalCatalogLayerConfig( req, res, next ) {
 }
 
 function postLocalCatalog( req, res, next ) {
-    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
 
     if ( !fs.existsSync( catalogFile ) ) {
         console.log( `    Creating catalog at ${ catalogFile }` );
-        var dir = path.resolve( req.app.get( 'smk layers' ) )
+        var dir = path.resolve( req.app.get( 'layers' ) )
         if ( !fs.existsSync( dir ) )
             fs.mkdirSync( dir )
 
@@ -399,7 +399,7 @@ function postLocalCatalog( req, res, next ) {
         ly.id = slugify( ly.title, i )
     }
 
-    var outputFile = path.resolve( req.app.get( 'smk layers' ), `${ ly.id }.geojson` )
+    var outputFile = path.resolve( req.app.get( 'layers' ), `${ ly.id }.geojson` )
 
     if ( req.file ) {
         console.log( `    Adding ${ ly.id } to catalog from ${ req.file.originalname }` )
@@ -471,7 +471,7 @@ function extractGeoJsonAttributes( geojson ) {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function getAssetCatalog( req, res, next ) {
-    var assetDir = path.resolve( req.app.get( 'smk assets' ) )
+    var assetDir = path.resolve( req.app.get( 'assets' ) )
 
     if ( !fs.existsSync( assetDir ) ) {
         console.log( `    No catalog at ${ assetDir }` );
@@ -491,7 +491,7 @@ function getAssetCatalog( req, res, next ) {
 
 function getAssetCatalogItem( req, res, next ) {
     var id = req.params.id
-    var assetDir = path.resolve( req.app.get( 'smk assets' ) )
+    var assetDir = path.resolve( req.app.get( 'assets' ) )
 
     if ( !fs.existsSync( assetDir ) ) {
         console.log( `    No catalog at ${ assetDir }` );
@@ -525,7 +525,7 @@ function postAssetCatalog( req, res, next ) {
     if ( req.file ) {
         id = slugify( req.file.originalname )
         console.log( `    Adding ${ id } to assets from ${ req.file.originalname }` )
-        fs.renameSync( req.file.path, path.resolve( req.app.get( 'smk assets' ), req.file.originalname ) )
+        fs.renameSync( req.file.path, path.resolve( req.app.get( 'assets' ), req.file.originalname ) )
     }
 
     res.json( { ok: true, message: `Successfully added ${ id }`, id: id, title: 'assets/' + req.file.originalname } )
