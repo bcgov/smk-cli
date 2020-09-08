@@ -189,7 +189,7 @@ export default importComponents( [
                 this.externalUrl = null
                 this.externalTitle = null
             },
-            addLayer: function ( item ) {
+            addCatalogLayer: function ( item ) {
                 var self = this
 
                 fetch( '/catalog/local/' + item.id )
@@ -207,6 +207,54 @@ export default importComponents( [
             catalogError: function ( err ) {
                 M.toast( {
                     html: err
+                } )
+            },
+            canEditCatalogItem: function ( item ) {
+                return true
+            },
+            canRemoveCatalogItem: function ( item ) {
+                return !this.$store.getters.configHasLayer( item.id )
+            },
+            editCatalogLayer: function ( item, title ) {
+                var self = this
+
+                var formData = new FormData()
+                formData.append( 'title', title )
+
+                return fetch( `/catalog/local/${ item.id }`, {
+                    method: 'PUT',
+                    cache: 'no-cache',
+                    body: formData
+                } )
+                .then( function( resp ) {
+                    return resp.json()
+                } )
+                .then( function ( result ) {
+                    if ( !result.ok ) throw Error( result.message )
+                    self.catalogKey += 1
+                    M.toast( { html: result.message } )
+                } )
+                .catch( function ( err ) {
+                    M.toast( { html: err.toString().replace( /^(Error: )+/, '' ) } )
+                } )
+            },
+            removeCatalogLayer: function ( item ) {
+                var self = this
+
+                return fetch( `/catalog/local/${ item.id }`, {
+                    method: 'DELETE',
+                    cache: 'no-cache'
+                } )
+                .then( function( resp ) {
+                    return resp.json()
+                } )
+                .then( function ( result ) {
+                    if ( !result.ok ) throw Error( result.message )
+                    self.catalogKey += 1
+                    M.toast( { html: result.message } )
+                } )
+                .catch( function ( err ) {
+                    M.toast( { html: err.toString().replace( /^(Error: )+/, '' ) } )
                 } )
             },
             editItem: function ( itemId ) {

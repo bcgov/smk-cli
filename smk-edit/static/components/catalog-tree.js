@@ -1,7 +1,12 @@
 import { vueComponent } from '../vue-util.js'
 
 vueComponent( import.meta.url, {
-    props: [ 'filter', 'src' ], // 'items',
+    props: {
+        filter: String,
+        src: String,
+        allowedEdit: Function,
+        allowedRemove: Function
+    },
     data: function () {
         return {
             loading: false,
@@ -24,10 +29,6 @@ vueComponent( import.meta.url, {
                 tree.clearFilter()
             }
         },
-        // items: function () {
-        //     if ( !this.$refs.container ) return
-        //     $( this.$refs.container ).fancytree( 'getTree' ).reload( this.items )
-        // }
     },
     methods: {
         load: function () {
@@ -39,7 +40,6 @@ vueComponent( import.meta.url, {
             this.loaded = false
             fetch( this.src )
                 .then( function ( resp ) {
-                    // if ( !resp.ok ) throw Error( 'request failed' )
                     return resp.json()
                 } )
                 .then( function ( catalog ) {
@@ -63,8 +63,13 @@ vueComponent( import.meta.url, {
         var self = this
 
         $( this.$refs.container ).fancytree( {
-            extensions: [ 'filter' ],
+            source: [],
+            extensions: [ 'filter', "edit" ],
             quicksearch: true,
+            tooltip: function ( event, data ) {
+                if ( !data.node.data.id ) return
+                return 'ID: ' + data.node.data.id
+            },
             filter: {
                 autoApply: true,
                 autoExpand: true,
@@ -75,12 +80,44 @@ vueComponent( import.meta.url, {
                 highlight: true,
                 leavesOnly: false,
                 nodata: true,
-                mode: 'hide'
+                mode: 'hide',
+                extensions: [],
             },
-            source: [],
+            edit: {
+                adjustWidthOfs: 50,
+                beforeEdit: function(event, data){
+                    if ( !self.allowedEdit ) return false
+
+                    return self.allowedEdit( data.node.data )
+                },
+                edit: function(event, data){
+                    $( data.input ).addClass( 'browser-default' ) //.css( { width: 'auto' } )
+                    $( data.node.span ).find( '.catalog-node-command' ).remove()
+                },
+                // beforeClose: function(event, data){
+                save: function(event, data){
+                    self.$emit( 'edit-item', data.node.data, data.input.val() )
+                    return true;
+                },
+                // close: function(event, data){
+            },
             dblclick: function(event, data) {
                 if ( data.node.folder ) return
                 self.$emit( 'select-item', data.node.data )
+                $( data.node.span ).find( '.catalog-node-command' ).remove()
+            },
+            activate: function ( event, data ) {
+                if ( self.allowedRemove && self.allowedRemove( data.node.data ) )
+                    $( data.node.span ).append(
+                        $( '<i class="material-icons catalog-node-command red-text">' )
+                            .text( 'delete_forever' )
+                            .click( function () {
+                                self.$emit( 'remove-item', data.node.data )
+                            } )
+                    )
+            },
+            deactivate: function ( event, data ) {
+                $( data.node.span ).find( '.catalog-node-command' ).remove()
             }
         } )
 

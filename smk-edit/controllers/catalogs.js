@@ -41,6 +41,8 @@ module.exports = function( app, logger ) {
     app.get(    '/catalog/local',           getLocalCatalog )
     app.get(    '/catalog/local/:id',       getLocalCatalogLayerConfig )
     app.post(   '/catalog/local',           uploadLayer, postLocalCatalog )
+    app.put(    '/catalog/local/:id',       uploadLayer, putLocalCatalogLayerConfig )
+    app.delete( '/catalog/local/:id',       deleteLocalCatalogLayerConfig )
 
     var uploadAsset = multer( {
         dest: path.resolve( app.get( 'assets' ) ),
@@ -444,6 +446,72 @@ function postLocalCatalog( req, res, next ) {
         res.json( { ok: true, message: `Successfully added ${ ly.id } to ${ catalogFile }` } )
         console.log('    Success!');
     }
+}
+
+function putLocalCatalogLayerConfig( req, res, next ) {
+    var id = req.params.id
+    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
+
+    if ( !fs.existsSync( catalogFile ) ) {
+        console.log( `    No catalog at ${ catalogFile }` );
+        res.status( 404 ).json( { error: `No catalog at ${ catalogFile }` } )
+        return
+    }
+
+    console.log( `    Reading catalog from ${ catalogFile }` );
+    const catalog = JSON.parse( fs.readFileSync( catalogFile, { encoding: 'utf8' } ) )
+
+    if ( !( 'layers' in catalog ) || !Array.isArray( catalog.layers ) )
+        throw Error( 'no layers in catalog' )
+
+    var ly = catalog.layers.find( function ( ly ) { return ly.id == id } )
+    if ( !ly ) {
+        console.log( `    No layer for ${ id } in ${ catalogFile }` );
+        res.status( 404 ).json( { error: `No layer for ${ id } in ${ catalogFile }` } )
+        return
+    }
+
+    console.log( `    Modifying ${ ly.id }` )
+
+    if ( req.body.title ) ly.title = req.body.title
+
+    fs.writeFileSync( catalogFile, JSON.stringify( catalog, null, '    ' ) )
+
+    res.json( { ok: true, message: `Successfully modified ${ ly.id }` } )
+    console.log('    Success!');
+}
+
+function deleteLocalCatalogLayerConfig( req, res, next ) {
+    var id = req.params.id
+    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
+
+    if ( !fs.existsSync( catalogFile ) ) {
+        console.log( `    No catalog at ${ catalogFile }` );
+        res.status( 404 ).json( { error: `No catalog at ${ catalogFile }` } )
+        return
+    }
+
+    console.log( `    Reading catalog from ${ catalogFile }` );
+    const catalog = JSON.parse( fs.readFileSync( catalogFile, { encoding: 'utf8' } ) )
+
+    if ( !( 'layers' in catalog ) || !Array.isArray( catalog.layers ) )
+        throw Error( 'no layers in catalog' )
+
+    var ly = catalog.layers.find( function ( ly ) { return ly.id == id } )
+    if ( !ly ) {
+        console.log( `    No layer for ${ id } in ${ catalogFile }` );
+        res.status( 404 ).json( { error: `No layer for ${ id } in ${ catalogFile }` } )
+        return
+    }
+
+    console.log( `    Deleting ${ ly.id }` )
+
+    catalog.layers = catalog.layers.filter( function ( item ) { return item.id != id } )
+
+    fs.writeFileSync( catalogFile, JSON.stringify( catalog, null, '    ' ) )
+
+    res.json( { ok: true, message: `Successfully deleted ${ ly.id }` } )
+    console.log('    Success!');
 }
 
 function extractGeoJsonAttributes( geojson ) {
