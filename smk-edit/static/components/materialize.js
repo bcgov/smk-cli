@@ -26,7 +26,7 @@ Vue.component( 'input-range', {
         uniqueId
     ],
     template: `
-        <div class="range-field">
+        <div class="materialize range-field">
             <label v-bind:for="id"><slot></slot></label>
             <input v-bind:id="id" type="range"
                 v-bind:value="value"
@@ -50,7 +50,7 @@ Vue.component( 'input-spectrum', {
         uniqueId
     ],
     template: `
-        <div class="input-spectrum">
+        <div class="materialize input-spectrum">
             <label v-bind:for="id"><slot></slot></label>
             <input v-bind:id="id" type="text" ref="color">
             <span><slot name="output">{{ value }}</slot></span>
@@ -98,7 +98,7 @@ Vue.component( 'input-select', {
         uniqueId
     ],
     template: `
-        <div class="input-field">
+        <div class="materialize input-field">
             <label v-bind:for="id" class="active"><slot></slot></label>
             <select v-bind:id="id" ref="select"
                 v-bind:value="value"
@@ -109,14 +109,18 @@ Vue.component( 'input-select', {
         </div>
     `,
     props: [ 'value' ],
-    mounted: function () {
-        M.FormSelect.init( this.$refs.select, {
-            dropdownOptions: {
-                constrainWidth: false,
-                container: document.getElementsByTagName( 'body' )[ 0 ]
-            }
-        } )
-    }
+    created: function () {
+        this.onUpdate = function () {
+            M.FormSelect.init( this.$refs.select, {
+                dropdownOptions: {
+                    constrainWidth: false,
+                    container: document.getElementsByTagName( 'body' )[ 0 ]
+                }
+            } )
+        }
+    },
+    mounted: function () { this.onUpdate() },
+    updated: function () { this.onUpdate() },
 } )
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -126,13 +130,15 @@ Vue.component( 'input-text', {
         uniqueId
     ],
     template: `
-        <div class="input-field">
+        <div class="materialize input-field">
             <label v-bind:for="id"><slot></slot></label>
-            <input v-bind:id="id" type="text"
+            <input v-bind:id="id" type="text" ref="text"
                 class="validate"
                 v-bind:value="value"
+                v-bind:disabled="disabled"
                 v-on:input="$emit( 'input', $event.target.value )"
                 v-bind:pattern="pattern"
+                v-on:keyup.enter="$emit( 'keyEnter' )"
             />
             <span class="helper-text" v-if="$slots.helper || error || success"
                 v-bind:data-error="error"
@@ -140,9 +146,30 @@ Vue.component( 'input-text', {
             ><slot name="helper"></slot></span>
         </div>
     `,
-    props: [ 'value', 'pattern', 'error', 'success' ],
-    mounted: function () {
-    }
+    props: {
+        value: [ String, Number ],
+        hasFocus: Boolean,
+        disabled: Boolean,
+        pattern: String,
+        error: String,
+        success: String
+    },
+    watch: {
+        hasFocus: function ( val ) {
+            if ( val ) this.onUpdate()
+        }
+    },
+    created: function () {
+        this.onUpdate = function () {
+            var self = this
+
+            M.updateTextFields()
+            if ( this.hasFocus )
+                Vue.nextTick( function () { self.$refs.text.focus() } )
+        }
+    },
+    mounted: function () { this.onUpdate() },
+    updated: function () { this.onUpdate() },
 } )
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -152,29 +179,45 @@ Vue.component( 'input-textarea', {
         uniqueId
     ],
     template: `
-        <div class="input-field">
+        <div class="materialize input-field">
             <label v-bind:for="id"><slot></slot></label>
             <textarea v-bind:id="id" class="materialize-textarea" ref="text"
                 v-bind:value="value"
+                v-bind:disabled="disabled"
                 v-on:input="$emit( 'input', $event.target.value )"
             ></textarea>
         </div>
     `,
-    props: [ 'value' ],
-    mounted: function () {
-        M.updateTextFields()
-        M.textareaAutoResize( this.$refs.text )
+    props: {
+        value: String,
+        hasFocus: Boolean,
+        disabled: Boolean
     },
-    updated: function () {
-        M.textareaAutoResize( this.$refs.text )
-    }
+    watch: {
+        hasFocus: function ( val ) {
+            if ( val ) this.onUpdate()
+        }
+    },
+    created: function () {
+        this.onUpdate = function () {
+            var self = this
+
+            M.updateTextFields()
+            M.textareaAutoResize( this.$refs.text )
+
+            if ( this.hasFocus )
+                Vue.nextTick( function () { self.$refs.text.focus() } )
+        }
+    },
+    mounted: function () { this.onUpdate() },
+    updated: function () { this.onUpdate() },
 } )
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Vue.component( 'input-checkbox', {
     template: `
-        <div>
+        <div class="materialize">
             <label>
                 <input type="checkbox" class="filled-in"
                     v-bind:checked="value"
@@ -197,7 +240,7 @@ Vue.component( 'input-checkbox', {
 
 Vue.component( 'input-toggle', {
     template: `
-        <div class="switch input-toggle">
+        <div class="materialize switch input-toggle">
             <div><slot></slot></div>
             <label>
                 {{ off }}

@@ -8,6 +8,8 @@
         <a class="waves-effect waves-light btn blue-grey darken-2"
             v-on:click="view"
         ><i class="material-icons left">public</i>View</a>
+
+        <div class="version grey-text">{{ $store.state.packageVersion }}</div>
     </div>
 
     <dialog-box

@@ -3,12 +3,15 @@ import { vueComponent, importComponents } from '../vue-util.js'
 export default importComponents( [
     './components/catalog-item.js',
     './components/catalog-tree.js',
-    './components/edit-item.js'
+    './components/edit-item.js',
+    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
             return {
+                showFilter: false,
                 layerFilter: null,
+                appliedLayerFilter: null,
                 editItemId: null,
                 showEditItem: false
             }
@@ -34,8 +37,22 @@ export default importComponents( [
                         M.toast( { html: err.toString().replace( /^(Error: )+/, '' ) } )
                     } )
             },
+            applyFilter: function () {
+                this.appliedLayerFilter = this.layerFilter
+            },
             clearFilter: function () {
                 this.layerFilter = null
+                this.appliedLayerFilter = null
+                M.Collapsible.getInstance( this.$refs.collapsible ).close( 0 )
+            },
+            catalogError: function ( err ) {
+                M.toast( { html: 'Failed to loaded MPCM catalog' } )
+            },
+            catalogLoaded: function () {
+                M.toast( { html: 'Loaded MPCM catalog' } )
+            },
+            catalogFiltered: function ( count ) {
+                M.toast( { html: `Found ${ count } MPCM catalog items matching filter` } )
             },
             editItem: function ( itemId ) {
                 this.editItemId = itemId
@@ -44,7 +61,22 @@ export default importComponents( [
             removeItem: function ( itemId ) {
                 this.$store.dispatch( 'configToolLayersDisplayItemRemove', itemId )
             }
-        }
+        },
+        mounted: function () {
+            var self = this
+
+            M.Collapsible.init( this.$refs.collapsible, {
+                onOpenEnd: function ( el ) {
+                    if ( el.dataset.index == 1 )
+                        self.showFilter = true
+                },
+                onCloseEnd: function () {
+                    self.showFilter = false
+                    self.showAddCatalogUrl = false
+                }
+            } )
+        },
+
     } )
 } )
 

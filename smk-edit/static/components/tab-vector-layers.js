@@ -1,7 +1,8 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
-    './components/edit-item.js'
+    './components/edit-item.js',
+    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
@@ -13,7 +14,12 @@ export default importComponents( [
                 externalTitle: null,
                 catalogKey: 1,
                 editItemId: null,
-                showEditItem: false
+                showEditItem: false,
+                showImportOptions: false,
+                importMethod: 'latlong',
+                importLatProperty: null,
+                importLongProperty: null,
+                importProperties: null
             }
         },
         computed: {
@@ -30,7 +36,7 @@ export default importComponents( [
             },
             vectorCatalog: function () {
                 return []
-            }
+            },
         },
         methods: {
             readFile: function ( ev ) {
@@ -44,6 +50,10 @@ export default importComponents( [
 
                 var m = this.$vectorFile.name.match( /(^|[/\\])([^/\\.]+)[.](.+)$/ )
                 this.importTitle = m ? m[ 2 ] : this.$vectorFile.name
+            },
+            importFilename: function () {
+                if ( !this.$vectorFile ) return
+                return this.$vectorFile.name
             },
             importLayer: function () {
                 var self = this
@@ -64,8 +74,41 @@ export default importComponents( [
 
                     M.toast( { html: result.message } )
 
+                    return result.data
+                } )
+                .then( function ( data ) {
+                    if ( self.importType != 'csv' ) return data
+
+                    self.showImportOptions = true
+                    self.importProperties = Object.keys( data[ 0 ] )
+                    self.importLongProperty = self.importProperties.find( function ( p ) { return /^long/i.test( p ) } )
+                    self.importLatProperty = self.importProperties.find( function ( p ) { return /^lat/i.test( p ) } )
+
+                    return new Promise( function ( res, rej ) {
+                        self.continueImportOptions = function ( ok ) { return ok ? res( data ) : rej() }
+                    } )
+                    .then( function ( data ) {
+                        return {
+                            type: 'FeatureCollection',
+                            features: data.map( function ( row ) {
+                                return {
+                                    type: 'Feature',
+                                    properties: row,
+                                    geometry: {
+                                        type: 'Point',
+                                        coordinates: [
+                                            parseFloat( row[ self.importLongProperty ] ),
+                                            parseFloat( row[ self.importLatProperty ] ),
+                                        ]
+                                    }
+                                }
+                            } )
+                        }
+                    } )
+                } )
+                .then( function ( data ) {
                     var formData = new FormData()
-                    formData.append( 'file', JSON.stringify( result.data ) )
+                    formData.append( 'file', JSON.stringify( data ) )
                     formData.append( 'layer', JSON.stringify( {
                         title: self.importTitle.trim()
                     } ) )
@@ -88,9 +131,17 @@ export default importComponents( [
                     self.resetImport()
                 } )
                 .catch( function ( err ) {
-                    M.toast( { html: err.toString().replace( /^(Error: )+/, '' ) } )
+                    if ( err )
+                        M.toast( { html: err.toString().replace( /^(Error: )+/, '' ) } )
                 } )
 
+            },
+            closeImportOptions: function ( ok ) {
+                this.showImportOptions = false
+                if ( !this.continueImportOptions ) return
+
+                this.continueImportOptions( ok )
+                this.continueImportOptions = null
             },
             resetImport: function () {
                 this.importFile = false
@@ -100,6 +151,14 @@ export default importComponents( [
             },
             addExternalLayer: function () {
                 var self = this
+
+                try {
+                    new URL( this.externalUrl )
+                }
+                catch ( e ) {
+                    M.toast( { html: 'Invalid URL' } )
+                    return
+                }
 
                 var formData = new FormData()
                 formData.append( 'layer', JSON.stringify( {
@@ -128,7 +187,7 @@ export default importComponents( [
             },
             resetExternal: function () {
                 this.externalUrl = null
-                this.externalUrl = null
+                this.externalTitle = null
             },
             addLayer: function ( item ) {
                 var self = this
