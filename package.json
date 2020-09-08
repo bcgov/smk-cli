@@ -1,21 +1,21 @@
 {
-    "name": "smk-cli",
-    "version": "1.0.0-beta.2",
-    "description": "A utility for creating and configuring a Simple Map Kit project",
-    "main": "index.js",
-    "author": "Ben Jubb <benjubb@gmail.com>",
-    "license": "(MIT OR Apache-2.0)",
-    "bin": {
-        "smk": "./index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/bcgov/smk-cli.git"
-    },
-    "scripts": {
-        "debug": "./index.js edit --open no --base build/test-app --ping 300000"
-    },
-    "dependencies": {
+  "name": "smk-cli",
+  "version": "1.0.0-beta.3",
+  "description": "A utility for creating and configuring a Simple Map Kit project",
+  "main": "index.js",
+  "author": "Ben Jubb <benjubb@gmail.com>",
+  "license": "(MIT OR Apache-2.0)",
+  "bin": {
+    "smk": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcgov/smk-cli.git"
+  },
+  "scripts": {
+    "debug": "./index.js edit --open no --base build/test-app --ping 300000"
+  },
+  "dependencies": {
         "@tmcw/togeojson": "^4.1.0",
         "chalk": "^4.1.0",
         "cors": "^2.8.5",
