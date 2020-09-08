@@ -1,7 +1,13 @@
 import { vueComponent } from '../vue-util.js'
 
 vueComponent( import.meta.url, {
-    props: [ 'showDialog' ],
+    props: {
+        showDialog: Boolean,
+        dismissible: {
+            type: Boolean,
+            default: true
+        }
+    },
     watch: {
         showDialog: function ( val ) {
             if ( val ) {
@@ -18,6 +24,7 @@ vueComponent( import.meta.url, {
         var self = this
 
         M.Modal.init( this.$refs.dialog, {
+            dismissible: this.dismissible,
             onCloseEnd: function () {
                 self.$emit( 'update:showDialog', false )
             }

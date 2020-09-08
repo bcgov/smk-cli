@@ -5,6 +5,8 @@ module.exports = function ( app, logger ) {
 
     app.get( '/ping', function ( req, res, next ) { res.json( {
         ok: true,
-        next: parseInt( app.get( 'smk ping' ) )
+        next: parseInt( app.get( 'ping' ) ),
+        version: app.get( 'packageVersion' ),
+        config: app.get( 'config' )
     } ) } )
 }

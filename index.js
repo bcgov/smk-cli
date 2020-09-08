@@ -26,19 +26,21 @@ const title = figlet.textSync( 'Simple Map Kit', {
 } ).slice( 0, -ver.length )
 console.log( chalk.yellow( title ) + chalk.gray( ver ) )
 
-if ( !opt.package ) {
+if ( !opt.smkPackage ) {
     var smkDeps = Object.keys( package.dependencies ).filter( function ( d ) {
         return /(^|[/])smk$/.test( d )
     } )
     if ( smkDeps.length != 1 )
         throw Error( "Can't determine the dependency information for smk" )
 
-    opt.package = smkDeps[ 0 ]
+    opt.smkPackage = smkDeps[ 0 ]
 }
 
-if ( !opt.version ) {
-    opt.version = package.dependencies[ opt.package ]
+if ( !opt.smkPackageVersion ) {
+    opt.smkPackageVersion = package.dependencies[ opt.smkPackage ]
 }
+
+opt.packageVersion = package.version
 
 if ( command == 'edit' )
     return require( './smk-edit' )( opt )

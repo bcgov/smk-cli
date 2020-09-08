@@ -8,8 +8,8 @@ const semverRsort = require( 'semver/functions/rsort' )
 module.exports = async function ( args ) {
     const name = args._.shift()
     const baseDir = args.base || args.b || process.cwd()
-    const package = args.package
-    const version = args.version
+    const package = args.smkPackage
+    const version = args.smkPackageVersion
 
     console.log( chalk.blue( 'Welcome to the SMK application creation tool!' ) )
     console.log( chalk.blue( 'A application skeleton will be created for you at the current directory.' ) )

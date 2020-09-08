@@ -23,7 +23,9 @@ export default {
     getters: {
         configToolLayersDisplay: function ( state, getters ) {
             return getters.version && function () {
-                var d = getters.configTool( 'layers' ).display
+                var d
+                if ( getters.configHasTool( 'layers' ) )
+                    d = getters.configTool( 'layers' ).display
                 if ( !d ) d = getters.configLayers.map( function ( ly ) { return { id: ly.id } } )
 
                 return {
@@ -71,6 +73,10 @@ export default {
     },
     actions: {
         configToolLayersDisplay: function ( context, display ) {
+            if ( !context.getters.configHasTool( 'layers' ) ) {
+                context.commit( 'configToolAppend', { type: 'layers' } )
+            }
+
             var tool = context.getters.configTool( 'layers' )
 
             if ( Array.isArray( display ) ) {

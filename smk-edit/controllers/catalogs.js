@@ -32,7 +32,7 @@ module.exports = function( app, logger ) {
     app.get(    '/catalog/wms/:url/:id',    getWmsCatalogLayerConfig )
 
     var uploadLayer = multer( {
-        dest: path.resolve( app.get( 'smk layers' ) ),
+        dest: path.resolve( app.get( 'layers' ) ),
         limits: {
             fieldSize: Number.POSITIVE_INFINITY
         }
@@ -43,7 +43,7 @@ module.exports = function( app, logger ) {
     app.post(   '/catalog/local',           uploadLayer, postLocalCatalog )
 
     var uploadAsset = multer( {
-        dest: path.resolve( app.get( 'smk assets' ) ),
+        dest: path.resolve( app.get( 'assets' ) ),
         limits: {
             fieldSize: Number.POSITIVE_INFINITY
         }
@@ -170,6 +170,7 @@ function getWmsCatalog( req, res, next ) {
 
     var url = new URL( serviceUrl )
     url.search = '?version=1.3.0&service=wms&request=GetCapabilities'
+    var layerCache = {}
 
     return fetch( url )
         .then( function ( resp ) {
@@ -184,43 +185,9 @@ function getWmsCatalog( req, res, next ) {
             } )
         } )
         .then( function ( capabilities ) {
-            var layerCache = {}
-            var layers = assertOne( assertOne( capabilities.WMS_Capabilities.Capability ).Layer ).Layer
-            var catalog = layers.map( function ( ly ) {
-                var title = assertOne( ly.Title ),
-                    lyName = assertOne( ly.Name )
+            var catalog = convertLayer( assertOne( assertOne( capabilities.WMS_Capabilities.Capability ).Layer ) )
 
-                return catalogItem( title, null,
-                    ly.Style.map( function ( st ) {
-                        var stName = assertOne( st.Name ),
-                            lyTitle = `${ title } ( ${ stName } )`,
-                            id = slugify( lyName, stName )
-
-                        if ( layerCache[ id ] ) return
-
-                        layerCache[ id ] = layer.WMS( {
-                            id: id,
-                            title: lyTitle,
-                            isQueryable: true,
-                            opacity: 0.65,
-                            // attribution: "",
-                            // minScale: null,
-                            // maxScale: null,
-                            // titleAttribute: null,
-                            metadataUrl: ly.MetadataURL && ly.MetadataURL[ 0 ].OnlineResource && ly.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
-                            // attributes:  [ ],
-                            // queries: [],
-                            serviceUrl: serviceUrl,
-                            layerName: lyName,
-                            styleName: stName
-                        } )
-
-                        return catalogItem( lyTitle, { id: id } )
-                    } ).filter( function ( i ) { return i } )
-                )
-            } )
-
-            catalog = pruneCatalog( catalog )
+            catalog = pruneCatalog( catalog.children )
 
             catalog.sort( function ( a, b ) {
                 return a.title > b.title ? 1 : -1
@@ -234,6 +201,48 @@ function getWmsCatalog( req, res, next ) {
         .catch( function ( err ) {
             next( err )
         } )
+
+    function convertLayer( wmsLayer ) {
+        var title = assertOne( wmsLayer.Title )
+
+        if ( wmsLayer.Layer ) {
+            return catalogItem( title, null, wmsLayer.Layer.map( function ( ly ) {
+                return convertLayer( ly )
+            } ) )
+        }
+        else if ( wmsLayer.Style ) {
+            var lyName = assertOne( wmsLayer.Name )
+
+            return catalogItem( title, null,
+                wmsLayer.Style.map( function ( st ) {
+                    var stName = assertOne( st.Name ),
+                        lyTitle = `${ title } ( ${ stName } )`,
+                        id = slugify( lyName, stName )
+
+                    if ( layerCache[ id ] ) return
+
+                    layerCache[ id ] = layer.WMS( {
+                        id: id,
+                        title: lyTitle,
+                        isQueryable: true,
+                        opacity: 0.65,
+                        // attribution: "",
+                        // minScale: null,
+                        // maxScale: null,
+                        // titleAttribute: null,
+                        metadataUrl: wmsLayer.MetadataURL && wmsLayer.MetadataURL[ 0 ].OnlineResource && wmsLayer.MetadataURL[ 0 ].OnlineResource[ 0 ].$[ "xlink:href" ],
+                        // attributes:  [ ],
+                        // queries: [],
+                        serviceUrl: serviceUrl,
+                        layerName: lyName,
+                        styleName: stName
+                    } )
+
+                    return catalogItem( lyTitle, { id: id } )
+                } ).filter( function ( i ) { return i } )
+            )
+        }
+    }
 }
 
 function getWmsCatalogLayerConfig( req, res, next ) {
@@ -297,7 +306,7 @@ function getWmsCatalogLayerConfig( req, res, next ) {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function getLocalCatalog( req, res, next ) {
-    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
 
     if ( !fs.existsSync( catalogFile ) ) {
         console.log( `    No catalog at ${ catalogFile }` );
@@ -321,7 +330,7 @@ function getLocalCatalog( req, res, next ) {
 
 function getLocalCatalogLayerConfig( req, res, next ) {
     var id = req.params.id
-    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
 
     if ( !fs.existsSync( catalogFile ) ) {
         console.log( `    No catalog at ${ catalogFile }` );
@@ -362,11 +371,11 @@ function getLocalCatalogLayerConfig( req, res, next ) {
 }
 
 function postLocalCatalog( req, res, next ) {
-    var catalogFile = path.resolve( req.app.get( 'smk layers' ), '-smk-catalog.json' )
+    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
 
     if ( !fs.existsSync( catalogFile ) ) {
         console.log( `    Creating catalog at ${ catalogFile }` );
-        var dir = path.resolve( req.app.get( 'smk layers' ) )
+        var dir = path.resolve( req.app.get( 'layers' ) )
         if ( !fs.existsSync( dir ) )
             fs.mkdirSync( dir )
 
@@ -390,7 +399,7 @@ function postLocalCatalog( req, res, next ) {
         ly.id = slugify( ly.title, i )
     }
 
-    var outputFile = path.resolve( req.app.get( 'smk layers' ), `${ ly.id }.geojson` )
+    var outputFile = path.resolve( req.app.get( 'layers' ), `${ ly.id }.geojson` )
 
     if ( req.file ) {
         console.log( `    Adding ${ ly.id } to catalog from ${ req.file.originalname }` )
@@ -399,48 +408,70 @@ function postLocalCatalog( req, res, next ) {
     }
     else if ( req.body.file ) {
         console.log( `    Adding ${ ly.id } to catalog from geojson` )
-        // console.log( req.body.file )
 
         var geojson = JSON.parse( req.body.file )
-        var fts
-        if ( geojson.type == 'FeatureCollection' ) {
-            fts = geojson.features
-        }
-        else {
-            console.log(geojson)
-        }
-
-        if ( fts ) {
-            ly.attributes = Object.keys( fts[ 0 ].properties ).map( function ( p ) {
-                return {
-                    id: slugify( p ),
-                    name: p,
-                    title: p,
-                    visible: true
-                }
-            } )
+        ly.attributes = extractGeoJsonAttributes( geojson )
+        if ( ly.attributes )
             console.log( `    Found ${ ly.attributes.length } attributes` )
-        }
 
         fs.writeFileSync( outputFile, JSON.stringify( geojson ) )
         ly.dataUrl = `./layers/${ ly.id }.geojson`
+        finish()
     }
     else {
-        console.log( `    Adding ${ ly.id } to catalog` )
+        console.log( `    Adding ${ ly.id } to catalog from ${ ly.dataUrl }` )
+
+        fetch( ly.dataUrl )
+            .then( function ( resp ) {
+                if ( !resp.ok ) throw Error( 'request failed' )
+                return resp.json()
+            } )
+            .then( function ( geojson ) {
+                ly.attributes = extractGeoJsonAttributes( geojson )
+                if ( ly.attributes )
+                    console.log( `    Found ${ ly.attributes.length } attributes` )
+
+                finish()
+                next()
+            } )
     }
 
-    catalog.layers.push( ly )
+    function finish() {
+        catalog.layers.push( ly )
 
-    fs.writeFileSync( catalogFile, JSON.stringify( catalog, null, '    ' ) )
+        fs.writeFileSync( catalogFile, JSON.stringify( catalog, null, '    ' ) )
 
-    res.json( { ok: true, message: `Successfully added ${ ly.id } to ${ catalogFile }` } )
-    console.log('    Success!');
+        res.json( { ok: true, message: `Successfully added ${ ly.id } to ${ catalogFile }` } )
+        console.log('    Success!');
+    }
+}
+
+function extractGeoJsonAttributes( geojson ) {
+    var fts
+
+    if ( geojson.type == 'FeatureCollection' ) {
+        fts = geojson.features
+    }
+    else {
+        console.log(geojson)
+    }
+
+    if ( fts ) {
+        return Object.keys( fts[ 0 ].properties ).map( function ( p ) {
+            return {
+                id: slugify( p ),
+                name: p,
+                title: p,
+                visible: true
+            }
+        } )
+    }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function getAssetCatalog( req, res, next ) {
-    var assetDir = path.resolve( req.app.get( 'smk assets' ) )
+    var assetDir = path.resolve( req.app.get( 'assets' ) )
 
     if ( !fs.existsSync( assetDir ) ) {
         console.log( `    No catalog at ${ assetDir }` );
@@ -460,7 +491,7 @@ function getAssetCatalog( req, res, next ) {
 
 function getAssetCatalogItem( req, res, next ) {
     var id = req.params.id
-    var assetDir = path.resolve( req.app.get( 'smk assets' ) )
+    var assetDir = path.resolve( req.app.get( 'assets' ) )
 
     if ( !fs.existsSync( assetDir ) ) {
         console.log( `    No catalog at ${ assetDir }` );
@@ -494,7 +525,7 @@ function postAssetCatalog( req, res, next ) {
     if ( req.file ) {
         id = slugify( req.file.originalname )
         console.log( `    Adding ${ id } to assets from ${ req.file.originalname }` )
-        fs.renameSync( req.file.path, path.resolve( req.app.get( 'smk assets' ), req.file.originalname ) )
+        fs.renameSync( req.file.path, path.resolve( req.app.get( 'assets' ), req.file.originalname ) )
     }
 
     res.json( { ok: true, message: `Successfully added ${ id }`, id: id, title: 'assets/' + req.file.originalname } )

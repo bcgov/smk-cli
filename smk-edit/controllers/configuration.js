@@ -9,7 +9,7 @@ module.exports = function ( app, logger ) {
 };
 
 function getConfig( req, res, next ) {
-    var configFile = req.app.get( 'smk config' )
+    var configFile = req.app.get( 'config' )
 
     console.log( `    Reading config from ${ configFile }` );
     const data = JSON.parse( fs.readFileSync( configFile, { encoding: 'utf8' } ) )// function(err, data)
@@ -17,7 +17,7 @@ function getConfig( req, res, next ) {
 }
 
 function saveConfig( req, res, next ) {
-    var configFile = req.app.get( 'smk config' )
+    var configFile = req.app.get( 'config' )
 
     // console.log('    Reading body content...');
     var body = '';

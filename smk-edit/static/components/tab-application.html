@@ -1,98 +1,77 @@
-<form action="#">
-    <div class="row" style="margin-bottom: 0px;">
-        <div class="col s12 input-field">
-            <label class="active">Application Name</label>
-            <input type="text" class="validate active" disabled
-                v-model="name"
-            >
-        </div>
-    </div>
+<article>
+    <section>
+        <header>
+            <h5>Application</h5>
+        </header>
+        <div>
+            <div class="row tight">
+                <dl>
+                    <dt>Configuration Name</dt>
+                    <dd>{{ name }}</dd>
 
-    <div class="row" style="margin-top: 20px;">
-        <div class="col s12">
-            <p>What kind of map viewer do you want to use?</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <p>
-                <label>
-                    <input name="viewerGroup" type="radio" value="leaflet"
-                        v-model="viewerType"
-                    >
-                    <span>Leaflet</span>
-                </label>
-            </p>
-            <p>
-                <label>
-                    <input name="viewerGroup" type="radio" value="esri3d"
-                        v-model="viewerType"
-                    >
-                    <span>ESRI ArcGIS 3D</span>
-                </label>
-            </p>
-        </div>
-    </div>
+                    <dt>Configuration Created By</dt>
+                    <dd>{{ $store.state.config.createdBy }}</dd>
 
-    <div class="row" style="margin-top: 20px;">
-        <div class="col s12">
-            <p>What kind of device is the viewer going to be used on?</p>
+                    <dt>Configuration File</dt>
+                    <dd>{{ $store.state.configFile }}</dd>
+
+                    <dt>Configuration Version</dt>
+                    <dd>{{ $store.state.config.version }}</dd>
+                </dl>
+            </div>
+
+            <div class="row tight">
+                <input-select class="col s12"
+                    v-model="viewerType"
+                >The type of map viewer for this application
+                    <template v-slot:options>
+                        <option value="leaflet">Leaflet</option>
+                        <option value="esri3d" disabled>Esri ArcGIS 3D</option>
+                    </template>
+                </input-select>
+            </div>
+
+            <div class="row tight">
+                <input-select class="col s12"
+                    v-model="viewerDevice"
+                >The type of device this application is to be used on
+                    <template v-slot:options>
+                        <option value="auto">Auto-detect</option>
+                        <option value="desktop">Desktop</option>
+                        <option value="mobile">Mobile</option>
+                    </template>
+                </input-select>
+            </div>
+
+            <div class="row tight">
+                <input-select class="col s12"
+                    v-model="baseMap"
+                >Select the default basemap for your application
+                    <template v-slot:options>
+                        <option
+                            v-for="bm in baseMaps"
+                            v-bind:value="bm.id"
+                        >{{ bm.title }}</option>
+                    </template>
+                </input-select>
+            </div>
+
         </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <p>
-                <label>
-                    <input name="viewerModeGroup" type="radio" id="autoMode" value="auto"
-                        v-model="viewerDevice"/>
-                    <span>Auto-Detect</span>
-                </label>
-            </p>
-            <p>
-                <label>
-                    <input name="viewerModeGroup" type="radio" id="desktopMode" value="desktop"
-                        v-model="viewerDevice"/>
-                    <span>Desktop</span>
-                </label>
-            </p>
-            <p>
-                <label>
-                    <input name="viewerModeGroup" type="radio" id="mobileMode" value="mobile"
-                        v-model="viewerDevice"/>
-                    <span>Mobile</span>
-                </label>
-            </p>
+    </section>
+
+    <section>
+        <header>
+            <h5>Initial Map Position</h5>
+            <h6>
+                Pan and zoom the map to set the application's initial position.
+            </h6>
+        </header>
+        <div>
+            <smk-map
+                v-if="hasMapConfig"
+                v-bind:config="mapConfig"
+                v-on:changed-view="changedView"
+            ></smk-map>
         </div>
-    </div>
-    <!--
-    <div class="row" style="margin-bottom: 0px;">
-        <div class="col s6 input-field">
-            <input id="defaultPanelWidth" type="text" class="validate active" v-model="config.viewer.panelWidth">
-                <label for="defaultPanelWidth">Side Panel Width (in pixels)</label>
-        </div>
-    </div>
-    <div class="row" style="margin-bottom: 0px;">
-        <div class="col s6 input-field">
-            <input id="autoTogglePanelWidth" type="text" class="validate active" v-model="config.viewer.deviceAutoBreakpoint">
-                <label for="defaultPanelWidth">Auto-toggle to Mobile width (in pixels)</label>
-        </div>
-    </div>-->
-    <!--<div class="row" style="padding-bottom: 30px;">
-        <div class="col s6 input-field">
-            <label>
-                <input type="checkbox" class="filled-in" id="visible" v-model="config.viewer.clusterOption.showCoverageOnHover" />
-                <span>Show coverage on vector clusters hover</span>
-            </label>
-        </div>
-    </div>-->
-    <!--<div class="row">
-        <div class="col s6 input-field">
-            <input id="createdDateField" type="text" disabled="true" v-model="config.createdDate">
-                <label for="createdDateField">Created Date</label>
-        </div>
-        <div class="col s6 input-field">
-            <input id="updatedDateField" type="text" disabled="true" v-model="config.modifiedDate">
-                <label for="updatedDateField">Updated Date</label>
-        </div>
-    </div>-->
-</form>
+    </section>
+</article>
