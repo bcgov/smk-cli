@@ -12,6 +12,7 @@ const { promisify } = require( 'util' )
 const readdir = promisify( fs.readdir )
 const rmdir = promisify( fs.rmdir )
 const unlink = promisify( fs.unlink )
+const parse = require( 'csv-parse' )
 
 module.exports = function( app, logger ) {
     var tempPath = path.resolve( app.get( 'temp' ) )
@@ -160,8 +161,31 @@ function convertShape( req, res, next ) {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function convertCsv( req, res, next ) {
-    console.log( `    Convert CSV ${ req.file.path }` )
-    next()
+    const input = selectInputFile( req, 'csv' ) || selectInputFile( req, 'tsv' ) || selectInputFile( req )
+    if ( !input)
+        throw Error( 'No suitable input file found' )
+
+    console.log( `    Convert CSV from ${ input }` )
+    var csv = fs.readFileSync( input, { encoding: 'utf8' } )
+
+    parse( csv, {
+            // comment: '#'
+            columns: true
+        },
+        function( err, output, info ) {
+            if ( err ) {
+                return next( err )
+            }
+
+            res.json( {
+                ok: true,
+                message: `Converted ${ req.file.originalname }`,
+                data: output
+            } )
+
+            console.log('    Success!')
+        }
+    )
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
