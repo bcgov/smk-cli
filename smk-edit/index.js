@@ -7,7 +7,9 @@ const path = require( 'path' )
 module.exports = async function ( args ) {
     try {
         var app = startService( {
-            smkPackage: args.package,
+            packageVersion:     args.packageVersion,
+            smkPackage:         args.smkPackage,
+            smkPackageVersion:  args.smkPackageVersion,
             port:   args.port || args.p || 1337,
             base:   args.base || '.',
             config: args.config || 'smk-config.json',
@@ -37,12 +39,14 @@ function startService( opt ) {
     var app = express()
 
     app.set( 'port', opt.port )
-    app.set( 'smk base', path.resolve( opt.base ) )
-    app.set( 'smk config', path.resolve( opt.base, opt.config ) )
-    app.set( 'smk layers', path.resolve( opt.base, opt.layers ) )
-    app.set( 'smk assets', path.resolve( opt.base, opt.assets ) )
-    app.set( 'smk temp', path.resolve( opt.base, opt.temp ) )
-    app.set( 'smk ping', opt.ping )
+    app.set( 'base', path.resolve( opt.base ) )
+    app.set( 'config', path.resolve( opt.base, opt.config ) )
+    app.set( 'layers', path.resolve( opt.base, opt.layers ) )
+    app.set( 'assets', path.resolve( opt.base, opt.assets ) )
+    app.set( 'temp', path.resolve( opt.base, opt.temp ) )
+    app.set( 'ping', opt.ping )
+    app.set( 'packageVersion', opt.packageVersion )
+    app.set( 'smkLib', `${ opt.smkPackage }@${ opt.smkPackageVersion }` )
 
     app.use( cors() )
 
@@ -59,8 +63,8 @@ function startService( opt ) {
     app.use( express.static( path.resolve( __dirname, 'static' ) ) )
     app.use( '/module', express.static( path.dirname( require.resolve( opt.smkPackage ) ) ) )
     app.use( '/module', express.static( path.dirname( require.resolve( 'material-design-icons-iconfont' ) ) ) )
-    app.use( '/layers', express.static( app.get( 'smk layers' ) ) )
-    app.use( '/assets', express.static( app.get( 'smk assets' ) ) )
+    app.use( '/layers', express.static( app.get( 'layers' ) ) )
+    app.use( '/assets', express.static( app.get( 'assets' ) ) )
 
     app.use( function ( req, res, next ) {
         if ( ( '' + req.originalUrl ).endsWith( 'css' ) ) {
@@ -80,8 +84,8 @@ function startService( opt ) {
         ] } )
         .sort( function( a, b ) { return a[ 1 ] > b[ 1 ] ? 1 : -1 } )
     routes.unshift( [ 'GET', '/module', path.dirname( require.resolve( opt.smkPackage ) ) ] )
-    routes.unshift( [ 'GET', '/layers', app.get( 'smk layers' ) ] )
-    routes.unshift( [ 'GET', '/assets', app.get( 'smk assets' ) ] )
+    routes.unshift( [ 'GET', '/layers', app.get( 'layers' ) ] )
+    routes.unshift( [ 'GET', '/assets', app.get( 'assets' ) ] )
     routes.unshift( [ 'GET', '/', path.resolve( __dirname, 'static' ) ] )
 
     app.listen( opt.port, () => {
@@ -90,12 +94,12 @@ function startService( opt ) {
             return `\t${ chalk.green( r[ 0 ] ) }\t${ chalk.cyan( r[ 1 ] ) }\t${  r[ 2 ] ? chalk.yellow( '-> ' ) + chalk.blue( relativePath( r[ 2 ] ) ) : '' }`
         } ).join( '\n' ) )
         console.log( chalk.yellow( `Current path is ${ chalk.blue( process.cwd() ) }` ) )
-        console.log( chalk.yellow( `Base path is ${ chalk.blue( relativePath( app.get( 'smk base' ) ) ) }` ) )
-        console.log( chalk.yellow( `Configuration path is ${ chalk.blue( relativePath( app.get( 'smk config' ) ) ) }` ) )
-        console.log( chalk.yellow( `Layers catalog path is ${ chalk.blue( relativePath( app.get( 'smk layers' ) ) ) }` ) )
-        console.log( chalk.yellow( `Assets catalog path is ${ chalk.blue( relativePath( app.get( 'smk assets' ) ) ) }` ) )
-        console.log( chalk.yellow( `Temp path is ${ chalk.blue( relativePath( app.get( 'smk temp' ) ) ) }` ) )
-        console.log( chalk.yellow( `Service listening at ${ chalk.cyan( 'http://localhost:' + app.get( 'port' ) + '/' ) }` ) )
+        console.log( chalk.yellow( `Base path is ${ chalk.blue( relativePath( app.get( 'base' ) ) ) }` ) )
+        console.log( chalk.yellow( `Configuration path is ${ chalk.blue( relativePath( app.get( 'config' ) ) ) }` ) )
+        console.log( chalk.yellow( `Layers catalog path is ${ chalk.blue( relativePath( app.get( 'layers' ) ) ) }` ) )
+        console.log( chalk.yellow( `Assets catalog path is ${ chalk.blue( relativePath( app.get( 'assets' ) ) ) }` ) )
+        console.log( chalk.yellow( `Temp path is ${ chalk.blue( relativePath( app.get( 'temp' ) ) ) }` ) )
+        console.log( chalk.yellow( `Service listening at ${ chalk.cyan( 'http://localh' + app.get( 'port' ) + '/' ) }` ) )
         console.log( chalk.yellow( `Hit Ctrl-C to exit` ) )
         console.log()
     } )

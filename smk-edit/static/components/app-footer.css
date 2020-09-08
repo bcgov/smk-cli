@@ -2,10 +2,17 @@
     position: relative;
     padding: 1em;
     height: 100%;
+    display: flex;
 }
 
 .app-footer .content-panel .btn {
     margin-right: 10px;
+}
+
+.app-footer .content-panel .version {
+    flex-grow: 1;
+    align-self: flex-end;
+    text-align: right;
 }
 
 .app-footer .dialog-box {

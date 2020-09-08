@@ -9,6 +9,7 @@
             <h6>Select which base maps are available:</h6>
             <input-checkbox
                 v-for="bm in baseMaps"
+                v-bind:key="bm.id"
                 v-bind:value="choices.includes( bm.id )"
                 v-on:input="setChoice( bm.id, $event )"
             >{{ bm.title }}</input-checkbox>
