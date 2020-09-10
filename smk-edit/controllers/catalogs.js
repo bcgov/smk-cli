@@ -366,6 +366,17 @@ function getLocalCatalogLayerConfig( req, res, next ) {
         // queries: [],
         dataUrl: ly.dataUrl,
         attributes: ly.attributes,
+        legend: { line: true },
+        style: {
+            strokeColor: '#3388ff',
+            strokeOpacity: 1.0,
+            strokeWidth: 3,
+            strokeCap: 'round',
+            strokeJoin: 'round',
+            fill: false,
+            fillColor: '#3388ff',
+            fillOpacity: 0.2,
+        }
     } )
 
     res.json( out )

@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="collapsible-body">
-                <div class="row">
+                <div class="row tight">
                     <input-select class="col s10"
                         v-model="markerUrl"
                         v-bind:key="assetsKey"
@@ -42,7 +42,7 @@
                     </form>
                 </div>
 
-                <div class="row">
+                <div class="row tight">
                     <input-text class="col s4"
                         v-model="markerSize"
                         v-bind:pattern="pairPattern.toString().slice( 1, -1 )"
@@ -71,7 +71,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row tight">
                 </div>
 
             </div>
@@ -113,7 +113,7 @@
                     </input-range>
                 </div>
 
-                <div class="row">
+                <div class="row tight">
                     <input-select class="col s4"
                         v-model="strokeCap"
                     >Stroke Cap
@@ -139,7 +139,7 @@
                         v-bind:pattern="dashArrayPattern.toString().slice( 1, -1 )"
                         error="Invalid pattern"
                     >Dash Pattern
-                        <template v-slot:helper>number, number[,...]</template>
+                        <template v-slot:helper>number number [number...]</template>
                     </input-text>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                 </div>
             </div>
             <div class="collapsible-body">
-                <div class="row">
+                <div class="row tight">
                     <input-spectrum class="col s4"
                         v-model="fillColor"
                     >Fill Colour</input-spectrum>
@@ -177,4 +177,36 @@
             </div>
         </li>
     </ul>
+
+    <div class="row tight">
+        <div class="col s12">
+            Show Legend:
+
+            <input-checkbox class="inline"
+                v-model="legendPoint"
+            >Point</input-checkbox>
+
+            <input-checkbox class="inline"
+                v-model="legendLine"
+            >Line</input-checkbox>
+
+            <input-checkbox class="inline"
+                v-model="legendFill"
+            >Fill</input-checkbox>
+
+            <input-checkbox class="inline"
+                v-if="legendPoint || legendLine || legendFill"
+                v-model="showLegendTitle"
+                xxv-bind:disabled="!legendTitle"
+            >Title</input-checkbox>
+        </div>
+    </div>
+    <div class="row tight">
+        <input-text class="col s6"
+            v-if="showLegendTitle && ( legendPoint || legendLine || legendFill )"
+            v-model="legendTitle"
+            xxv-bind:disabled="!legendTitle"
+        >Legend Title</input-text>
+    </div>
+
 </div>
