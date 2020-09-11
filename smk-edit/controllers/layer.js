@@ -58,7 +58,9 @@ function Vector ( opt ) {
 
     return project( out, {
         useClustering: false,
-        dataUrl: null
+        dataUrl: null,
+        legend: null,
+        style: null
     }, opt )
 }
 

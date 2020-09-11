@@ -94,9 +94,13 @@
         <div>
             <catalog-tree
                 src="/catalog/local"
-                v-on:select-item="addLayer"
-                v-on:load-error="catalogError"
                 v-bind:key="catalogKey"
+                v-bind:allowedEdit="canEditCatalogItem"
+                v-bind:allowedRemove="canRemoveCatalogItem"
+                v-on:select-item="addCatalogLayer"
+                v-on:load-error="catalogError"
+                v-on:edit-item="editCatalogLayer"
+                v-on:remove-item="removeCatalogLayer"
             ></catalog-tree>
         </div>
     </section>

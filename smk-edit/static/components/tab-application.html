@@ -13,10 +13,8 @@
                     <dd>{{ $store.state.config.createdBy }}</dd>
 
                     <dt>Configuration File</dt>
-                    <dd>{{ $store.state.configFile }}</dd>
-
-                    <dt>Configuration Version</dt>
-                    <dd>{{ $store.state.config.version }}</dd>
+                    <dd v-bind:title="'Version: ' + $store.state.config.version"
+                    >{{ $store.state.configFile }}</dd>
                 </dl>
             </div>
 

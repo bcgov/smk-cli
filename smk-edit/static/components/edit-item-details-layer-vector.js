@@ -1,6 +1,7 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
+    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         props: [ 'itemId' ],
@@ -13,20 +14,18 @@ export default importComponents( [
                     this.$store.dispatch( 'configLayer', { id: this.itemId, dataUrl: val } )
                 }
             },
-            useClustering: {
+            displayMode: {
                 get: function () {
-                    return this.$store.getters.configLayer( this.itemId ).useClustering
+                    var ly = this.$store.getters.configLayer( this.itemId )
+                    return ly.useClustering ? 'cluster' : ly.useHeatmap ? 'heatmap' : 'raw'
                 },
                 set: function ( val ) {
-                    this.$store.dispatch( 'configLayer', { id: this.itemId, useClustering: val } )
-                }
-            },
-            useHeatmap: {
-                get: function () {
-                    return this.$store.getters.configLayer( this.itemId ).useHeatmap
-                },
-                set: function ( val ) {
-                    this.$store.dispatch( 'configLayer', { id: this.itemId, useHeatmap: val } )
+                    this.$store.dispatch( 'configLayer', {
+                        id: this.itemId,
+                        useClustering: val == 'cluster',
+                        useHeatmap: val == 'heatmap',
+                        useRaw: val == 'raw',
+                    } )
                 }
             },
         },

@@ -27,11 +27,16 @@
         <li v-for="attr,i in attributes"
             v-bind:data-index="i"
         >
-            <div class="collapsible-header">
+            <div class="collapsible-header"
+                v-bind:class="{ 'grey lighten-2': !isAttributeVisible( i ) }"
+            >
                 <i class="material-icons">article</i>
-                <span>{{ attr.title }}</span>
+                <span class="attribute">
+                    <div class="name grey-text">{{ attr.name }}</div>
+                    <div class="title">"{{ attr.title }}"</div>
+                </span>
                 <div class="widgets">
-                    <div class="switch tooltipped" ref="visibility">
+                    <span class="switch tooltipped" ref="visibility">
                         <label>
                             <input type="checkbox"
                                 v-bind:checked="isAttributeVisible( i )"
@@ -40,60 +45,33 @@
                             <span class="lever"></span>
                         </label>
                         <div>{{ isAttributeVisible( i ) ? 'Show' : 'Hide' }}</div>
-                    </div>
+                    </span>
+                    <span>
+                        <div class="col s2 right-align">
+                            <a class="waves-effect waves-light btn-flat"
+                                v-bind:class="{ disabled: !canMoveUp( i ) }"
+                                v-on:click.stop="moveUp( i )"
+                            ><i class="tiny material-icons right">arrow_upward</i></a>
+                        </div>
+                        <div class="col s2 right-align">
+                            <a class="waves-effect waves-light btn-flat"
+                                v-bind:class="{ disabled: !canMoveDown( i ) }"
+                                v-on:click.stop="moveDown( i )"
+                            ><i class="tiny material-icons right">arrow_downward</i></a>
+                        </div>
+                    </span>
                 </div>
             </div>
             <div class="collapsible-body">
                 <div v-if="activeAttributeIndex == i"
                     v-bind:key="activeAttributeIndex"
                 >
-                    <div class="row">
-                        <div class="col s10 input-field">
-                            <label>Name</label>
-                            <input type="text" v-model="attributeName" disabled>
-                        </div>
-
-                        <div class="col s2 right-align">
-                            <a class="waves-effect waves-light btn-flat"
-                                v-bind:class="{ disabled: !canMoveUp }"
-                                v-on:click="moveUp"
-                            ><i class="material-icons right">arrow_upward</i></a>
-                        </div>
+                    <div class="row tight">
+                        <input-text class="col s12"
+                            v-model="attributeTitle"
+                            hasFocus
+                        >Title</input-text>
                     </div>
-                    <div class="row">
-                        <div class="col s10 input-field">
-                            <label>Title</label>
-                            <input type="text" v-model="attributeTitle">
-                        </div>
-
-                        <div class="col s2 right-align">
-                            <a class="waves-effect waves-light btn-flat"
-                                v-bind:class="{ disabled: !canMoveDown }"
-                                v-on:click="moveDown"
-                            ><i class="material-icons right">arrow_downward</i></a>
-                        </div>
-                    </div>
-                    <!-- <div class="row">
-                        <div class="col s6">
-                            <label>
-                                <input type="checkbox" class="filled-in" v-model="attributeVisible" />
-                                <span>Attribute is visible</span>
-                            </label>
-                        </div>
-                    </div> -->
-                    <!-- <div class="row">
-                        <div class="col s12 right-align">
-                            <a class="waves-effect waves-light btn-flat"
-                                v-bind:class="{ disabled: !canMoveUp }"
-                                v-on:click="moveUp"
-                            ><i class="material-icons right">arrow_upward</i></a>
-
-                            <a class="waves-effect waves-light btn-flat"
-                                v-bind:class="{ disabled: !canMoveDown }"
-                                v-on:click="moveDown"
-                            ><i class="material-icons right">arrow_downward</i></a>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </li>

@@ -14,11 +14,8 @@ export default importComponents( [
             attributes: function () {
                 return this.$store.getters.configLayer( this.itemId ).attributes
             },
-            attributeName: attributeAccessor( 'name' ),
+            // attributeName: attributeAccessor( 'name' ),
             attributeTitle: attributeAccessor( 'title' ),
-            // attributeVisible: attributeAccessor( 'visible' ),
-            canMoveUp: function () { return this.activeAttributeIndex > 0 },
-            canMoveDown: function () { return this.activeAttributeIndex < ( this.attributes.length - 1 ) },
             titleAttribute: {
                 get: function () {
                     return this.$store.getters.configLayer( this.itemId ).titleAttribute
@@ -45,20 +42,21 @@ export default importComponents( [
                 attrs[ index ].visible = val
                 this.$store.dispatch( 'configLayer', { id: this.itemId, attributes: attrs } )
             },
-            moveUp: function () {
+            canMoveUp: function ( index ) { return index > 0 },
+            canMoveDown: function ( index ) { return index < ( this.attributes.length - 1 ) },
+            moveUp: function ( index ) {
+                M.Collapsible.getInstance( this.$refs.collapsible ).close( index )
                 var attrs = this.attributes
-                attrs.splice( this.activeAttributeIndex - 1, 2, attrs[ this.activeAttributeIndex ], attrs[ this.activeAttributeIndex - 1 ] )
+                attrs.splice( index - 1, 2, attrs[ index ], attrs[ index - 1 ] )
                 this.$store.dispatch( 'configLayer', { id: this.itemId, attributes: attrs } )
-                // this.activeAttributeIndex -= 1
-                M.Collapsible.getInstance( this.$refs.collapsible ).open( this.activeAttributeIndex - 1 )
+                M.Collapsible.getInstance( this.$refs.collapsible ).open( index - 1 )
             },
-            moveDown: function () {
+            moveDown: function ( index ) {
+                M.Collapsible.getInstance( this.$refs.collapsible ).close( index )
                 var attrs = this.attributes
-                attrs.splice( this.activeAttributeIndex, 2, attrs[ this.activeAttributeIndex + 1 ], attrs[ this.activeAttributeIndex ] )
+                attrs.splice( index, 2, attrs[ index + 1 ], attrs[ index ] )
                 this.$store.dispatch( 'configLayer', { id: this.itemId, attributes: attrs } )
-                // this.activeAttributeIndex += 1
-                M.Collapsible.getInstance( this.$refs.collapsible ).open( this.activeAttributeIndex + 1 )
-
+                M.Collapsible.getInstance( this.$refs.collapsible ).open( index + 1 )
             },
         },
         mounted: function () {
@@ -69,6 +67,10 @@ export default importComponents( [
                 onOpenStart: function ( el ) {
                     self.activeAttributeIndex = 1 * el.dataset.index
                 },
+                onOpenEnd: function ( el ) {
+                    el.scrollIntoView( { behavior: 'smooth', block: 'center' } )
+                }
+
             } )
         },
         updated: function () {
