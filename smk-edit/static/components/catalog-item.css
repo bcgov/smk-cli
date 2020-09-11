@@ -20,6 +20,7 @@
 
 .catalog-item.size-1 .card-content {
     padding-bottom: 0;
+    overflow-wrap: anywhere;
 }
 
 
