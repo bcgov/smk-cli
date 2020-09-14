@@ -27,7 +27,7 @@ export default importComponents( [
         props: [ 'itemId' ],
         data: function () {
             return {
-                dashArrayPattern: /^((\s*\d+\s*,)+\s*\d+\s*)?$/,
+                dashArrayPattern: /^((\s*\d+\s+)+\d+\s*)?$/,
                 pairPattern: pairPattern,
                 assetsKey: 1,
                 assets: null
@@ -58,19 +58,79 @@ export default importComponents( [
             isFilled: attributeAccessor( 'fill', false ),
             fillColor: attributeAccessor( 'fillColor', function ( v ) { return v == null ? this.strokeColor : v } ),
             fillOpacity: attributeAccessor( 'fillOpacity', .2, validateFloat ),
+
+            showLegendTitle: {
+                get: function () {
+                    var ly = this.$store.getters.configLayer( this.itemId )
+                    return !ly.legend || !ly.legend.title || !!ly.legend.title.trim()
+                },
+                set: function ( val ) {
+                    var ly = this.$store.getters.configLayer( this.itemId )
+                    if ( val ) {
+                        ly.legend.title = null
+                    }
+                    else {
+                        if ( !ly.legend ) ly.legend = {}
+                        ly.legend.title = ' '
+                    }
+                    this.$store.dispatch( 'configLayer', ly )
+                }
+            },
+            legendTitle: {
+                get: function () {
+                    var ly = this.$store.getters.configLayer( this.itemId )
+                    return ( ly.legend && ly.legend.title ) || ly.title
+                },
+                set: function ( val ) {
+                    if ( !val ) val = ' '
+                    this.setLegend( 'title', val )
+                }
+            },
+            legendPoint: {
+                get: function () {
+                    var ly = this.$store.getters.configLayer( this.itemId )
+                    return ly.legend && ly.legend.point
+                },
+                set: function ( val ) {
+                    this.setLegend( 'point', val )
+                }
+            },
+            legendLine: {
+                get: function () {
+                    var ly = this.$store.getters.configLayer( this.itemId )
+                    return ly.legend && ly.legend.line
+                },
+                set: function ( val ) {
+                    this.setLegend( 'line', val )
+                }
+            },
+            legendFill: {
+                get: function () {
+                    var ly = this.$store.getters.configLayer( this.itemId )
+                    return ly.legend && ly.legend.fill
+                },
+                set: function ( val ) {
+                    this.setLegend( 'fill', val )
+                }
+            }
         },
         watch: {
             hasMarker: function ( val ) {
-                if ( !val )
+                if ( !val ) {
+                    this.markerUrl = null
                     M.Collapsible.getInstance( this.$refs.collapsible ).close( 0 )
+                }
+
             },
             isStroked: function ( val ) {
-                if ( !val )
+                if ( !val ) {
                     M.Collapsible.getInstance( this.$refs.collapsible ).close( 1 )
+                }
             },
             isFilled: function ( val ) {
-                if ( !val )
+                if ( !val ) {
                     M.Collapsible.getInstance( this.$refs.collapsible ).close( 2 )
+                }
             },
             markerUrl: function ( val ) {
                 this.markerSize = null
@@ -80,6 +140,14 @@ export default importComponents( [
         methods: {
             invalid: function () {
                 console.log('invalid')
+            },
+            setLegend( geometryType, visible ) {
+                var legend = this.$store.getters.configLayer( this.itemId ).legend || {}
+                legend[ geometryType ] = visible
+
+                var legends = !legend.point && !legend.line && !legend.fill ? false : null
+
+                this.$store.dispatch( 'configLayer', { id: this.itemId, legends: legends, legend: legend } )
             },
             loadAssets: function () {
                 var self = this

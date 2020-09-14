@@ -27,3 +27,8 @@
     border: 1px solid black;
     border-radius: 4px;
 }
+
+.edit-item-style .inline {
+    display: inline-block;
+    margin: 0 1em;
+}

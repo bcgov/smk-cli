@@ -3,6 +3,7 @@
     display: flex;
     min-height: 0;
     flex-direction: column;
+    overflow-y: hidden !important;
 }
 
 .edit-item .modal-content .dialog-header {

@@ -6,9 +6,16 @@
     background-image: url( '../assets/images/spinner.gif' );
     background-position: center;
     background-repeat: no-repeat;
+    z-index: 100;
 }
 
 .catalog-tree ul.fancytree-container, .catalog-tree ul.fancytree-container:focus {
     border: none;
     outline: none;
+}
+
+.catalog-tree ul.fancytree-container i.catalog-node-command {
+    line-height: 17px;
+    margin-left: 10px;
+    cursor: pointer;
 }
