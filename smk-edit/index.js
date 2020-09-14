@@ -99,7 +99,7 @@ function startService( opt ) {
         console.log( chalk.yellow( `Layers catalog path is ${ chalk.blue( relativePath( app.get( 'layers' ) ) ) }` ) )
         console.log( chalk.yellow( `Assets catalog path is ${ chalk.blue( relativePath( app.get( 'assets' ) ) ) }` ) )
         console.log( chalk.yellow( `Temp path is ${ chalk.blue( relativePath( app.get( 'temp' ) ) ) }` ) )
-        console.log( chalk.yellow( `Service listening at ${ chalk.cyan( 'http://localh' + app.get( 'port' ) + '/' ) }` ) )
+        console.log( chalk.yellow( `Service listening at ${ chalk.cyan( 'http://localhost:' + app.get( 'port' ) + '/' ) }` ) )
         console.log( chalk.yellow( `Hit Ctrl-C to exit` ) )
         console.log()
     } )

@@ -46,3 +46,7 @@
 .text-large {
     font-size: 22px;
 }
+
+.materialize.input-field {
+    margin-bottom: 0;
+}
