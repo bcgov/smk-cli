@@ -23,24 +23,12 @@
                 </ul>
             </div>
 
-            <div class="dialog-body">
-                <div id="details">
-                    <component
-                        v-bind:is="detailsComponent"
-                        v-bind:toolType="toolType"
-                        v-bind:toolInstance="toolInstance"
-                    ></component>
-                            <!-- <edit-item-details -->
-                        <!-- v-bind:itemId="itemId" -->
-                    <!-- ></edit-item-details> -->
-                </div>
-
-                <!-- <div id="style">
-                    <edit-item-style
-                        v-if="hasStyle"
-                        v-bind:itemId="itemId"
-                    ></edit-item-style>
-                </div> -->
+            <div class="dialog-body" id="details">
+                <component
+                    v-bind:is="detailsComponent"
+                    v-bind:toolType="toolType"
+                    v-bind:toolInstance="toolInstance"
+                ></component>
             </div>
         </div>
 
