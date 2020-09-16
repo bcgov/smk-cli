@@ -1,10 +1,85 @@
-.smk-map {
-    width: 100%;
-    height: 100%;
+.text-editor .toolbar {
+    height: 30px;
+
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    pointer-events: auto;
+    user-select: none;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-bottom: 10px;
 }
 
-.smk-map iframe.map {
+.text-editor .editor-button {
+    display: inline-flex;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    user-select: none;
+    color: black;
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    font-size: 24px;
+}
+
+.text-editor .editor-button:hover {
+    border: 1px solid black;
+}
+
+.text-editor .editor-button.active {
+    background-color: #d2d9e6
+}
+
+.text-editor .editor-button.inactive {
+}
+
+.text-editor .editor-button.unknown {
+    color: #d2d9e6
+}
+
+.text-editor .editor-button.disabled {
+    color: #d2d9e6;
+    background-color: transparent;
+}
+
+.text-editor .editor-button.disabled:hover {
+    border: 1px solid transparent;
+}
+
+.text-editor .toolbar .expand {
+    flex-grow: 1;
+}
+
+.text-editor .toolbar select {
+    display: block;
+    width: unset;
+    border: unset;
+    height: unset;
+}
+
+.text-editor .toolbar select:focus {
+    outline: none;
+}
+
+.text-editor .editor {
     width: 100%;
-    height: 100%;
-    border: 0;
+    height: calc( 100% - 40px );
+    border: none;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    padding: 3px;
+}
+
+.text-editor .editor-raw {
+    width: 100%;
+    height: calc( 100% - 40px );
+    border-radius: 3px;
+    padding: 3px;
+    font-family: monospace;
+    resize: none;
 }
