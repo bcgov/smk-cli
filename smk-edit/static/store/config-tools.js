@@ -92,7 +92,9 @@ export default mix( [
                 context.commit( 'configTool', old )
             }
             else {
-                context.commit( 'configToolAppend', { ...tool, enabled: true } )
+                var cfg = typeFilter( tool.type ).get( tool )
+                cfg.enabled = true
+                context.commit( 'configToolAppend', cfg )
             }
             context.commit( 'bumpVersion' )
         },
