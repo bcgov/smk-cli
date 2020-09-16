@@ -51,8 +51,10 @@ export const toolTypePresentation = {
     'bespoke': {
         title: 'Bespoke',
         details: 'edit-tool-details',
+        content: 'edit-tool-content-bespoke',
         default: {
-            instance: 'NEW'
+            instance: 'NEW',
+            icon: 'now_widgets',
         }
     },
     'coordinate': {

@@ -1,5 +1,6 @@
 import configToolAbout from './config-tool-about.js'
 import configToolBaseMaps from './config-tool-baseMaps.js'
+import configToolBespoke from './config-tool-bespoke.js'
 import configToolDirections from './config-tool-directions.js'
 import configToolIdentify from './config-tool-identify.js'
 import configToolLayers from './config-tool-layers.js'
@@ -17,6 +18,7 @@ import configToolZoom from './config-tool-zoom.js'
 export default mix( [
     configToolAbout,
     configToolBaseMaps,
+    configToolBespoke,
     configToolDirections,
     configToolIdentify,
     configToolLayers,
