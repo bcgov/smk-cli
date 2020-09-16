@@ -4,7 +4,7 @@ import { toolTypePresentation } from './presentation.js'
 export default importComponents( [
     './components/tool-item.js',
     './components/edit-tool-details.js',
-    './components/edit-tool-details-about.js',
+    './components/edit-tool-content-about.js',
     './components/edit-tool-details-baseMaps.js',
     './components/edit-tool-details-directions.js',
     './components/edit-tool-details-identify.js',
@@ -21,6 +21,10 @@ export default importComponents( [
         computed: {
             detailsComponent: function () {
                 return toolTypePresentation[ this.toolType ].details
+            },
+            hasContent: function () { return !!toolTypePresentation[ this.toolType ].content },
+            contentComponent: function () {
+                return toolTypePresentation[ this.toolType ].content
             }
         },
         methods: {
