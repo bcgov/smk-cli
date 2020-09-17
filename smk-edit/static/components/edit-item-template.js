@@ -9,9 +9,13 @@ export default importComponents( [
         computed: {
             popupTemplate: {
                 get: function () {
-                    return this.$store.getters.configLayer( this.itemId ).popupTemplate || '<div>Identified Feature</div>'
+                    return this.$store.getters.configLayer( this.itemId ).popupTemplate || ''
                 },
                 set: function ( val ) {
+                    if ( val )
+                        if ( !/^</.test( val.trim() ) )
+                            val = `<div>${ val }</div>`
+
                     this.$store.dispatch( 'configLayer', { id: this.itemId, popupTemplate: val } )
                 }
             }
