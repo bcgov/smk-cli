@@ -80,6 +80,16 @@ export default mix( [
 
             state.splice( index, 1 )
         },
+        configToolChangeInstance: function ( state, tool ) {
+            var index = state.findIndex( toolMatch( tool ) )
+            if ( index == -1 )
+                throw Error( `Config tool "${ tool.type }${ tool.instance ? ':' : '' }${ tool.instance || '' }" not defined` )
+
+            tool.instance = tool.newInstance
+            delete tool.newInstance
+
+            Vue.set( state, index, typeFilter( tool.type ).set( tool ) )
+        },
     },
     actions: {
         configTool: function ( context, tool ) {
@@ -115,6 +125,12 @@ export default mix( [
             context.commit( 'configToolRemove', tool )
             context.commit( 'bumpVersion' )
         },
+        configToolChangeInstance: function ( context, tool ) {
+            var old = context.getters.configTool( tool.type, tool.instance )
+            old.newInstance = tool.newInstance
+            context.commit( 'configToolChangeInstance', old )
+            context.commit( 'bumpVersion' )
+        }
     } }
 } )
 

@@ -7,6 +7,7 @@ export default importComponents( [
     './components/edit-tool-content-about.js',
     './components/edit-tool-details-baseMaps.js',
     './components/edit-tool-content-bespoke.js',
+    './components/edit-tool-details-bespoke.js',
     './components/edit-tool-details-directions.js',
     './components/edit-tool-details-identify.js',
     './components/edit-tool-details-layers.js',
@@ -36,7 +37,7 @@ export default importComponents( [
                 setTimeout( function () {
                     inst.updateTabIndicator()
                 }, 500 )
-            },
-        },
+            }
+        }
     } )
 } )

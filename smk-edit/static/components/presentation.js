@@ -50,7 +50,7 @@ export const toolTypePresentation = {
     },
     'bespoke': {
         title: 'Bespoke',
-        details: 'edit-tool-details',
+        details: 'edit-tool-details-bespoke',
         content: 'edit-tool-content-bespoke',
         default: {
             instance: 'NEW',
