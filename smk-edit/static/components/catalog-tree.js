@@ -85,7 +85,7 @@ vueComponent( import.meta.url, {
             },
             edit: {
                 adjustWidthOfs: 50,
-                triggerStart: [ "f2", "mac+enter", "shift+click", "clickActive" ],
+                triggerStart: [ "f2", "mac+enter", "shift+click" ],
                 beforeEdit: function(event, data){
                     if ( !self.allowedEdit ) return false
 
