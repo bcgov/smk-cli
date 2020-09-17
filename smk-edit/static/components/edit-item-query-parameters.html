@@ -18,7 +18,7 @@
 
                 <select
                     v-bind:value="getParameterType( i )"
-                    v-on:change.stop="setParameterType( i, $event )"
+                    v-on:change.stop="setParameterType( i, $event.target.value )"
                     v-on:click.stop="1"
                 >
                     <option value="constant">Constant</option>
