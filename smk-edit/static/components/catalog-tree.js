@@ -49,7 +49,7 @@ vueComponent( import.meta.url, {
 
                     $( self.$refs.container ).fancytree( 'getTree' ).reload( catalog )
                     self.loaded = true
-                    self.$emit( 'loaded' )
+                    self.$emit( 'loaded', catalog )
                 } )
                 .catch( function ( err ) {
                     self.$emit( 'load-error', err )
