@@ -1,5 +1,6 @@
 import configToolAbout from './config-tool-about.js'
 import configToolBaseMaps from './config-tool-baseMaps.js'
+import configToolBespoke from './config-tool-bespoke.js'
 import configToolDirections from './config-tool-directions.js'
 import configToolIdentify from './config-tool-identify.js'
 import configToolLayers from './config-tool-layers.js'
@@ -17,6 +18,7 @@ import configToolZoom from './config-tool-zoom.js'
 export default mix( [
     configToolAbout,
     configToolBaseMaps,
+    configToolBespoke,
     configToolDirections,
     configToolIdentify,
     configToolLayers,
@@ -78,6 +80,16 @@ export default mix( [
 
             state.splice( index, 1 )
         },
+        configToolChangeInstance: function ( state, tool ) {
+            var index = state.findIndex( toolMatch( tool ) )
+            if ( index == -1 )
+                throw Error( `Config tool "${ tool.type }${ tool.instance ? ':' : '' }${ tool.instance || '' }" not defined` )
+
+            tool.instance = tool.newInstance
+            delete tool.newInstance
+
+            Vue.set( state, index, typeFilter( tool.type ).set( tool ) )
+        },
     },
     actions: {
         configTool: function ( context, tool ) {
@@ -92,7 +104,9 @@ export default mix( [
                 context.commit( 'configTool', old )
             }
             else {
-                context.commit( 'configToolAppend', { ...tool, enabled: true } )
+                var cfg = typeFilter( tool.type ).get( tool )
+                cfg.enabled = true
+                context.commit( 'configToolAppend', cfg )
             }
             context.commit( 'bumpVersion' )
         },
@@ -111,6 +125,12 @@ export default mix( [
             context.commit( 'configToolRemove', tool )
             context.commit( 'bumpVersion' )
         },
+        configToolChangeInstance: function ( context, tool ) {
+            var old = context.getters.configTool( tool.type, tool.instance )
+            old.newInstance = tool.newInstance
+            context.commit( 'configToolChangeInstance', old )
+            context.commit( 'bumpVersion' )
+        }
     } }
 } )
 

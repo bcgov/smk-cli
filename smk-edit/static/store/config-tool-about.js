@@ -5,6 +5,7 @@ export default {
                 return Object.assign( {
                     order: 1,
                     position: 'list-menu',
+                    icon: 'help',
                     title: 'About SMK',
                     content: 'Welcome to SMK'
                 }, tool )

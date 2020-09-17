@@ -40,6 +40,14 @@ export default importComponents( [
                     this.$store.dispatch( 'configToolSubProp', { type: this.toolType, instance: this.toolInstance, propName: 'command', nearBy: val } )
                 }
             },
+            commandAttributeMode: {
+                get: function () {
+                    return this.$store.getters.configTool( this.toolType, this.toolInstance ).command.attributeMode
+                },
+                set: function ( val ) {
+                    this.$store.dispatch( 'configToolSubProp', { type: this.toolType, instance: this.toolInstance, propName: 'command', attributeMode: val } )
+                }
+            },
             radius: {
                 get: function () {
                     return this.$store.getters.configTool( this.toolType, this.toolInstance ).radius
