@@ -35,8 +35,11 @@ export const itemTypePresentation = {
 export const toolTypePresentation = {
     'about': {
         title: 'About',
-        details: 'edit-tool-details-about',
-        default: {}
+        details: 'edit-tool-details',
+        content: 'edit-tool-content-about',
+        default: {
+            icon: 'help'
+        }
     },
     'baseMaps': {
         title: 'Base Maps',
@@ -47,9 +50,11 @@ export const toolTypePresentation = {
     },
     'bespoke': {
         title: 'Bespoke',
-        details: 'edit-tool-details',
+        details: 'edit-tool-details-bespoke',
+        content: 'edit-tool-content-bespoke',
         default: {
-            instance: 'NEW'
+            instance: 'NEW',
+            icon: 'now_widgets',
         }
     },
     'coordinate': {

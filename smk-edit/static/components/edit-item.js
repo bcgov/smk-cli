@@ -7,6 +7,7 @@ export default importComponents( [
     './components/edit-item-style.js',
     './components/edit-item-attributes.js',
     './components/edit-item-queries.js',
+    './components/edit-item-template.js',
     './components/dialog-box.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
@@ -26,6 +27,7 @@ export default importComponents( [
             hasStyle: function () { return itemTypePresentation[ this.type ].style },
             hasAttributes: function () { return itemTypePresentation[ this.type ].layer },
             hasQueries: function () { return itemTypePresentation[ this.type ].layer },
+            hasTemplate: function () { return itemTypePresentation[ this.type ].layer },
             title: function () {
                 var item = this.$store.getters.configToolLayersDisplayItem( this.itemId )
                 return item.title || this.$store.getters.configLayer( this.itemId ).title

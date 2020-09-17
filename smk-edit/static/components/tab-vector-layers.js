@@ -34,9 +34,6 @@ export default importComponents( [
                     csv:    '.csv, .tsv, .zip',
                 } )[ this.importType ]
             },
-            vectorCatalog: function () {
-                return []
-            },
         },
         methods: {
             readFile: function ( ev ) {
@@ -208,6 +205,7 @@ export default importComponents( [
                 M.toast( {
                     html: err
                 } )
+                this.checkCatalog( [] )
             },
             canEditCatalogItem: function ( item ) {
                 return true
@@ -263,6 +261,33 @@ export default importComponents( [
             },
             removeItem: function ( itemId ) {
                 this.$store.dispatch( 'configToolLayersDisplayItemRemove', itemId )
+            },
+            checkCatalog: function ( catalog ) {
+                var self = this
+
+                for ( var ly of this.vectorLayers ) {
+                    if ( catalog.find( function ( c ) { return c.data.id == ly.id } ) ) continue
+
+                    var formData = new FormData()
+                    formData.append( 'layer', JSON.stringify( {
+                        title: ly.title,
+                        dataUrl: ly.dataUrl
+                    } ) )
+
+                    return fetch( `/catalog/local`, {
+                        method: 'POST',
+                        cache: 'no-cache',
+                        body: formData
+                    } )
+                    .then( function( resp ) {
+                        return resp.json()
+                    } )
+                    .then( function ( result ) {
+                        if ( !result.ok ) throw Error( result.message )
+                        self.catalogKey += 1
+                        M.toast( { html: result.message } )
+                    } )
+                }
             }
         },
         watch: {

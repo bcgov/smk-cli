@@ -1,0 +1,34 @@
+<div>
+    <div class="toolbar">
+        <select v-model="formatBlock" v-bind:disabled="showRaw">
+            <option disabled value="">Format...</option>
+            <option value="<p>">Paragraph</option>
+            <option value="<h1>">Heading 1</option>
+            <option value="<h2>">Heading 2</option>
+            <option value="<h3>">Heading 3</option>
+            <option value="<h4>">Heading 4</option>
+            <option value="<h5>">Heading 5</option>
+            <option value="<h6>">Heading 6</option>
+            <option value="<address>">Address</option>
+            <option value="<pre>">Formatted</option>
+        </select>
+        <editor-command icon="format_bold" title="Bold" command="bold" v-bind:disabled="showRaw"></editor-command>
+        <editor-command icon="format_italic" title="Italic" command="italic" v-bind:disabled="showRaw"></editor-command>
+        <editor-command icon="format_underline" title="Underline" command="underline" v-bind:disabled="showRaw"></editor-command>
+        <editor-spectrum icon="color_lens" title="Text Colour" command="forecolor" v-bind:disabled="showRaw"></editor-spectrum>
+        <editor-spectrum icon="format_color_fill" title="Background Colour" command="hilitecolor" v-bind:disabled="showRaw"></editor-spectrum>
+        <editor-command icon="format_align_left" title="Align Left" command="justifyleft" v-bind:disabled="showRaw"></editor-command>
+        <editor-command icon="format_align_center" title="Center" command="justifycenter" v-bind:disabled="showRaw"></editor-command>
+        <editor-command icon="format_align_right" title="Align Right" command="justifyright" v-bind:disabled="showRaw"></editor-command>
+        <editor-command icon="format_list_bulleted" title="Bullet List" command="insertunorderedlist" v-bind:disabled="showRaw"></editor-command>
+        <editor-command icon="format_list_numbered" title="Numbered List" command="insertorderedlist" v-bind:disabled="showRaw"></editor-command>
+        <div class="expand"></div>
+        <select v-model="display">
+            <option value="raw">Raw</option>
+            <option value="styled">Styled</option>
+        </select>
+        <editor-button icon="local_florist" title="Make HTML pretty" v-bind:disabled="showStyled" v-on:click="makePretty"></editor-button>
+    </div>
+    <iframe class="editor" ref="editor" v-show="showStyled"></iframe>
+    <textarea class="editor-raw" ref="editor-raw" v-if="showRaw" v-model="raw"></textarea>
+</div>

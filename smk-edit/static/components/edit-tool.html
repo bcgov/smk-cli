@@ -17,30 +17,26 @@
                         <a href="#details">Details</a>
                     </li>
 
-                    <!-- <li class="tab col s4"
-                        v-if="hasStyle"
-                    ><a href="#style">Style</a></li> -->
+                    <li class="tab col s4"
+                        v-if="hasContent"
+                    ><a href="#content">Content</a></li>
                 </ul>
             </div>
 
-            <div class="dialog-body">
-                <div id="details">
-                    <component
-                        v-bind:is="detailsComponent"
-                        v-bind:toolType="toolType"
-                        v-bind:toolInstance="toolInstance"
-                    ></component>
-                            <!-- <edit-item-details -->
-                        <!-- v-bind:itemId="itemId" -->
-                    <!-- ></edit-item-details> -->
-                </div>
+            <div class="dialog-body" id="details">
+                <component
+                    v-bind:is="detailsComponent"
+                    v-bind:toolType="toolType"
+                    v-bind:toolInstance="toolInstance"
+                ></component>
+            </div>
 
-                <!-- <div id="style">
-                    <edit-item-style
-                        v-if="hasStyle"
-                        v-bind:itemId="itemId"
-                    ></edit-item-style>
-                </div> -->
+            <div class="dialog-body" id="content">
+                <component
+                    v-bind:is="contentComponent"
+                    v-bind:toolType="toolType"
+                    v-bind:toolInstance="toolInstance"
+                ></component>
             </div>
         </div>
 

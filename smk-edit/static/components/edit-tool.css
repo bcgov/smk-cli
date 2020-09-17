@@ -11,7 +11,7 @@
 }
 
 .edit-tool .modal-content .dialog-body {
-    flex-grow: 0;
+    flex-grow: 1;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 1em;

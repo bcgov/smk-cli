@@ -39,9 +39,16 @@
         >Unit
             <template v-slot:options>
                 <option value="m">meters</option>
+                <option value="km">kilometers</option>
                 <option value="px">pixels</option>
             </template>
         </input-select>
+    </div>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="commandAttributeMode"
+        >Show Attribute View Mode Selector</input-checkbox>
     </div>
 </div>
 
