@@ -9,10 +9,18 @@ export default {
                     title: 'Bespoke Tool',
                     useComponent: true,
                     component: {
-                        template: 'Custom content for tool'
+                        template: '<div>Custom content for tool</div>'
                     }
                 }, tool )
             },
+            set: function ( tool ) {
+                if ( tool.useComponent )
+                    if ( tool.component && tool.component.template )
+                        if ( !/^</.test( tool.component.template.trim() ) )
+                            tool.component.template = `<div>${ tool.component.template }</div>`
+
+                return tool
+            }
         }
     },
     actions: {
