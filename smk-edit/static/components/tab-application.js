@@ -2,7 +2,6 @@ import { vueComponent, importComponents } from '../vue-util.js'
 import { baseMaps } from './presentation.js'
 
 export default importComponents( [
-    './components/materialize.js',
     './components/smk-map.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {

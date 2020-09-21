@@ -2,7 +2,6 @@ import { vueComponent, importComponents } from '../vue-util.js'
 import { toolTypePresentation } from './presentation.js'
 
 export default importComponents( [
-    './components/materialize.js',
     './components/dialog-choose-icon.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {

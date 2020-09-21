@@ -4,7 +4,6 @@ export default importComponents( [
     './components/catalog-item.js',
     './components/catalog-tree.js',
     './components/edit-item.js',
-    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {

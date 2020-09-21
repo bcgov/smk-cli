@@ -13,7 +13,6 @@ const mode = {
 }
 
 export default importComponents( [
-    './components/materialize.js',
     './components/dialog-box.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
