@@ -1,4 +1,5 @@
 import { vueComponent, importComponents } from '../vue-util.js'
+import { zoomScale } from './presentation.js'
 
 export default importComponents( [
     './components/edit-item-details-layer-wms.js',
@@ -36,18 +37,22 @@ export default importComponents( [
             },
             scaleMin: {
                 get: function () {
-                    return this.$store.getters.configLayer( this.itemId ).scaleMin
+                    var s = this.$store.getters.configLayer( this.itemId ).scaleMin
+                    if ( !s ) return 0
+                    return zoomBracketForScale( s )[ 0 ]
                 },
                 set: function ( val ) {
-                    this.$store.dispatch( 'configLayer', { id: this.itemId, scaleMin: Math.max( parseInt( this.scaleMax || 0 ), parseInt( val ) ) } )
+                    this.$store.dispatch( 'configLayer', { id: this.itemId, scaleMin: !val ? val : zoomScale[ val ] } )
                 }
             },
             scaleMax: {
                 get: function () {
-                    return this.$store.getters.configLayer( this.itemId ).scaleMax
+                    var s = this.$store.getters.configLayer( this.itemId ).scaleMax
+                    if ( !s ) return 0
+                    return zoomBracketForScale( s )[ 0 ]
                 },
                 set: function ( val ) {
-                    this.$store.dispatch( 'configLayer', { id: this.itemId, scaleMax: Math.min( parseInt( this.scaleMin || 1e15 ), parseInt( val ) ) } )
+                    this.$store.dispatch( 'configLayer', { id: this.itemId, scaleMax: !val ? val : zoomScale[ val ] } )
                 }
             },
             metadataUrl: {
@@ -60,6 +65,15 @@ export default importComponents( [
             },
             layerDetailComponent: function () {
                 return 'edit-item-details-layer-' + this.$store.getters.configLayer( this.itemId ).type
+            },
+            zoomScale: function () {
+                return zoomScale.map( function ( scale, i ) {
+                    return {
+                        formatted: parseFloat( scale.toPrecision( 3 ) ).toLocaleString(),
+                        scale: scale,
+                        zoom: i
+                    }
+                } )
             }
         },
         mounted: function () {
@@ -71,3 +85,10 @@ export default importComponents( [
         }
     } )
 } )
+
+function zoomBracketForScale ( scale ) {
+    if ( scale > zoomScale[ 1 ] ) return [ 0, 1 ]
+    if ( scale < zoomScale[ 19 ] ) return [ 19, 20 ]
+    for ( var z = 2; z < 20; z += 1 )
+        if ( scale > zoomScale[ z ] ) return [ z - 1, z ]
+}

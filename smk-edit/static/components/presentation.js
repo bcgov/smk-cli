@@ -240,3 +240,24 @@ export const baseMaps = [
         title: 'Stamen Toner Light'
     },
 ]
+
+export const zoomScale = []
+zoomScale[  1 ] = 173000000
+zoomScale[  2 ] = 89700000
+zoomScale[  3 ] = 45200000
+zoomScale[  4 ] = 22600000
+zoomScale[  5 ] = 11300000
+zoomScale[  6 ] = 5660000
+zoomScale[  7 ] = 2830000
+zoomScale[  8 ] = 1410000
+zoomScale[  9 ] = 707000
+zoomScale[ 10 ] = 354000
+zoomScale[ 11 ] = 177000
+zoomScale[ 12 ] = 88000
+zoomScale[ 13 ] = 44000
+zoomScale[ 14 ] = 22000
+zoomScale[ 15 ] = 11000
+zoomScale[ 16 ] = 5530
+zoomScale[ 17 ] = 2760
+zoomScale[ 18 ] = 1380
+zoomScale[ 19 ] = 691

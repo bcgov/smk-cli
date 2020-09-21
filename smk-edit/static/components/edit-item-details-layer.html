@@ -1,35 +1,47 @@
 <div>
     <div class="row">
-        <div class="col s6">
-            <label>
-                <input type="checkbox" class="filled-in" v-model="isQueryable" />
-                <span>Available for identify</span>
-            </label>
-        </div>
+        <input-select class="col s6"
+            v-model="scaleMin"
+        >Minimum Scale Visible
+            <template v-slot:options>
+                <option v-bind:value="0">No minimum</option>
+                <option v-for="s in zoomScale"
+                    v-if="s"
+                    v-bind:value="s.zoom"
+                    v-bind:title="'Zoom Level: ' + s.zoom"
+                    v-bind:disabled="!!scaleMax && s.zoom >= scaleMax"
+                >1 : {{ s.formatted }}</option>
+            </template>
+        </input-select>
 
-        <div class="col s6 range-field">
-            <label>
-                <span>Opacity ( {{ Math.round( opacity * 100 ) }}% )</span>
-                <input type="range" v-model="opacity" min="0" max="1" step="0.05"/>
-            </label>
-        </div>
+        <input-select class="col s6"
+            v-model="scaleMax"
+        >Maximum Scale Visible
+            <template v-slot:options>
+                <option v-bind:value="0">No maximum</option>
+                <option v-for="s in zoomScale"
+                    v-if="s"
+                    v-bind:value="s.zoom"
+                    v-bind:title="'Zoom Level: ' + s.zoom"
+                    v-bind:disabled="!!scaleMin && s.zoom <= scaleMin"
+                >1 : {{ s.formatted }}</option>
+            </template>
+        </input-select>
     </div>
 
     <div class="row">
-        <div class="col s12">
-            Show only in scale range from
-            1 :
-            <div class="input-field inline">
-                <label>Minimum Scale</label>
-                <input type="number" v-model="scaleMin" style="width: 14ex">
-            </div>
-            to
-            1 :
-            <div class="input-field inline">
-                <label>Maximum Scale</label>
-                <input type="number" v-model="scaleMax" style="width: 14ex">
-            </div>
-        </div>
+        <input-range class="col s6"
+            v-bind:min="0"
+            v-bind:max="1"
+            v-bind:step="0.05"
+            v-model="opacity"
+        >Opacity
+            <template v-slot:output>{{ Math.round( opacity * 100 ) }}%</template>
+        </input-range>
+
+        <input-checkbox  class="col s6"
+            v-model="isQueryable"
+        >Available for identify</input-checkbox>
     </div>
 
     <component
@@ -37,12 +49,9 @@
         v-bind:itemId="itemId"
     ></component>
 
-    <div class="row">
-        <div class="col s12 input-field">
-            <label>Metadata URL</label>
-            <textarea class="materialize-textarea" ref="metadataUrl"
-                v-model="metadataUrl"
-            ></textarea>
-        </div>
+    <div class="row tight">
+        <input-textarea class="col s12"
+            v-model="metadataUrl"
+        >Metadata URL</input-textarea>
     </div>
 </div>
