@@ -51,13 +51,6 @@ vueComponent( import.meta.url, {
         remove: function () { this.$emit( 'remove-item', this.itemId ) }
     },
     mounted: function () {
-        M.Tooltip.init( this.$refs.visibility, {
-            html: 'Initial visibility of this layer',
-            position: 'top',
-            enterDelay: 1000,
-            inDuration: 500,
-            outDuration: 100,
-        } )
     }
 } )
 

@@ -21,7 +21,6 @@ function validateFloat( val ) {
 }
 
 export default importComponents( [
-    './components/materialize.js'
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         props: [ 'itemId' ],

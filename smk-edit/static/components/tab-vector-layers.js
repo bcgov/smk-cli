@@ -2,7 +2,6 @@ import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
     './components/edit-item.js',
-    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {

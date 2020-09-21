@@ -23,7 +23,6 @@ function configTool( opt ) {
 }
 
 export default importComponents( [
-    './components/materialize.js',
     './components/edit-tool-details.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {

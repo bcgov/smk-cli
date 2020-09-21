@@ -1,7 +1,6 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
 export default importComponents( [
-    './components/materialize.js',
     './components/edit-item-query-parameters.js',
     './components/edit-item-query-predicate.js'
 ] ).then( function () {
