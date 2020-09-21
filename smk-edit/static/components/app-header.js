@@ -2,7 +2,6 @@ import { importComponents, vueComponent } from '../vue-util.js'
 
 export default importComponents( [
     './components/tab-application.js',
-    './components/tab-viewer.js',
     './components/tab-mpcm-layers.js',
     './components/tab-wms-layers.js',
     './components/tab-vector-layers.js',
