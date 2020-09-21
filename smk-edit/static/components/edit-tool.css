@@ -1,9 +1,13 @@
-
 .edit-tool .modal-content {
     display: flex;
     min-height: 0;
     flex-direction: column;
     overflow-y: hidden !important;
+    height: 100% !important;
+}
+
+.edit-tool .modal-footer {
+    display: none;
 }
 
 .edit-tool .modal-content .dialog-header {
@@ -22,13 +26,13 @@
     color: black;
 }
 
-.edit-tool .modal-footer {
+/* .edit-tool .modal-footer {
     display: flex;
     justify-content: space-between;
     padding-left: 1em;
     padding-right: 1em;
     text-align: unset;
-}
+} */
 
 .edit-tool .modal-footer a.btn {
     flex-shrink: 0;
