@@ -39,7 +39,7 @@ export default importComponents( [
                 }
             },
             catalogUrls: function () {
-                return this.$store.state.wmsCatalogUrls
+                return this.$store.getters.wmsCatalogUrls
             }
         },
         methods: {
