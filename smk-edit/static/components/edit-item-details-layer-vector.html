@@ -1,14 +1,11 @@
 <div>
     <div class="row">
-        <div class="col s12 input-field">
-            <label>Data URL</label>
-            <textarea class="materialize-textarea" ref="dataUrl"
-                v-model="dataUrl"
-            ></textarea>
-        </div>
+        <input-textarea class="col s12"
+            v-model="dataUrl"
+        >Data URL</input-textarea>
     </div>
 
-    <div class="row" >
+    <div class="row">
         <input-select class="col s12"
             v-model="displayMode"
         >How should the data be displayed?

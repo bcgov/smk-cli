@@ -168,11 +168,11 @@ function getWmsCatalog( req, res, next ) {
         return
     }
 
-    console.log( '    Loading WMS Catalog from ' + serviceUrl )
-
     var url = new URL( serviceUrl )
     url.search = '?version=1.3.0&service=wms&request=GetCapabilities'
     var layerCache = {}
+
+    console.log( '    Loading WMS Catalog from ' + url )
 
     return fetch( url )
         .then( function ( resp ) {
@@ -210,7 +210,7 @@ function getWmsCatalog( req, res, next ) {
         if ( wmsLayer.Layer ) {
             return catalogItem( title, null, wmsLayer.Layer.map( function ( ly ) {
                 return convertLayer( ly )
-            } ) )
+            } ).filter( function ( ly ) { return !!ly } ) )
         }
         else if ( wmsLayer.Style ) {
             var lyName = assertOne( wmsLayer.Name )

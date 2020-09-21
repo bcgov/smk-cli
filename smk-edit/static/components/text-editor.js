@@ -104,7 +104,6 @@ const editorSpectrum = {
 }
 
 export default importComponents( [
-    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         components: {

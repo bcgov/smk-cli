@@ -31,7 +31,7 @@
                 ></component>
             </div>
 
-            <div class="dialog-body" id="content">
+            <div class="dialog-body" id="content" v-if="hasContent">
                 <component
                     v-bind:is="contentComponent"
                     v-bind:toolType="toolType"

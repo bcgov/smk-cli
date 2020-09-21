@@ -43,7 +43,14 @@ export const store = new Vuex.Store( {
         }
     },
     getters: {
-        version: function ( state ) { return state.version }
+        version: function ( state ) { return state.version },
+
+        wmsCatalogUrls: function ( state, getters ) {
+            return getters.configLayersWms.reduce( function ( acc, ly ) {
+                if ( acc.includes( ly.serviceUrl ) ) return acc
+                return acc.concat( ly.serviceUrl )
+            }, state.wmsCatalogUrls )
+        }
     },
     actions: {
         loadConfig: function ( context ) {

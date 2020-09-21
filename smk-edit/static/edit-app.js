@@ -4,7 +4,8 @@ import { importComponents } from './vue-util.js'
 importComponents( [
     './components/app-header.js',
     './components/app-main.js',
-    './components/app-footer.js'
+    './components/app-footer.js',
+    './components/materialize.js',
 ] ).then( function () {
     var app = new Vue( {
         el: '#app',

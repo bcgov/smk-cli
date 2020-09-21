@@ -4,7 +4,6 @@ export default importComponents( [
     './components/catalog-item.js',
     './components/catalog-tree.js',
     './components/edit-item.js',
-    './components/materialize.js',
 ] ).then( function () {
     return vueComponent( import.meta.url, {
         data: function () {
@@ -40,7 +39,7 @@ export default importComponents( [
                 }
             },
             catalogUrls: function () {
-                return this.$store.state.wmsCatalogUrls
+                return this.$store.getters.wmsCatalogUrls
             }
         },
         methods: {
