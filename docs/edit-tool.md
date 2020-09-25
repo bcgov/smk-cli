@@ -42,7 +42,7 @@ Almost all tools share a common set of default settings. Some tools will only ha
 
 ### Show title in Toolbar
 
-`Show title in Toolbar` Allows you to specify if you want the title to be displayed in the toolbar. This is set to `false` by default. Be careful of setting this on screens with many buttons, or on mobile devics.
+`Show title in Toolbar` Allows you to specify if you want the title to be displayed in the toolbar. This is set to `false` by default. Be careful of setting this on screens with many buttons, or on mobile devices.
 
 ### Set Icon
 
@@ -64,9 +64,9 @@ The About tool contains a `Contents` section, where you can supply HTML Markup c
 
 The `Base Maps` tool adds a base map selection panel to your application. From this panel, you can change the currently visible base map from within the application.
 
-![Basemap Tool](basemap-tool.png)
+![Base map Tool](basemap-tool.png)
 
-In Addtional to the default settings for a tool,  Basemap configuration has two additional options you can conifgure:
+In Additional to the default settings for a tool,  Base map configuration has two additional options you can configure:
 
 - Select which base maps are available
 - Appearance of base map tiles in panel
@@ -88,7 +88,7 @@ Please review `Common settings` above. Below are Base Map specific Settings.
 
 ## Bespoke
 
-Bespoke is a special tool that "holds" other accesible tool data. Specifically, this is used for custom tools, and the layer specific search, query and filter tools. When you create a Search/Filter/Query on a layer, a `Bespoke` is generated automaticaly. Your application can have many of these tools.
+Bespoke is a special tool that "holds" other accessible tool data. Specifically, this is used for custom tools, and the layer specific search, query and filter tools. When you create a Search/Filter/Query on a layer, a `Bespoke` is generated automatically. Your application can have many of these tools.
 
 Please review `Common settings` above. The `Bespoke` tool does not have any additional special configurations.
 
@@ -103,7 +103,7 @@ The Directions tool allows access to the DataBC GeoLocation API for creating rou
 In Addtional to the default settings for a tool, you can specify the following options for the route planner:
 
 - Route Optimization
-- Route Travelled
+- Route Traveled
 - Route Criteria
 - Vehicle Type
 - Truck Route Adherence
@@ -116,7 +116,7 @@ In Addtional to the default settings for a tool, you can specify the following o
 
 `Route Optimization` Allows you to specify if you want the route planner API to find the optimal route by default. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
 
-### Route Travelled
+### Route Traveled
 
 `Route Travelled` Allows you to specify if the route planner API should determine a round-trip route or a direct route. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
 
@@ -128,7 +128,7 @@ In Addtional to the default settings for a tool, you can specify the following o
 
 `Vehicle Type` Allows you to specify if the route planner API should determine a route optimized for general personal automobiles or industrial transport and freight trucks. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
 
-> __Note:__ The following settings are specific to planning routes for Frieght Trucks. If you do not intend to allow route planning for these vehicles, you can ignore and disable the following settings.
+> __Note:__ The following settings are specific to planning routes for Freight Trucks. If you do not intend to allow route planning for these vehicles, you can ignore and disable the following settings.
 
 ### Truck Route Adherence
 
@@ -150,13 +150,13 @@ In Addtional to the default settings for a tool, you can specify the following o
 
 `Truck Weight` Allows you to specify if the default truck height in kilograms that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
 
-> __Tip:__ Though intended for large frieght trucks, the truck specific options may also be useful for assiting recreational vehicles, busses and other oversized vehicles in planning optimal routes.
+> __Tip:__ Though intended for large freight trucks, the truck specific options may also be useful for assisting recreational vehicles, buses and other over-sized vehicles in planning optimal routes.
 
 ![Route Planner Panel](route-planner.png)
 
 ## Identify
 
-The Identify tool allows users to recieve attribute details about layers in your application by clicking on the map. See [Edit Layers](edit-layer.md) for information on settings visible attributes and allowing a layer to be identifiable.
+The Identify tool allows users to receive attribute details about layers in your application by clicking on the map. See [Edit Layers](edit-layer.md) for information on settings visible attributes and allowing a layer to be identifiable.
 
 ![Identify Options](identify-options.png)
 
@@ -206,7 +206,7 @@ In addition to the default settings, Identify has several unique customizable op
 
 ## Layers
 
-The Layers tool enables a layer ativation panel for your application. This panel allows users to turn layer visibility on and off and toggle legend icons
+The Layers tool enables a layer activation panel for your application. This panel allows users to turn layer visibility on and off and toggle legend icons
 
 ![Layer tool options](layer-tool.png)
 
@@ -228,7 +228,7 @@ In addition to the default settings, Identify has several unique customizable op
 
 ### Show 'All Layers' visibility toggle
 
-`Show All Layers visibility toggle` activates a toggle that allows users to set all layers to visibe or hidden with a single click. Not recommended for applications with a large volume of layers.
+`Show All Layers visibility toggle` activates a toggle that allows users to set all layers to visible or hidden with a single click. Not recommended for applications with a large volume of layers.
 
 ### Set layer visible icon
 
@@ -284,7 +284,7 @@ The scale tool has several unique customizable options:
 
 The Search tool adds a search bar to the top left side of your application, allowing users to access the DataBC geocoder search results, for address and location searches.
 
-![serch tool options](search-tool.png)
+![search tool options](search-tool.png)
 
 In addition to the default settings, Search has two additional customizable options:
 

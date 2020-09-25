@@ -16,7 +16,7 @@ Before you can edit your application, you'll want to open your command line and 
 cd /myApplications/mySmkApplication
 ```
 
-Once you've navigated to your applciation, you use the SMK-CLI `edit` command.
+Once you've navigated to your application, you use the SMK-CLI `edit` command.
 
 ```bash
 smk edit
@@ -106,13 +106,13 @@ You can also test your application by building and launching it on a local serve
 
 ## Application
 
-The Applcation screen shows you your current settings for the application name and title, and allows you to modify the following settings for your application.
+The Application screen shows you your current settings for the application name and title, and allows you to modify the following settings for your application.
 
 - Map Viewer (Leaflet or ESRI 3D)
 - Device (Auto-detect, Desktop, or Mobile)
-- Basemap (ESRI basemaps)
+- Base map (ESRI basemaps)
 
-You can use the map on the right to select your applications initial extent. When the appliction is launched, this is the location that the map will zoom to. By default the extent is a bounding box around British Columbia, Canada.
+You can use the map on the right to select your applications initial extent. When the application is launched, this is the location that the map will zoom to. By default the extent is a bounding box around British Columbia, Canada.
 
 To change your initial extent and zoom levels, you can pan and zoom the map using your mouse to the desired location using the provided leaflet "slippy" map.
 
@@ -136,11 +136,11 @@ You'll notice that there are three options in the sub-menu:
 
 ### DataBC Layers
 
-`Manage DataBC Layers` allows you to select layers from the [DataBC Layer Catalog](https://catalogue.data.gov.bc.ca/dataset?download_audience=Public). These are Government of British Columbia datasets provided by the BC Geographic Warehouse and contain layers covering a wide range of ministries, business areas and data sets. By default, only publically accessible layers are provided. An active internet connection is required to load available layers from the DataBC Catalog.
+`Manage DataBC Layers` allows you to select layers from the [DataBC Layer Catalog](https://catalogue.data.gov.bc.ca/dataset?download_audience=Public). These are Government of British Columbia datasets provided by the BC Geographic Warehouse and contain layers covering a wide range of ministries, business areas and data sets. By default, only publicly accessible layers are provided. An active internet connection is required to load available layers from the DataBC Catalog.
 
 ![DataBC Selector](smk-cli-databc-init.png)
 
-On the left had side of the screen there is a "Filter Catalog" option, and a folder listing of available layers. Because the layer list is quite large, convering hundreds of folder and layer groups, it's best to filter your options down to the datasets you're specifically looking for.
+On the left had side of the screen there is a "Filter Catalog" option, and a folder listing of available layers. Because the layer list is quite large, covering hundreds of folder and layer groups, it's best to filter your options down to the datasets you're specifically looking for.
 
 #### Filtering DataBC Layers
 
@@ -160,7 +160,7 @@ The added DataBC Catalog layers have four options on the bottom-right of the lay
 
 ![Layer edit buttons](smk-cli-layer-edit-buttons.png)
 
-`View in catalog` will open a seperate browser tab, which displays the DataBC Data Catalog page with information about the layer.
+`View in catalog` will open a separate browser tab, which displays the DataBC Data Catalog page with information about the layer.
 
 `Show/Hide` is a toggle button that indicates if this layer should be turned on when the application is launched. By default layers are set to hidden.
 
@@ -182,7 +182,7 @@ By default, the application will set the WMS service URL to the [DataBC Catalog 
 
 ![WMS Selector](smk-cli-wms-selector.png)
 
-You'll notice that the selector is actually a dropdown select box. SMK-CLI is preconfigured with some additional default WMS Services. These include:
+You'll notice that the selector is actually a dropdown select box. SMK-CLI is pre-configured with some additional default WMS Services. These include:
 
 - [DataBC Catalog WMS Service](https://openmaps.gov.bc.ca/geo/pub/wms) (selected by default)
 - [Maps.th.gov.bc.ca](https://maps.th.gov.bc.ca/geoV05/ows)
@@ -395,7 +395,7 @@ The following tools are currently available to add to your application.
 
 Details on the tools and how they work can be found in the [SMK Documentation](https://bcgov.github.io/smk/docs/SMK-Client-Configuration)
 
-> __Note:__ It is also possible to create your own custom tools and screens in SMK. This requires an understanding of javascript development. Custom tools will not dislay in the SMK-CLI tools menu.
+> __Note:__ It is also possible to create your own custom tools and screens in SMK. This requires an understanding of javascript development. Custom tools will not display in the SMK-CLI tools menu.
 
 ### Adding a Tool
 
@@ -417,7 +417,7 @@ The tool will be removed from your `Tools in App` listing on the right. It will 
 
 ### Editing a Tool
 
-Many of the available tools in SMK have special configuration options that change and specialize the behaviour of a tool to suit your needs. You can modify these configurations for any added tool by clicking once on the `edit tool` ![edit tool](tool-edit.png) button on the tool tile
+Many of the available tools in SMK have special configuration options that change and specialize the behavior of a tool to suit your needs. You can modify these configurations for any added tool by clicking once on the `edit tool` ![edit tool](tool-edit.png) button on the tool tile
 
 Each tool has a unique set of configuration options specific to their use. See [Editing a Tool](edit-tool.md) for more details on each configuration screen.
 

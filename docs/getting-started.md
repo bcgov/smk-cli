@@ -2,7 +2,7 @@
 
 ## SMK and SMK-CLI repositories
 
-Firstly, lets get aquainted with SMK and the SMK-CLI. Some useful links for various components of the SMK Project
+Firstly, lets get acquainted with SMK and the SMK-CLI. Some useful links for various components of the SMK Project
 
 - [SMK repo](https://github.com/bcgov/smk)
 - [SMK NPM repo](https://www.npmjs.com/package/smk)
@@ -17,7 +17,7 @@ The first step in getting started with the SMK-CLI is installation of dependenci
 
 Node.js is a free, open source server environment that runs on various platforms (Windows, Linux, Unix, Mac OS X, etc.), for running JavaScript on a server based environment.
 
-NPM is a package manager for Node.js applications and is intalled along side Node.js.
+NPM is a package manager for Node.js applications and is installed along side Node.js.
 
 These tools are needed to install and run the SMK-CLI and build your final SMK project for local testing.
 

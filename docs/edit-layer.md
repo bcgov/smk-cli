@@ -49,7 +49,7 @@ From the DataBC Details panel, you can modify the following attributes:
 
 #### Opacity
 
-`Opacity` adjust how transparent the layer is by default. Making a layer 100% Opaque will prevent users from seeing feaures covered by this layer. Setting a layer to 0% Opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
+`Opacity` adjust how transparent the layer is by default. Making a layer 100% Opaque will prevent users from seeing features covered by this layer. Setting a layer to 0% Opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
 
 #### Display Range
 
@@ -232,7 +232,7 @@ Fill styles supply styling for the interior of your vector features. Fill styles
 
 ![Attribute edit](smk-cli-databc-att-edit.png)
 
-To view the attribute edit panel of the Layer edit popup, click once on the `Attributes` tab header. The attributes details screen contains several customizable options that affect the behaviour of your layer when identified or displaying data.
+To view the attribute edit panel of the Layer edit popup, click once on the `Attributes` tab header. The attributes details screen contains several customizable options that affect the behavior of your layer when identified or displaying data.
 
 #### Title Attribute
 
@@ -284,7 +284,7 @@ From the query edit panel you can modify the displayed Query Title and Query Des
 
 Queries function from Parameters, operator, and Clauses. You must include at least one Parameter, specify the Operator and at least one Clause into your query for it to produce results.
 
-Think of a parameter as your entry field. The parameter will be dislayed to the user and allow them to enter values to use for the query.
+Think of a parameter as your entry field. The parameter will be displayed to the user and allow them to enter values to use for the query.
 
 To add a parameter. Click once in the `Add New Parameter` button. A query parameter tile will be added to your query. Click once anywhere in the tile to expand it for editing.
 
@@ -337,7 +337,7 @@ The Operator defines the method of query, and contains three options:
 
 #### OR
 
-`Or` Queries indicate that the query should return results for any one of the parameter conditions. This qill result in queries with a larger volume of results.
+`Or` Queries indicate that the query should return results for any one of the parameter conditions. This will result in queries with a larger volume of results.
 
 #### NOT
 
@@ -345,7 +345,7 @@ The Operator defines the method of query, and contains three options:
 
 ### Clause
 
-The Query Clause defines the actual queriable field. Clauses are attached to parameters. To add a new clause to your query, click once on the `Add New Clause` button.
+The Query Clause defines the actual query-able field. Clauses are attached to parameters. To add a new clause to your query, click once on the `Add New Clause` button.
 
 Select your Parameter, the related Attribute and specify the clause.
 

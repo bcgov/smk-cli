@@ -24,7 +24,7 @@ To create a new SMK project:     index create [name]
 To modify an SMK project config: index edit [-p port]
 ```
 
-There are three main commmands:
+There are three main commands:
 
 - `create`
 - `edit`
@@ -40,7 +40,7 @@ Before creating your application, you'll want to ensure you're in a path where y
 cd /myProjectsFolder
 ```
 
-Once you're in a location where you want to create your new applciation, you can enter the SMK create command
+Once you're in a location where you want to create your new application, you can enter the SMK create command
 
 ```bash
 smk create mySmkProject
@@ -157,7 +157,7 @@ Your application has been created.
 
 ### What's Created
 
-You'll now have a new folder in the location where `smk create` was executed with the name you supplied. The folder contains a checkout of the SMK github repo, a generated cofiguration, and a pre-download of all required node modules.
+You'll now have a new folder in the location where `smk create` was executed with the name you supplied. The folder contains a checkout of the SMK github repo, a generated configuration, and a pre-download of all required node modules.
 
 ## Final Steps
 
@@ -167,7 +167,7 @@ Before moving on to testing and editing your application, you may want to push y
 
 ## Edit your application
 
-Check out [Editting an SMK Application](edit-an-app.md)
+Check out [Editing an SMK Application](edit-an-app.md)
 
 [Back to Index](index.md)
 
