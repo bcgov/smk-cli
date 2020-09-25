@@ -308,6 +308,52 @@ The added Vector layers have three options on the bottom-right of the layer pane
 
 `Remove` will remove the layer from your application. Be careful, as removing a layer will also delete any of your configured settings with that layer.
 
+## Layers and Folders
+
+Once you've added layers to your application, you may want to structure them into folders and groupings for ease of use in your application layer list.
+
+![Folders View](smk-cli-folders.png)
+
+To move layers into folders, click once on the layer selection check-box on the left side of the layer tiles.
+
+![Select Layer](smk-cli-select-layer.png)
+
+This will activate the buttons allowing for the creation of folders and reorganizing the layer list. 
+
+### Reordering the list
+
+Click once on the `Move Up` and `Move Down` buttons to move selected layers or folders up or down in the listing.
+
+### Adding to Folders
+
+Click once on the `Move to Folder` button to move the selected layers or folders into a new folder. This will open a popup dialog allowing you to supply a name for your folder, and a location (Top Level, or a specific folder). Enter the desired name and click once on the `Accept` button to create your folder. Click once on the `Cancel` button to stop creating a new folder.
+
+![Folder Dialog](move-to-folder-dialog.png)
+
+When you create a new folder, it is placed at the bottom of your layer listing by default, or the bottom of the parent folder.
+
+Folders can be nested within each other by following the same method described above, and selecting the name of a parent folder instead of the default top level.
+
+![parent folder](set-parent-folder.png)
+
+Folders can be moved out of a parent folder by selecting them, clicking once on the `Move to Folder` button, and selecting `Top Level`. This will place them back in the main listing where they can be moved around as required.
+
+### Editing a folder
+
+You can edit a folders details by clicking once on the folder edit ![edit](tool-edit.png) button within the folders tile.
+
+![Folder Tile](folder-tile.png)
+
+This will display a popup window with the editable options for your folder.
+
+![Edit Folder](smk-cli-folder-edit.png)
+
+From this popup, you can modify the folders name, as well as set the layer to expanded by default. Click once on the `Initially Expanded in Layer List` checkbox to ensure this folder is expanded by default.
+
+Once you have finished making your desired changes to the folders configuration, click once anywhere outside of the popup window to close it and return to the layer list view.
+
+![Layer Panel](layer-panel.png)
+
 ## Tools
 
 The Tools screen allows you to activate and configure the available SMK map tools for your SMK application.
