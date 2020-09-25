@@ -13,10 +13,7 @@ Please note that the SMK-CLI is primarily a developer tool. While it's perfectly
 - [Creating an SMK application with the CLI](create-an-app.md)
 - [Editing an SMK application with the CLI](edit-an-app.md)
 
-## For the future
-
-A web/electron based editor that is independent of Node?
-
 ## Special Thanks
 
-Gov BC, Vivid, put some logos here for fucks sake
+![Vivid Solutions Inc.](vivid_logo.jpg)
+![DataBC](databc-avatar-v2_400x400.png)
