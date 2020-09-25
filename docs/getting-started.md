@@ -33,4 +33,6 @@ You will need to ensure you've installed Node.js v12.x or higher
 - [Grunt](https://gruntjs.com/)
 - [Leaflet](https://leafletjs.com/)
 
+---
+
 ![logo](smk-logo-sm.png)

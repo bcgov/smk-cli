@@ -203,7 +203,7 @@ Adding layers from a WMS service works identically to the DataBC Layer options. 
 
 ![Added Layers](smk-cli-wms-layers.png)
 
-The added WMS layers have three options on the bottom-right of the layer panels for working with the layers. These options, from left to right, are 'View in Catalog', 'Show/Hide', 'Edit', and 'Remove'.
+The added WMS layers have three options on the bottom-right of the layer panels for working with the layers. These options, from left to right, are 'Show/Hide', 'Edit', and 'Remove'.
 
 ![Layer edit buttons](smk-cli-wms-layer-edit-buttons.png)
 
@@ -215,6 +215,158 @@ The added WMS layers have three options on the bottom-right of the layer panels 
 
 ### Vector Layers
 
+`Manage Vector Layers` allows you to supply a local vector data file, or a URL where vector data can be found. Vector data includes a number of different importable formats, and the URL method allows you to reference any URL that will return valid GeoJSON data.
+
+![Vector Layers](smk-cli-vector.png)
+
+When you open the Vector Layers menu, you will have to expandable options available:
+
+- Import Vector Dataset into Catalog
+- Add Vector Dataset URL to Catalog
+
+#### Import Vector Dataset into Catalog
+
+`Import Vector Dataset into Catalog` allows you to import static vector data directly into your application. Click once on the `Import Vector Dataset into Catalog` header to expand the options for importing.
+
+![Import Vector](smk-cli-vector-import.png)
+
+From the import options, you can choose the type of vector data to import, and supply a title for your layer. Importable vector types are:
+
+- Shapefile
+- GeoJSON
+- KML
+- CSV
+- WFS
+- PGDB
+- FGDB
+
+First, select your desired data type from the `Vector Layer Type` dropdown select box. Once selected, the ![upload](smk-cli-vector-upload-btn.png) will be highlighted. Click once on the `upload` button to begin the import of your vector data. A standard file open dialog for your operating system will be presented to you. Select your vector file and open.
+
+> __IMPORTANT__: This will not create a layer in your application, simply load and convert the data for use in your SMK application.
+
+Once your vector data has been imported and successfully converted for use with SMK, the `Title` field will auto-populate with a pretty-printed version of the file name. Update your layer title as needed.
+
+![Create Vector Layer](smk-cli-vector-ready.png)
+
+When you're ready, click once on the ![Import layer](smk-cli-vector-import-lyr.png) button to create your layer. Once complete, you will notice your imported layer has been added to a listing below the import options.
+
+![Add Vectors](smk-cli-vector-add.png)
+
+> __IMPORTANT__: Your layer still isn't added to your application yet, but it is ready to be added.
+
+From this point, the process for adding a layer to your application is identical to the process for both DataBC and WMS layers.
+
+To complete the vector import process and add the layer into your application, double-click on the layer in the listing. It will be added to your application.
+
+![Added Vector](smk-cli-vector-import-add.png)
+
+The added Vector layer have three options on the bottom-right of the layer panels for working with the layers. These options, from left to right, are 'Show/Hide', 'Edit', and 'Remove'.
+
+![Layer edit buttons](smk-cli-wms-layer-edit-buttons.png)
+
+`Show/Hide` is a toggle button that indicates if this layer should be turned on when the application is launched. By default layers are set to hidden.
+
+`Edit` will open an advanced settings popup that allows you to modify the layer details. Please view [Editing a Layer](edit-layer.md) from more information on the layer editing options.
+
+`Remove` will remove the layer from your application. Be careful, as removing a layer will also delete any of your configured settings with that layer.
+
+#### Add Vector Dataset URL to Catalog
+
+In addition to importing static vector data, you can also use vector data over the internet by supplying a URL. Vector data supplied by URL is not static and will not be imported into your application at build time, but will instead be loaded via the URL when your application is launched. This allows you to utilize the benefits of vector data without being limited to updating your application when the data changes.
+
+Unlike imported data, vector URL's must return valid GeoJSON Feature Collections. You cannot supply a URL that links to other datatypes, such as shapefiles or KML, and the endpoint must return a Feature Collection.
+
+> __TIP__: Vector URL dataset layers allow you to use data from WFS, FME Server, and any other RESTFul or web service that returns valid GeoJSON. For example, if you want to make shapefiles dynamic, consider linking to an FME Server task that does the conversion of generated data for you!
+
+To add a Vector URL dataset, click once on the `Add Vector Dataset URL to Catalog` heading to open the panel.
+
+![URL Dataset](smk-cli-vector-url.png)
+
+You can supply an External URL and a Title for your dataset.
+
+Click once on the `External URL` text box and enter (or copy/paste in) your source data URL. Once entered, the `Title` text box will become available. Enter a title for your layer.
+
+![URL dataset import](smk-cli-vector-url-wfs.png)
+
+Once you've entered a URL and a title, click once on the ![Add Layer](smk-cli-vector-add-btn.png) button to add your layer to the layer listing below.
+
+![Added URL layer](smk-cli-vector-url-layer.png)
+
+From this point, the process for adding a layer to your application is identical to the process for DataBC, WMS and Imported Vector layers described above.
+
+To complete the URL Dataset import process and add the layer into your application, double-click on the layer in the listing. It will be added to your application.
+
+![Added Vector](smk-cli-vector-import-add2.png)
+
+The added Vector layers have three options on the bottom-right of the layer panels for working with the layers. These options, from left to right, are 'Show/Hide', 'Edit', and 'Remove'.
+
+![Layer edit buttons](smk-cli-wms-layer-edit-buttons.png)
+
+`Show/Hide` is a toggle button that indicates if this layer should be turned on when the application is launched. By default layers are set to hidden.
+
+`Edit` will open an advanced settings popup that allows you to modify the layer details. Please view [Editing a Layer](edit-layer.md) from more information on the layer editing options.
+
+`Remove` will remove the layer from your application. Be careful, as removing a layer will also delete any of your configured settings with that layer.
+
 ## Tools
+
+The Tools screen allows you to activate and configure the available SMK map tools for your SMK application.
+
+![Tools Screen](smk-cli-tools.png)
+
+On the left you'll see a listing of available tools that can be added to your application. On your right, you'll see a listing of tools that have already been added to your application.
+
+The following tools are currently available to add to your application.
+
+- About
+- Base Maps
+- Bespoke
+- Coordinate
+- Directions
+- Identify
+- Layers
+- Legend
+- List Menu
+- Location
+- Markup
+- Measure
+- Pan
+- Scale
+- Search
+- Select
+- Shortcut Menu
+- Toolbar
+- Version
+- Zoom
+
+Details on the tools and how they work can be found in the [SMK Documentation](https://bcgov.github.io/smk/docs/SMK-Client-Configuration)
+
+> __Note:__ It is also possible to create your own custom tools and screens in SMK. This requires an understanding of javascript development. Custom tools will not dislay in the SMK-CLI tools menu.
+
+### Adding a Tool
+
+To add an Available Tool to your SMK application click once on the `add tool` ![green slider](green-slider.png) toggle button on the right of the tool tile.
+
+![Add Tool](smk-cli-add-tool.png)
+
+The tool will be added to your `Tools in App` listing on the right.
+
+> __Note:__ Some tools can be added multiple times. When you click the `add tool` slider, the tool will be added to your `Tools in App`, but the tool will remain available in `Available Tools`.
+
+### Removing a Tool
+
+To remove a tool from your application click once on the `remove tool` ![red-slider](red-slider.png) toggle button on the right of the tool tile.
+
+![Remove Tool](smk-cli-remove-tool.png)
+
+The tool will be removed from your `Tools in App` listing on the right. It will also be available for adding again in the `Available Tools` listing on the left.
+
+### Editing a Tool
+
+Many of the available tools in SMK have special configuration options that change and specialize the behaviour of a tool to suit your needs. You can modify these configurations for any added tool by clicking once on the `edit tool` ![edit tool](tool-edit.png) button on the tool tile
+
+Each tool has a unique set of configuration options specific to their use. See [Editing a Tool](edit-tool.md) for more details on each configuration screen.
+
+---
 
 ![logo](smk-logo-sm.png)

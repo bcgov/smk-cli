@@ -18,4 +18,6 @@ npm install —global smk-cli@1.0.0-beta.6
 
 NPM should now install all required packages as a globally accessible command line utility. You're ready to get started!
 
+---
+
 ![logo](smk-logo-sm.png)
