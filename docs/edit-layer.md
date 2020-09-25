@@ -1,10 +1,19 @@
 # Editing a Layer
 
+## Contents
+
+- [DataBC Details](#databc-Details)
+- [WMS Details](#wms-details)
+- [Vector Layer Details](#vector-layer-details)
+- [Attributes](#attributes)
+- [Queries](#queries)
+- [Custom Identify displays](#custom-identify-displays)
+
 Layers in SMK are highly customizable and allow for a number of configurations to tailor the layer to your applications specific needs. From the layer edit popup you can adjust display information, attribute details, and create special layer-specific query tools, as well as test your layer to ensure it displays as expected.
 
 Each layer type, DataBC, WMS and Vector, has some specific options that are only available to that type.
 
-## Customizing DataBC Layers
+## Customizing Layer Details
 
 Click once on the edit button to activate the edit popup. The edit popup contains three tabs found at the top of the window:
 
@@ -345,6 +354,10 @@ Select your Parameter, the related Attribute and specify the clause.
 It is possible to completely customize your layers Identify popup display. This is an advanced feature that requires a working understanding of the Vue.js framework, HTML and potentially some javascript knowledge. More details on providing custom popups will be made available in the future.
 
 > Query documentation and functionality is currently in progress, check back for further updates soon!
+
+[Creating an SMK application with the CLI](create-an-app.md) |
+[Editing an SMK application with the CLI](edit-an-app.md) |
+[Back to Index](index.md)
 
 ---
 

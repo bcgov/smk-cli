@@ -1,5 +1,13 @@
 # Editing your SMK application
 
+## Contents
+
+- [Saving and testing your changes](#saving-and-testing-your-changes)
+- [Application](#application)
+- [Layers](#layers)
+- [Layers and Folders](#layers-and-folders)
+- [Tools](#tools)
+
 Before this step, you should have an existing SMK application created. If you don't, review [Creating an SMK application](create-an-app.md).
 
 Before you can edit your application, you'll want to open your command line and navigate to the applications folder
@@ -318,7 +326,7 @@ To move layers into folders, click once on the layer selection check-box on the 
 
 ![Select Layer](smk-cli-select-layer.png)
 
-This will activate the buttons allowing for the creation of folders and reorganizing the layer list. 
+This will activate the buttons allowing for the creation of folders and reorganizing the layer list.
 
 ### Reordering the list
 
@@ -412,6 +420,10 @@ The tool will be removed from your `Tools in App` listing on the right. It will 
 Many of the available tools in SMK have special configuration options that change and specialize the behaviour of a tool to suit your needs. You can modify these configurations for any added tool by clicking once on the `edit tool` ![edit tool](tool-edit.png) button on the tool tile
 
 Each tool has a unique set of configuration options specific to their use. See [Editing a Tool](edit-tool.md) for more details on each configuration screen.
+
+[Editing Layers](edit-layer.md) |
+[Editing Tools](edit-tool.md) |
+[Back to Index](index.md)
 
 ---
 

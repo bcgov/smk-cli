@@ -2,19 +2,19 @@
 
 Several tools have unique configurations that allow you to tailor their behaviour to your applications needs. Tools that can be edited are:
 
-- About
-- Base Maps
-- Bespoke
-- Directions
-- Identify
-- Layers
-- List Menu
-- Measure
-- Scale
-- Search
-- Select
-- Version
-- Zoom
+- [About](#about)
+- [Base Maps](#base-maps)
+- [Bespoke](#bespoke)
+- [Directions](#directions)
+- [Identify](#identify)
+- [Layers](#layers)
+- [List Menu](#list-menu)
+- [Measure](#measure)
+- [Scale](#scale)
+- [Search](#search)
+- [Select](#select)
+- [Version](#version)
+- [Zoom](#zoom)
 
 ## Common settings
 
@@ -360,6 +360,10 @@ The zoom tool contains several customizable options:
 `Show Zoom Controls` Adds zoom-in and zoom-out buttons to the top-right corner of the map. Users can click once on the zoom-in or zoom-out buttons to adjust the zoom level of the map.
 
 ![zoom buttons](zoom-buttons.png)
+
+[Creating an SMK application with the CLI](create-an-app.md) |
+[Editing an SMK application with the CLI](edit-an-app.md) |
+[Back to Index](index.md)
 
 ---
 

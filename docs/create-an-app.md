@@ -169,6 +169,8 @@ Before moving on to testing and editing your application, you may want to push y
 
 Check out [Editting an SMK Application](edit-an-app.md)
 
+[Back to Index](index.md)
+
 ---
 
 ![logo](smk-logo-sm.png)
