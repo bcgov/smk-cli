@@ -2,6 +2,10 @@
 
 A command line utility and visual editor for creating and editing [Simple Map Kit](https://github.com/bcgov/smk) applications.
 
+# Documentation
+
+Check out the SMK CLI documentation available [here](https://bcgov.github.io/smk-cli/)
+
 # Installation
 
 The SMK CLI can be installed via NPM in two different ways;
