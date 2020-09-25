@@ -155,6 +155,70 @@ Note that the Vector Details panel is the same if you've imported vector data di
 
 Unlike other layer type, Vector layers can have customizable styling. To view an change a vector layers styling, click once on the `Style` tab header.
 
+![vector style editor](smk-cli-vector-style.png)
+
+Vectors have three primary categories for editing style information, depending on the source geometry type:
+
+- Marker style (Point Data)
+- Stroke style (Line Data)
+- Fill style (Polygon Data)
+
+In addition, you can specify the style for the legend, which by default will be set to match your data style. You can also update the legend title if you want it to display differently from your layer title.
+
+If you wish to apply other style types to a vector (for instance, using markers for a lines point coordinates), you can enable those specific style options by clicking once on the toggle buttons on the right of the style tiles. Note however that some styles, like for instance fill styles, will have little effect on some data types.
+
+#### Marker Style
+
+![Marker style](marker-style-edit.png)
+
+Marker styles require a marker image, a Marker size, and a marker offset.
+
+To add a marker image to your application, click once on the `Upload` button. This will open your operating systems standard file selection dialog. Select a file to import it into your application. Once imported, your marker image will be available to select in the `Marker URL` dropdown selection box.
+
+`Marker Size` allows you to specify the size of the image in pixels as it will display on the map. Images that are larger then the specified size will shrink to match, smaller images will be stretched.
+
+`Marker Offset` specifies an offset size in pixels to shift your marker over. Generally a marker will draw on the map with the images top left corner on the point. If you want to centre your marker, supply an offset of half the marker size. As different markers and sizes have different offset needs, this value is not defaulted.
+
+#### Stroke Style
+
+![Stroke style](stroke-style-edit.png)
+
+Stroke styles are the styling for linework for your vector data. This includes the perimeter of polygons as well as non-marker points.
+
+`Stroke Colour` will set the colour to use for your linework. Click once on the selector box to open a colour selector.
+
+`Stroke Width` will set the thickness of your linework. Click and hold your mouse button down on the slider, and drag your mouse left or right to adjust the thickness of your line.
+
+`Stroke Opacity` will set the transparency of your linework. Click and hold your mouse button down on the slider, and drag your mouse left or right to adjust the opacity of the line.
+
+`Stroke Cap` is the end-style of the line. You can specify the line ends to be the following styles:
+
+- Butt
+- Round
+- Square
+
+Click once on the Stroke Cap dropdown select box to display the possible values and select one. The Default value is `Round`
+
+`Stroke Join` is the style used where lines connect, for example the vertices along a polygons perimeter. You can specify the following styles:
+
+- Miter
+- Round
+- Bevel
+
+Click once on the Stroke Join dropdown select box to display the possible values and select one. The Default value is `Round`
+
+`Dash Pattern` is used if you want your linework to appear dashed or dotted, rather than a solid single line. These are numeric values indicating the size of the dashes. For example `20, 20` will create line dashes 20 pixels in size, with a 20 pixel gap between them.
+
+#### Fill Style
+
+![Fill style](fill-style-edit.png)
+
+Fill styles supply styling for the interior of your vector features. Fill styles are much simpler than the other style types. 
+
+`Fill Colour` will set the colour to use for your fill. Click once on the selector box to open a colour selector.
+
+`Fill Opacity` will set the transparency to use for your fill. Click once and hold your mouse button down on the slider, and drag your mouse left or right to adjust the level of opacity desired.
+
 ### Attributes
 
 ![Attribute edit](smk-cli-databc-att-edit.png)
@@ -279,6 +343,8 @@ Select your Parameter, the related Attribute and specify the clause.
 ## Custom Identify displays
 
 It is possible to completely customize your layers Identify popup display. This is an advanced feature that requires a working understanding of the Vue.js framework, HTML and potentially some javascript knowledge. More details on providing custom popups will be made available in the future.
+
+> Query documentation and functionality is currently in progress, check back for further updates soon!
 
 ---
 
