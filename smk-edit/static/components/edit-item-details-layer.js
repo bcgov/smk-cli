@@ -27,6 +27,15 @@ export default importComponents( [
                     this.$store.dispatch( 'configLayer', { id: this.itemId, isQueryable: val } )
                 }
             },
+            alwaysShowLegend: {
+                get: function () {
+                    var item = this.$store.getters.configToolLayersDisplayItem( this.itemId )
+                    return !!item.alwaysShowLegend
+                },
+                set: function ( val ) {
+                    this.$store.dispatch( 'configToolLayersDisplayItem', { id: this.itemId, alwaysShowLegend: val } )
+                }
+            },
             opacity: {
                 get: function () {
                     return this.$store.getters.configLayer( this.itemId ).opacity
@@ -77,11 +86,8 @@ export default importComponents( [
             }
         },
         mounted: function () {
-            M.updateTextFields()
-            M.textareaAutoResize( this.$refs.metadataUrl )
         },
         updated: function () {
-            M.textareaAutoResize( this.$refs.metadataUrl )
         }
     } )
 } )

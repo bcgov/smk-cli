@@ -29,11 +29,8 @@ export default importComponents( [
             },
         },
         mounted: function () {
-            M.updateTextFields()
-            M.textareaAutoResize( this.$refs.dataUrl )
         },
         updated: function () {
-            M.textareaAutoResize( this.$refs.dataUrl )
         }
     } )
 } )
