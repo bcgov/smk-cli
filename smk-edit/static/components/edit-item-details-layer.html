@@ -39,9 +39,15 @@
             <template v-slot:output>{{ Math.round( opacity * 100 ) }}%</template>
         </input-range>
 
-        <input-checkbox  class="col s6"
-            v-model="isQueryable"
-        >Available for identify</input-checkbox>
+        <div  class="col s6">
+            <input-checkbox
+                v-model="isQueryable"
+            >Available for identify</input-checkbox>
+
+            <input-checkbox
+                v-model="alwaysShowLegend"
+            >Always show legend in layers tool</input-checkbox>
+        </div>
     </div>
 
     <component
