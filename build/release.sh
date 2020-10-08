@@ -10,12 +10,18 @@ echo "SMK-CLI is now v$VERSION, next will be v$NEXT"
 echo ------------------------------------------------------------------
 read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 
-npm version $BUMP
+if npm version $BUMP ; then
+    echo "Set version to v$NEXT"
+else
+    echo "Failed to set version to v$NEXT"
+    exit 1
+fi
+
 VERSION=$( node --eval "console.log( require( './package.json' ).version )" )
 git push origin
 
 echo ------------------------------------------------------------------
-echo "Ready to publish SMK-CLI v$VERSION."
+echo "Ready to branch, tag, and publish SMK-CLI v$VERSION."
 echo ------------------------------------------------------------------
 
 echo
@@ -27,28 +33,32 @@ echo
 echo "Has the version number been bumped? Is this the master branch?"
 read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 
-# echo
-# echo "Is gh-pages already present?"
-# echo
-# git branch | grep gh-pages
-# git branch -r | grep gh-pages
+BRANCH=release/v$VERSION
 
-# read -n1 -r -p "Ok to delete gh-pages? Press Ctrl+C to cancel, or any other key to continue." key
+echo
+echo "Existing branches:"
+git branch | grep $BRANCH
+git branch -r | grep $BRANCH
 
-# echo
-# echo "Recreating gh-pages branch..."
-# echo
+echo
+read -n1 -r -p "If branch $BRANCH is present, hit Ctrl+C now. Any other key to continue." key
 
-# git branch -D gh-pages
-# git push origin --delete gh-pages
+echo
+echo "Checkout branch $BRANCH..."
+echo
 
-# git checkout -b gh-pages
+git checkout -b $BRANCH
 
 # echo
 # echo "Building..."
 # echo
 
-# npm run build
+# if npm run build ; then
+#     echo "Build was successful"
+# else
+#     echo "Build failed"
+#     exit 1
+# fi
 
 # echo
 # echo "Creating git tag v$VERSION..."
@@ -58,18 +68,19 @@ read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 # git commit -m "v$VERSION"
 # git tag v$VERSION --force
 
-# git push --set-upstream origin gh-pages
+git push --set-upstream origin $BRANCH
 git push --tags --force
 
 echo
-echo "Publish"
+echo "Publish v$VERSION..."
 echo
 
 npm publish --access public
 
-# echo
+echo
+echo "Checkout master..."
 
-# git checkout master
+git checkout master
 
 echo
 echo "All done."
