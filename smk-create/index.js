@@ -27,6 +27,7 @@ module.exports = async function ( args ) {
 
     app.createdDate = ( new Date() ).toISOString()
     app.smkDistPath = `./node_modules/${ app.smkPackage }/dist/smk.js`
+    app.viewer = 'leaflet'
 
     console.log()
     console.log( chalk.green( `Creating application directory ${ app.absoluteDir.replace( process.cwd(), '.' ) } with template "${ app.template }"...` ) )
@@ -142,42 +143,12 @@ async function inquireAppInfo( name, baseDir, package, version ) {
             choices: [ 'default', 'mobile' ],
             default: 'default'
         },
-        {
-            name: 'viewer',
-            type: 'list',
-            message: 'Select the type of map viewer:',
-            choices: [ 'leaflet', 'esri3d' ],
-            default: 'leaflet'
-        },
         // {
-        //     name: 'longitude',
-        //     type: 'input',
-        //     message: 'Starting Longitude:',
-        //     default: '-128.7817'
-        // },
-        // {
-        //     name: 'latitude',
-        //     type: 'input',
-        //     message: 'Starting Latitude:',
-        //     default: '53.7764'
-        // },
-        // {
-        //     name: 'zoom',
-        //     type: 'input',
-        //     message: 'Starting zoom:',
-        //     default: '5',
-        //     validate: function( value )
-        //     {
-        //         if (parseInt(value) >= 0 && parseInt(value) <= 20 ) return true;
-        //         else return 'Zoom level must be a value from 0 to 20';
-        //     }
-        // },
-        // {
-        //     name: 'basemaps',
-        //     type: 'checkbox',
-        //     message: 'Select your basemap options:',
-        //     choices: ['Streets', 'Topographic', 'NationalGeographic', 'Oceans', 'Gray', 'DarkGray', 'Imagery', 'ShadedRelief'],
-        //     default: ['Topographic', 'Imagery', 'Gray']
+        //     name: 'viewer',
+        //     type: 'list',
+        //     message: 'Select the type of map viewer:',
+        //     choices: [ 'leaflet', 'esri3d' ],
+        //     default: 'leaflet'
         // },
         {
             name: 'baseMap',
