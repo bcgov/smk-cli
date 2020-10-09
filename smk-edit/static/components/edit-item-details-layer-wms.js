@@ -31,15 +31,8 @@ export default importComponents( [
             }
         },
         mounted: function () {
-            M.updateTextFields()
-            M.textareaAutoResize( this.$refs.serviceUrl )
-            M.textareaAutoResize( this.$refs.layerName )
-            M.textareaAutoResize( this.$refs.styleName )
         },
         updated: function () {
-            M.textareaAutoResize( this.$refs.serviceUrl )
-            M.textareaAutoResize( this.$refs.layerName )
-            M.textareaAutoResize( this.$refs.styleName )
         }
     } )
 } )

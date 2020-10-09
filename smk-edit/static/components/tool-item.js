@@ -17,7 +17,7 @@ vueComponent( import.meta.url, {
                 'build'
         },
         allowedEdit: function () { return toolTypePresentation[ this.toolType ].details !== false && this.allowed && this.allowed.edit !== false },
-        allowedRemove: function () { return this.allowed && this.allowed.remove !== false },
+        allowedRemove: function () { return toolTypePresentation[ this.toolType ].details !== false && this.allowed && this.allowed.remove !== false },
         allowedEnable: function () { return this.allowed && this.allowed.enable !== false },
         allowedDisable: function () { return this.allowed && this.allowed.disable !== false },
         toolSummary: function () {
