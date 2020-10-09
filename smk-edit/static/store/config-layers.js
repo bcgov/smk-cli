@@ -57,7 +57,9 @@ export default {
         },
         configLayerQueryPredicate: function ( state, getters ) {
             return getters.version && function ( id, queryId ) {
-                return getters.configLayerQuery( id, queryId ).predicate || []
+                var p = getters.configLayerQuery( id, queryId ).predicate
+                if ( Array.isArray( p ) ) p = null
+                return p || { operator: 'and', arguments: [] }
             }
         }
     },
