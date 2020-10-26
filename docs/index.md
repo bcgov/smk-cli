@@ -16,4 +16,4 @@ Please note that the SMK-CLI is primarily a developer tool. While it's perfectly
 ## Special Thanks
 
 ![Vivid Solutions Inc.](vivid_logo.jpg)
-![DataBC](databc-avatar-v2_400x400.png)
+![BC](bc-logo.png)
