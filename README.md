@@ -1,5 +1,7 @@
 # Simple Map Kit Command-line Interface
 
+![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)
+
 A command line utility and visual editor for creating and editing [Simple Map Kit](https://github.com/bcgov/smk) applications.
 
 # Documentation
