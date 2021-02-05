@@ -1,0 +1,19 @@
+<div>
+    <div class="row">
+        <input-textarea class="col s12"
+            v-model="dataUrl"
+        >Data URL</input-textarea>
+    </div>
+
+    <div class="row">
+        <input-select class="col s12"
+            v-model="displayMode"
+        >How should the data be displayed?
+            <template v-slot:options>
+                <option value="raw">Show features as styled</option>
+                <option value="cluster">Show features in clusters</option>
+                <option value="heatmap">Show features as a heatmap</option>
+            </template>
+        </input-select>
+    </div>
+</div>

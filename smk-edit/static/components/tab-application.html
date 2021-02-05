@@ -1,0 +1,75 @@
+<article>
+    <section>
+        <header>
+            <h5>Application</h5>
+        </header>
+        <div>
+            <div class="row tight">
+                <dl>
+                    <dt>Configuration Name</dt>
+                    <dd>{{ name }}</dd>
+
+                    <dt>Configuration Created By</dt>
+                    <dd>{{ $store.state.config.createdBy }}</dd>
+
+                    <dt>Configuration File</dt>
+                    <dd v-bind:title="'Version: ' + $store.state.config.version"
+                    >{{ $store.state.configFile }}</dd>
+                </dl>
+            </div>
+
+            <div class="row tight">
+                <input-select class="col s12"
+                    v-model="viewerType"
+                >The type of map viewer for this application
+                    <template v-slot:options>
+                        <option value="leaflet">Leaflet</option>
+                        <!-- <option value="esri3d" disabled>Esri ArcGIS 3D</option> -->
+                    </template>
+                </input-select>
+            </div>
+
+            <div class="row tight">
+                <input-select class="col s12"
+                    v-model="viewerDevice"
+                >The type of device this application is to be used on
+                    <template v-slot:options>
+                        <option value="auto">Auto-detect</option>
+                        <option value="desktop">Desktop</option>
+                        <option value="mobile">Mobile</option>
+                    </template>
+                </input-select>
+            </div>
+
+            <div class="row tight">
+                <input-select class="col s12"
+                    v-model="baseMap"
+                >Select the default basemap for your application
+                    <template v-slot:options>
+                        <option
+                            v-for="bm in baseMaps"
+                            v-bind:value="bm.id"
+                        >{{ bm.title }}</option>
+                    </template>
+                </input-select>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <header>
+            <h5>Initial Map Position</h5>
+            <h6>
+                Pan and zoom the map to set the application's initial position.
+            </h6>
+        </header>
+        <div>
+            <smk-map
+                v-if="hasMapConfig"
+                v-bind:config="mapConfig"
+                v-on:changed-view="changedView"
+            ></smk-map>
+        </div>
+    </section>
+</article>

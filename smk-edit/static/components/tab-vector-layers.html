@@ -1,0 +1,197 @@
+<article>
+    <section>
+        <header>
+            <h5>Vector Catalog</h5>
+
+            <ul class="collapsible" ref="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">place</i>Import Vector Dataset into Catalog
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row tight">
+                            <input-select class="col s9"
+                                v-model="importType"
+                            >Vector Layer Type
+                                <template v-slot:options>
+                                    <option value="" disabled selected>Choose vector file type</option>
+                                    <option value="geojson">GeoJSON</option>
+                                    <option value="kml">KML</option>
+                                    <option value="shape">Shapefile</option>
+                                    <option value="csv">CSV</option>
+                                    <option value="wfs" disabled>WFS</option>
+                                    <option value="pgdb" disabled>PGDB</option>
+                                    <option value="fgdb" disabled>FGDB (zip only, v10 and lower)</option>
+                                </template>
+                            </input-select>
+
+                            <form class="col s2" ref="fileInputForm">
+                                <div class="btn blue-grey darken-2" style="margin-top: 25px"
+                                    v-bind:class="{ disabled: !importType }"
+                                >
+                                    <label class="white-text">
+                                        Upload
+                                        <input type="file" style="display:none"
+                                            ref="fileInput"
+                                            v-on:change="readFile( $event )"
+                                            v-bind:accept="acceptFileTypes"
+                                        />
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div style="position: relative;">
+                            <div class="grey-text" style="position: absolute; top: -20px; padding: 0 0.75rem;"
+                                v-if="importFilename()"
+                            >Uploaded <pre style="font-size:smaller; display: inline">{{ importFilename() }}</pre></div>
+                        </div>
+
+                        <div class="row tight">
+                            <input-textarea class="col s6"
+                                v-model="importTitle"
+                                v-bind:disabled="!importFile"
+                            >Title</input-textarea>
+
+                            <div class="col s6 right-align">
+                                <a class="waves-effect waves-light btn blue-grey darken-2" style="margin-top: 25px"
+                                    v-on:click="importLayer"
+                                    v-bind:class="{ disabled: !importFile }"
+                                ><i class="material-icons right">library_add</i>Import Layer</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">filter_drama</i>Add Vector Dataset URL to Catalog
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row tight">
+                            <input-textarea class="col s12"
+                                v-model="externalUrl"
+                            >External URL</input-textarea>
+                        </div>
+                        <div class="row tight">
+                            <input-textarea class="col s6"
+                                v-model="externalTitle"
+                            >Title</input-textarea>
+
+                            <div class="col s6 right-align">
+                                <a class="waves-effect waves-light btn blue-grey darken-2" style="margin-top: 25px"
+                                    v-on:click="addExternalLayer"
+                                    v-bind:class="{ disabled: !externalUrl || !externalTitle }"
+                                ><i class="material-icons right">library_add</i>Add Layer</a>
+                            </div>
+                        </div>
+                        <h6>The external vector file that the URL references must be in GeoJSON format.</h6>
+                    </div>
+                </li>
+            </ul>
+
+        </header>
+        <div>
+            <catalog-tree
+                src="/catalog/local"
+                v-bind:key="catalogKey"
+                v-bind:allowedEdit="canEditCatalogItem"
+                v-bind:allowedRemove="canRemoveCatalogItem"
+                v-on:select-item="addCatalogLayer"
+                v-on:load-error="catalogError"
+                v-on:edit-item="editCatalogLayer"
+                v-on:remove-item="removeCatalogLayer"
+                v-on:loaded="checkCatalog"
+            ></catalog-tree>
+        </div>
+    </section>
+    <section>
+        <header>
+            <h5>Vector Layers in App</h5>
+        </header>
+        <div>
+            <div class="catalog-collection">
+                <catalog-item
+                    v-for="layer in vectorLayers"
+                    v-bind:itemId="layer.id"
+                    v-bind:key="layer.id"
+                    v-on:edit-item="editItem"
+                    v-on:remove-item="removeItem"
+                ></catalog-item>
+            </div>
+        </div>
+    </section>
+
+    <edit-item
+        v-bind:showDialog.sync="showEditItem"
+        v-bind:itemId="editItemId"
+    ></edit-item>
+
+    <dialog-box
+        v-bind:showDialog.sync="showImportOptions"
+        xxxv-on:update:showDialog="updateShowImportOptions( $event )"
+        v-bind:dismissible="false"
+    >
+        <template v-if="showImportOptions">
+            <div class="modal-content" >
+                <div class="dialog-header">
+                    <div class="row tight">
+                        <input-select class="col s12"
+                            v-model="importMethod"
+                        >Where does geometry come from?
+                            <template v-slot:options>
+                                <option value="latlong">Columns with Latitude and Longitude</option>
+                            </template>
+                        </input-select>
+                    </div>
+                </div>
+
+                <div class="dialog-body">
+                    <div v-if="importMethod == 'latlong'">
+                        <div class="row tight">
+                            <h6>Select the columns containing the latitude and longitude</h6>
+                        </div>
+
+                        <div class="row">
+                            <input-select class="col s6"
+                                v-model="importLatProperty"
+                            >Column containing latitude
+                                <template v-slot:options>
+                                    <option v-for="property in importProperties"
+                                        v-bind:disabled="property == importLongProperty"
+                                        v-bind:value="property"
+                                    >{{ property }}</option>
+                                </template>
+                            </input-select>
+
+                            <input-select class="col s6"
+                                v-model="importLongProperty"
+                            >Column containing longitude
+                                <template v-slot:options>
+                                    <option v-for="property in importProperties"
+                                        v-bind:disabled="property == importLatProperty"
+                                        v-bind:value="property"
+                                    >{{ property }}</option>
+                                </template>
+                            </input-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a class="waves-effect waves-light btn blue-grey darken-2"
+                    xxv-if="hasAttributes"
+                    v-on:click="closeImportOptions( false )"
+                ><i class="material-icons left">cancel</i>Cancel</a>
+
+                <a class="waves-effect waves-light btn blue-grey darken-2"
+                    xxv-if="hasAttributes"
+                    v-on:click="closeImportOptions( true )"
+                ><i class="material-icons left">library_add</i>Import</a>
+            </div>
+
+        </template>
+    </dialog-box>
+
+</article>

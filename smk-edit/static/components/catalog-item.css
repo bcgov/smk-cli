@@ -1,0 +1,62 @@
+.catalog-item {
+    margin-top: 0;
+    margin-bottom: 6px;
+}
+.catalog-item .card-image {
+    padding: 5px;
+}
+
+
+.catalog-item.size-1 .card-image i {
+    font-size: 2rem;
+    padding: 5px;
+}
+
+.catalog-item.size-1 .card-stacked {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.catalog-item.size-1 .card-content {
+    padding-bottom: 0;
+    overflow-wrap: anywhere;
+}
+
+
+.catalog-item.size-2 .card-image i {
+    font-size: 3rem;
+    padding: 10px;
+}
+
+
+.catalog-item.size-3 .card-image i {
+    font-size: 4rem;
+    padding: 10px;
+}
+
+
+.catalog-item .card-content {
+    padding: 12px;
+    padding-top: 0;
+}
+
+.catalog-item .card-action {
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 0;
+}
+
+.catalog-item .card-stacked .card-action .btn-flat {
+    margin-right: 0 !important;
+}
+
+.catalog-collection {
+    padding: 5px
+}
+
+.catalog-item .card-action .switch div {
+    font-size: smaller;
+    text-align: center;
+}

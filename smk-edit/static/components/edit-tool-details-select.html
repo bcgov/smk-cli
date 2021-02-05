@@ -1,0 +1,16 @@
+<div>
+    <edit-tool-details
+        v-bind:toolType="toolType"
+        v-bind:toolInstance="toolInstance"
+    ></edit-tool-details>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="commandClear"
+        >Show clear command</input-checkbox>
+
+        <input-checkbox class="col s6"
+            v-model="commandRemove"
+        >Show remove command</input-checkbox>
+    </div>
+</div>

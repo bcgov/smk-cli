@@ -1,0 +1,58 @@
+<div>
+    <edit-tool-details
+        v-bind:toolType="toolType"
+        v-bind:toolInstance="toolInstance"
+    ></edit-tool-details>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="commandSelect"
+        >Allow add to selection</input-checkbox>
+
+        <input-checkbox class="col s6"
+            v-model="commandRadius"
+        >Allow entry of search radius</input-checkbox>
+    </div>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="commandNearBy"
+        >Allow search near current location</input-checkbox>
+
+        <input-checkbox class="col s6"
+            v-model="commandRadiusUnit"
+            v-bind:disabled="!commandRadius"
+        >Allow changing search radius unit</input-checkbox>
+    </div>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="showWidget"
+        >Show in toolbar</input-checkbox>
+
+        <input-text class="col s3"
+            v-model="radius"
+        >Search radius</input-text>
+
+        <input-select class="col s3"
+            v-model="radiusUnit"
+        >Unit
+            <template v-slot:options>
+                <option value="m">meters</option>
+                <option value="km">kilometers</option>
+                <option value="px">pixels</option>
+            </template>
+        </input-select>
+    </div>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="commandAttributeMode"
+        >Show Attribute View Mode Selector</input-checkbox>
+    </div>
+</div>
+
+
+
+
+

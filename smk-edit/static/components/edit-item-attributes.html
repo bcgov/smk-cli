@@ -1,0 +1,79 @@
+<div>
+    <div class="row">
+        <input-select class="col s6"
+            v-model="titleAttribute"
+        >Title Attribute
+            <template v-slot:options>
+                <option value="" disabled>Choose attribute</option>
+                <option v-for="a in attributes"
+                    v-bind:value="a.name"
+                >{{ a.name }}</option>
+            </template>
+        </input-select>
+
+        <input-select class="col s6"
+            v-model="geometryAttribute"
+        >Geometry Attribute
+            <template v-slot:options>
+                <option value="" disabled>Choose attribute</option>
+                <option v-for="a in attributes"
+                    v-bind:value="a.name"
+                >{{ a.name }}</option>
+            </template>
+        </input-select>
+    </div>
+
+    <ul class="collapsible popout" ref="collapsible">
+        <li v-for="attr,i in attributes"
+            v-bind:data-index="i"
+        >
+            <div class="collapsible-header"
+                v-bind:class="{ 'grey lighten-2': !isAttributeVisible( i ) }"
+            >
+                <i class="material-icons">article</i>
+                <span class="attribute">
+                    <div class="name grey-text">{{ attr.name }}</div>
+                    <div class="title">"{{ attr.title }}"</div>
+                </span>
+                <div class="widgets">
+                    <span class="switch" ref="visibility">
+                        <label>
+                            <input type="checkbox"
+                                v-bind:checked="isAttributeVisible( i )"
+                                v-on:change="setAtributeVisible( i, $event.target.checked )"
+                            >
+                            <span class="lever"></span>
+                        </label>
+                        <div>{{ isAttributeVisible( i ) ? 'Show' : 'Hide' }}</div>
+                    </span>
+                    <span>
+                        <div class="col s2 right-align">
+                            <a class="waves-effect waves-light btn-flat"
+                                v-bind:class="{ disabled: !canMoveUp( i ) }"
+                                v-on:click.stop="moveUp( i )"
+                            ><i class="tiny material-icons right">arrow_upward</i></a>
+                        </div>
+                        <div class="col s2 right-align">
+                            <a class="waves-effect waves-light btn-flat"
+                                v-bind:class="{ disabled: !canMoveDown( i ) }"
+                                v-on:click.stop="moveDown( i )"
+                            ><i class="tiny material-icons right">arrow_downward</i></a>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <div v-if="activeAttributeIndex == i"
+                    v-bind:key="activeAttributeIndex"
+                >
+                    <div class="row tight">
+                        <input-text class="col s12"
+                            v-model="attributeTitle"
+                            hasFocus
+                        >Title</input-text>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

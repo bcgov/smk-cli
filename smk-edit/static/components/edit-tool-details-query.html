@@ -1,0 +1,22 @@
+<div>
+    <edit-tool-details
+        v-bind:toolType="toolType"
+        v-bind:toolInstance="toolInstance"
+    ></edit-tool-details>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="commandWithin"
+        >Show within extent toggle</input-checkbox>
+
+        <input-checkbox class="col s6"
+            v-model="commandSelect"
+        >Allow add to selection</input-checkbox>
+    </div>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="within"
+        >Show results within current extent</input-checkbox>
+    </div>
+</div>

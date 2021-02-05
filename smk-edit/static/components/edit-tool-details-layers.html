@@ -1,0 +1,47 @@
+<div>
+    <edit-tool-details
+        v-bind:toolType="toolType"
+        v-bind:toolInstance="toolInstance"
+    ></edit-tool-details>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="commandFilter"
+        >Allow filtering layer list</input-checkbox>
+
+        <input-checkbox class="col s6"
+            v-model="commandAllVisibility"
+        >Show 'All layers' visibility toggle</input-checkbox>
+    </div>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="commandLegend"
+        >Show legend toggle</input-checkbox>
+
+        <div class="col s6">
+            <div class="row">
+                <a class="waves-effect waves-light btn blue-grey darken-2 col s12"
+                    v-on:click="setGlyph( 'Visible' )"
+                ><i class="material-icons left tool-icon">{{ glyphVisible }}</i>Layer visible icon</a>
+            </div>
+
+            <div class="row">
+                <a class="waves-effect waves-light btn blue-grey darken-2 col s12"
+                    v-on:click="setGlyph( 'Hidden' )"
+                ><i class="material-icons left tool-icon">{{ glyphHidden }}</i>Layer hidden icon</a>
+            </div>
+        </div>
+    </div>
+
+    <dialog-choose-icon
+        v-bind:showDialog.sync="showGlyph"
+        v-bind:icon="glyph"
+        v-on:select-icon="selectGlyph( $event )"
+    ></dialog-choose-icon>
+</div>
+
+
+
+
+

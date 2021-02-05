@@ -1,0 +1,40 @@
+<article>
+    <section style="width: 20%;">
+        <header>
+            <h5>Available Tools</h5>
+        </header>
+        <div>
+            <tool-item
+                v-for="tool in availableTools"
+                v-bind:key="tool.type + tool.instance"
+                v-bind:toolType="tool.type"
+                v-bind:toolInstance="tool.instance"
+                v-bind:allowed="{ enable: true, edit: false, remove: !tool.proto, disable: false }"
+                v-on:enable-tool="enableTool"
+                v-on:remove-tool="removeTool"
+            ></tool-item>
+        </div>
+    </section>
+    <section>
+        <header>
+            <h5>Tools In App</h5>
+        </header>
+        <div>
+            <tool-item summary
+                v-for="tool in enabledTools"
+                v-bind:key="tool.type + tool.instance"
+                v-bind:toolType="tool.type"
+                v-bind:toolInstance="tool.instance"
+                v-bind:allowed="{ enable: false, edit: true, remove: false, disable: true }"
+                v-on:edit-tool="editTool"
+                v-on:disable-tool="disableTool"
+            ></tool-item>
+        </div>
+    </section>
+
+    <edit-tool
+        v-bind:showDialog.sync="showEditTool"
+        v-bind:toolType="editToolType"
+        v-bind:toolInstance="editToolInstance"
+    ></edit-tool>
+</article>

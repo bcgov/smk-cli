@@ -1,0 +1,116 @@
+<div>
+    <edit-tool-details
+        v-bind:toolType="toolType"
+        v-bind:toolInstance="toolInstance"
+    ></edit-tool-details>
+
+    <div class="row">
+        <div class="col s6">
+            <input-toggle
+                v-model="roundTrip"
+                on="Find optimal"
+                off="Leave unchanged"
+            >Route optimization</input-toggle>
+
+            <input-checkbox
+                v-model="commandOptimal"
+            >Show route optimization toggle</input-checkbox>
+        </div>
+
+        <div class="col s6">
+            <input-toggle
+                v-model="roundTrip"
+                on="Round trip"
+                off="One-way"
+            >Route travelled</input-toggle>
+
+            <input-checkbox
+                v-model="commandRoundTrip"
+            >Show route travelled toggle</input-checkbox>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <input-toggle
+                v-model="criteria"
+                on="Shortest" onValue="shortest"
+                off="Fastest" offValue="fastest"
+            >Route criteria</input-toggle>
+
+            <input-checkbox
+                v-model="commandCriteria"
+            >Show route criteria toggle</input-checkbox>
+        </div>
+
+        <div class="col s6">
+            <input-toggle
+                v-model="vehicleType"
+                on="Truck"
+                off="Car"
+            >Vehicle type</input-toggle>
+
+            <input-checkbox
+                v-model="commandVehicleType"
+            >Show vehicle type toggle</input-checkbox>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <input-toggle
+                v-model="truckRoute"
+                on="Tight" onValue="20"
+                off="Loose" offValue="1"
+            >Truck route adherence</input-toggle>
+
+            <input-checkbox
+                v-model="commandTruckRoute"
+            >Show truck route adherence toggle</input-checkbox>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <input-text
+                v-model="truckHeight"
+            >Truck Height (m)</input-text>
+
+            <input-checkbox
+                v-model="commandTruckHeight"
+            >Show truck height entry</input-checkbox>
+        </div>
+
+        <div class="col s6">
+            <input-text
+                v-model="truckWidth"
+            >Truck Width (m)</input-text>
+
+            <input-checkbox
+                v-model="commandTruckWidth"
+            >Show truck width entry</input-checkbox>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
+            <input-text
+                v-model="truckLength"
+            >Truck Length (m)</input-text>
+
+            <input-checkbox
+                v-model="commandTruckLength"
+            >Show truck length entry</input-checkbox>
+        </div>
+
+        <div class="col s6">
+            <input-text
+                v-model="truckWeight"
+            >Truck Weight (kg)</input-text>
+
+            <input-checkbox
+                v-model="commandTruckWeight"
+            >Show truck weight entry</input-checkbox>
+        </div>
+    </div>
+</div>

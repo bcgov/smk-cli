@@ -1,0 +1,31 @@
+<div>
+    <edit-tool-details
+        v-bind:toolType="toolType"
+        v-bind:toolInstance="toolInstance"
+    ></edit-tool-details>
+
+    <div class="row">
+        <div class="col s6">
+            <h6>Select which base maps are available:</h6>
+            <input-checkbox
+                v-for="bm in baseMaps"
+                v-bind:key="bm.id"
+                v-bind:value="choices.includes( bm.id )"
+                v-on:input="setChoice( bm.id, $event )"
+            >{{ bm.title }}</input-checkbox>
+        </div>
+
+        <div class="col s6">
+            <h6>Appearance of base map tiles in panel:</h6>
+            <div class="row">
+                <input-text class="col s6"
+                    v-model="mapStyleWidth"
+                >Width (px)</input-text>
+
+                <input-text class="col s6"
+                    v-model="mapStyleHeight"
+                >Height (px)</input-text>
+            </div>
+        </div>
+    </div>
+</div>

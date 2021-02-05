@@ -1,0 +1,21 @@
+.edit-item-queries .collapsible-header span {
+    flex-grow: 1;
+}
+
+.edit-item-queries .collapsible-header span h5 {
+    margin-top: 0;
+}
+
+.edit-item-queries .collapsible-header span h6 {
+    margin-bottom: 0;
+}
+
+.edit-item-queries .collapsible-header .widgets a {
+    padding: 0;
+}
+
+.edit-item-queries .collapsible-header .widgets a i {
+    margin-right: 0;
+    margin-left: 1rem;
+}
+

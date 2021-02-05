@@ -1,0 +1,46 @@
+<dialog-box class="modal-fixed-footer"
+    v-bind:showDialog="showDialog"
+    v-on:update:showDialog="$emit( 'update:showDialog', $event )"
+    v-on:opened="openDialog"
+>
+    <template v-if="showDialog">
+        <div class="modal-content" >
+            <div class="dialog-header">
+                <tool-item
+                    v-bind:key="toolType + toolInstance"
+                    v-bind:toolType="toolType"
+                    v-bind:toolInstance="toolInstance"
+                ></tool-item>
+
+                <ul class="tabs black-text" ref="tabs">
+                    <li class="tab col s4">
+                        <a href="#details">Details</a>
+                    </li>
+
+                    <li class="tab col s4"
+                        v-if="hasContent"
+                    ><a href="#content">Content</a></li>
+                </ul>
+            </div>
+
+            <div class="dialog-body" id="details">
+                <component
+                    v-bind:is="detailsComponent"
+                    v-bind:toolType="toolType"
+                    v-bind:toolInstance="toolInstance"
+                ></component>
+            </div>
+
+            <div class="dialog-body" id="content" v-if="hasContent">
+                <component
+                    v-bind:is="contentComponent"
+                    v-bind:toolType="toolType"
+                    v-bind:toolInstance="toolInstance"
+                ></component>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+        </div>
+    </template>
+</dialog-box>

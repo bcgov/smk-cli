@@ -1,0 +1,70 @@
+<article>
+    <section>
+        <header>
+            <h5>DataBC Catalog</h5>
+
+            <ul class="collapsible" ref="collapsible">
+                <li data-index="1">
+                    <div class="collapsible-header">
+                        <i class="material-icons">filter_list</i>
+                        {{ appliedLayerFilter ? `Filter: "${ appliedLayerFilter }"` : 'Filter Catalog' }}
+                        <div class="collapsible-action">
+                            <a class="btn-flat"
+                                v-if="appliedLayerFilter"
+                                v-on:click.stop="clearFilter"
+                            ><i class="material-icons">cancel</i></a>
+                        </div>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row tight">
+                            <input-text class="col s12"
+                                v-model="layerFilter"
+                                v-bind:hasFocus="showFilter"
+                                v-on:keyEnter="applyFilter"
+                            >Show Catalog Entries Containing</input-text>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 right-align">
+                                <a class="waves-effect waves-light btn blue-grey darken-2"
+                                    v-on:click="applyFilter"
+                                ><i class="material-icons right">filter_list</i>Filter</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </header>
+
+        <div>
+            <catalog-tree
+                src="/catalog/mpcm"
+                v-bind:filter="appliedLayerFilter"
+                v-on:select-item="addLayer"
+                v-on:load-error="catalogError"
+                v-on:loaded="catalogLoaded"
+                v-on:filtered="catalogFiltered"
+            ></catalog-tree>
+        </div>
+    </section>
+    <section>
+        <header>
+            <h5>DataBC Layers In App</h5>
+        </header>
+        <div>
+            <div class="catalog-collection">
+                <catalog-item
+                    v-for="layer in mpcmLayers"
+                    v-bind:itemId="layer.id"
+                    v-bind:key="layer.id"
+                    v-on:edit-item="editItem"
+                    v-on:remove-item="removeItem"
+                ></catalog-item>
+            </div>
+        </div>
+    </section>
+
+    <edit-item
+        v-bind:showDialog.sync="showEditItem"
+        v-bind:itemId="editItemId"
+    ></edit-item>
+</article>

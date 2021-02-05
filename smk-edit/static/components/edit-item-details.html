@@ -1,0 +1,12 @@
+<div>
+    <div class="row xtight">
+        <input-text class="col s12"
+            v-model="title"
+        >Title</input-text>
+    </div>
+
+    <component
+        v-bind:is="layerDetailComponent"
+        v-bind:itemId="itemId"
+    ></component>
+</div>

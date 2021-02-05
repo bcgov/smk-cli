@@ -1,0 +1,212 @@
+<div>
+    <ul class="collapsible" ref="collapsible">
+        <li v-bind:class="{ disabled: !hasMarker }">
+            <div class="collapsible-header">
+                <i class="material-icons">article</i>
+                <span>Marker style</span>
+                <div class="widgets">
+                    <div class="switch" ref="visibility">
+                        <label>
+                            <input type="checkbox" v-model="hasMarker">
+                            <span class="lever"></span>
+                        </label>
+                        <div>{{ hasMarker ? 'Marker' : '' }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <div class="row tight">
+                    <input-select class="col s10"
+                        v-model="markerUrl"
+                        v-bind:key="assetsKey"
+                    >Marker URL
+                        <template v-slot:options>
+                            <option
+                                v-for="asset in assets"
+                                v-bind:value="asset.title"
+                            >{{ asset.title }}</option>
+                        </template>
+                    </input-select>
+
+                    <form class="col s2" ref="markerUploadForm">
+                        <div class="btn blue-grey darken-2" style="margin-top: 25px">
+                            <label class="white-text">
+                                Upload
+                                <input type="file" style="display:none"
+                                    ref="markerUpload"
+                                    v-on:change="markerUpload( $event )"
+                                    xxv-bind:accept="acceptFileTypes"
+                                />
+                            </label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row tight">
+                    <input-text class="col s4"
+                        v-model="markerSize"
+                        v-bind:pattern="pairPattern.toString().slice( 1, -1 )"
+                        error="Invalid size"
+                    >Marker size
+                        <template v-slot:helper>width, height</template>
+                    </input-text>
+
+                    <input-text class="col s4"
+                        v-model="markerOffset"
+                        v-bind:pattern="pairPattern.toString().slice( 1, -1 )"
+                        error="Invalid offset"
+                    >Marker offset
+                        <template v-slot:helper>left, top</template>
+                    </input-text>
+
+                    <div class="col s1"></div>
+
+                    <div class="col s3">
+                        <img class="marker-image" ref="markerImage"
+                            v-if="markerUrl"
+                            v-bind:src="markerUrl"
+                            v-on:load="markerImageLoad"
+                            v-on:error="markerImageError"
+                        >
+                    </div>
+                </div>
+
+                <div class="row tight">
+                </div>
+
+            </div>
+        </li>
+
+        <li v-bind:class="{ disabled: !isStroked }">
+            <div class="collapsible-header">
+                <i class="material-icons">article</i>
+                <span>Stroke style</span>
+                <div class="widgets">
+                    <div class="switch" ref="visibility">
+                        <label>
+                            <input type="checkbox" v-model="isStroked">
+                            <span class="lever"></span>
+                        </label>
+                        <div>{{ isStroked ? 'Stroked' : '' }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <div class="row">
+                    <input-spectrum class="col s4"
+                        v-model="strokeColor"
+                    >Stroke Colour</input-spectrum>
+
+                    <input-range class="col s4"
+                        v-bind:min="1"
+                        v-bind:max="20"
+                        v-model="strokeWidth"
+                    >Stroke Width</input-range>
+
+                    <input-range class="col s4"
+                        v-bind:min="0"
+                        v-bind:max="1"
+                        v-bind:step="0.05"
+                        v-model="strokeOpacity"
+                    >Stroke Opacity
+                        <template v-slot:output>{{ Math.round( strokeOpacity * 100 ) }}%</template>
+                    </input-range>
+                </div>
+
+                <div class="row tight">
+                    <input-select class="col s4"
+                        v-model="strokeCap"
+                    >Stroke Cap
+                        <template v-slot:options>
+                            <option value="butt">Butt</option>
+                            <option value="round">Round</option>
+                            <option value="square">Square</option>
+                        </template>
+                    </input-select>
+
+                    <input-select class="col s4"
+                        v-model="strokeJoin"
+                    >Stroke Join
+                        <template v-slot:options>
+                            <option value="miter">Miter</option>
+                            <option value="round">Round</option>
+                            <option value="bevel">Bevel</option>
+                        </template>
+                    </input-select>
+
+                    <input-text class="col s4"
+                        v-model="strokeDashes"
+                        v-bind:pattern="dashArrayPattern.toString().slice( 1, -1 )"
+                        error="Invalid pattern"
+                    >Dash Pattern
+                        <template v-slot:helper>number number [number...]</template>
+                    </input-text>
+                </div>
+            </div>
+        </li>
+
+        <li v-bind:class="{ disabled: !isFilled }">
+            <div class="collapsible-header">
+                <i class="material-icons">article</i>
+                <span>Fill style</span>
+                <div class="widgets">
+                    <div class="switch" ref="visibility">
+                        <label>
+                            <input type="checkbox" v-model="isFilled">
+                            <span class="lever"></span>
+                        </label>
+                        <div>{{ isFilled ? 'Filled' : '' }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <div class="row tight">
+                    <input-spectrum class="col s4"
+                        v-model="fillColor"
+                    >Fill Colour</input-spectrum>
+
+                    <input-range class="col s4"
+                        v-bind:min="0"
+                        v-bind:max="1"
+                        v-bind:step="0.05"
+                        v-model="fillOpacity"
+                    >Fill Opacity
+                        <template v-slot:output>{{ Math.round( fillOpacity * 100 ) }}%</template>
+                    </input-range>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <div class="row tight">
+        <div class="col s12">
+            Show Legend:
+
+            <input-checkbox class="inline"
+                v-model="legendPoint"
+            >Point</input-checkbox>
+
+            <input-checkbox class="inline"
+                v-model="legendLine"
+            >Line</input-checkbox>
+
+            <input-checkbox class="inline"
+                v-model="legendFill"
+            >Fill</input-checkbox>
+
+            <input-checkbox class="inline"
+                v-if="legendPoint || legendLine || legendFill"
+                v-model="showLegendTitle"
+                xxv-bind:disabled="!legendTitle"
+            >Title</input-checkbox>
+        </div>
+    </div>
+    <div class="row tight">
+        <input-text class="col s6"
+            v-if="showLegendTitle && ( legendPoint || legendLine || legendFill )"
+            v-model="legendTitle"
+            xxv-bind:disabled="!legendTitle"
+        >Legend Title</input-text>
+    </div>
+
+</div>

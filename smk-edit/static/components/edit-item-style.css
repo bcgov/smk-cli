@@ -1,0 +1,34 @@
+.edit-item-style .collapsible li.disabled {
+    pointer-events: none;
+    color: #9F9F9F !important;
+    cursor: default;
+}
+
+.edit-item-style .collapsible li.disabled .collapsible-header .widgets {
+    pointer-events: auto;
+}
+
+.edit-item-style .collapsible-header {
+    align-items: center;
+}
+
+.edit-item-style .collapsible-header span {
+    flex-grow: 1;
+}
+
+.edit-item-style .collapsible-header .switch div {
+    font-size: smaller;
+    text-align: center;
+}
+
+.edit-item-style .marker-image {
+    width: 100%;
+    padding: 2px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.edit-item-style .inline {
+    display: inline-block;
+    margin: 0 1em;
+}

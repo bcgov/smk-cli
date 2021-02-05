@@ -1,0 +1,94 @@
+<div>
+    <div class="row" v-if="parameters.length == 0">
+        <div class="col s12">
+            <p>No parameters defined</p>
+        </div>
+    </div>
+
+    <ul class="collapsible popout" ref="collapsible"
+        xxv-bind:key="queriesKey"
+        v-if="parameters.length > 0"
+    >
+        <li v-for="parameter,i in parameters"
+            v-bind:data-index="i"
+        >
+            <div class="collapsible-header">
+                <i class="material-icons">article</i>
+                <span>{{ parameter.title }}</span>
+
+                <select
+                    v-bind:value="getParameterType( i )"
+                    v-on:change.stop="setParameterType( i, $event.target.value )"
+                    v-on:click.stop="1"
+                >
+                    <option value="constant">Constant</option>
+                    <option value="input">Input</option>
+                    <option value="select">Select</option>
+                    <option value="select-unique">Select Unique</option>
+                </select>
+
+                <div class="widgets">
+                    <a class="btn-flat red-text"
+                        v-on:click.stop="removeQuery( i )"
+                    ><i class="material-icons">delete_forever</i></a>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <div v-if="activeParameterIndex == i"
+                    v-bind:key="activeParameterIndex"
+                >
+                    <div class="row">
+                        <input-textarea class="col s6"
+                            v-model="parameterTitle"
+                        >Title</input-textarea>
+
+                        <input-textarea class="col s6"
+                            v-model="parameterValue"
+                        >(default) Value</input-textarea>
+                    </div>
+
+                    <div class="row" v-if="getParameterType( i ) == 'select'">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Value</th>
+                                    <th>Title</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="choice in parameterChoices">
+                                    <td>{{ choice.value }}</td>
+                                    <td>{{ choice.title }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row" v-if="getParameterType( i ) == 'select-unique'">
+                        <input-select class="col s6"
+                            v-model="parameterUniqueAttribute"
+                        >Unique Attribute
+                            <template v-slot:options>
+                                <option v-for="attr in attributes"
+                                    v-bind:value="attr.name">{{ attr.name }}</option>
+                            </template>
+                        </input-select>
+
+                        <input-checkbox class="col s6"
+                            v-model="parameterUseFallback"
+                        >Use fallback input</input-checkbox>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col s12 xxright-align">
+            <a class="waves-effect waves-light btn blue-grey darken-2"
+                v-on:click="addParameter"
+            ><i class="material-icons left">playlist_add</i>Add New Parameter</a>
+        </div>
+    </div>
+
+</div>

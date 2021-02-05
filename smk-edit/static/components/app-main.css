@@ -1,0 +1,47 @@
+.app-main {
+    background: #e9ecee;
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+    min-height: 0;
+}
+
+.app-main .content-panel {
+    position: relative;
+    padding: 1em;
+    height: 100%;
+}
+
+.app-main .content-panel article {
+    display: flex;
+    height: 100%;
+}
+
+.app-main .content-panel article section {
+    flex-grow: 1;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+    min-height: 0;
+    width: 50%;
+}
+
+.app-main .content-panel article section header {
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding-left: 0;
+}
+
+.app-main .content-panel article section > div {
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+}
+

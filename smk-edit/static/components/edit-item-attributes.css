@@ -1,0 +1,38 @@
+.edit-item-attributes .collapsible-header {
+    align-items: center;
+}
+
+.edit-item-attributes .collapsible-header span {
+    flex-grow: 1;
+}
+
+.edit-item-attributes .collapsible-header .atttribute {
+    flex-grow: 1;
+}
+
+.edit-item-attributes .collapsible-header .name {
+    font-size: smaller;
+}
+
+.edit-item-attributes .collapsible-header .widgets {
+    display: flex;
+    align-items: center;
+}
+
+.edit-item-attributes .collapsible-header .widgets a {
+    padding: 0;
+    height: 25px;
+}
+
+.edit-item-attributes .collapsible-header .widgets a i {
+    margin: 0;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.edit-item-attributes .collapsible-header .switch div {
+    font-size: smaller;
+    text-align: center;
+}
+
+
