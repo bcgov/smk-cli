@@ -17,7 +17,7 @@ either local to the current project, or globally for your whole system.
 
 To install the command globally, so it can be used from any project in our system, use this command:
 
-    npm install -global @bcgov/smk-cli
+    npm install --global @bcgov/smk-cli
 
 This may require you to use administrative rights (or `sudo`) on your machine, depending on how it is configured.
 
@@ -53,4 +53,4 @@ For more information on the SMK project, or to read documentation on SMK develop
 
 # Uninstall
 
-    npm uninstall —global @bcgov/smk-cli
+    npm uninstall --global @bcgov/smk-cli

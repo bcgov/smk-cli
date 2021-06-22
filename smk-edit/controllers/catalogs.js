@@ -1,5 +1,5 @@
 const xml2js = require( 'xml2js' ).parseString
-const http = require( 'http' )
+const https = require( 'https' )
 const layer = require( './layer.js' )
 const path = require( 'path' )
 const fs = require( 'fs' )
@@ -12,7 +12,6 @@ const DATABC_SERVICE_URL = 'https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcg
 
 const MPCM_OPTIONS = {
     host: 'apps.gov.bc.ca',
-    port: '80',
     path: 'https://apps.gov.bc.ca/pub/mpcm/services/catalog/PROD',
     method: 'GET',
     headers: {
@@ -68,7 +67,7 @@ function getMpcmCatalog( req, res, next ) {
     }
 
     console.log( '    Loading MPCM Catalog from ' + MPCM_OPTIONS.path )
-    var mpcmReq = http.request( MPCM_OPTIONS, function( resp ) {
+    var mpcmReq = https.request( MPCM_OPTIONS, function( resp ) {
         resp.setEncoding('utf8');
 
         var msg = ''
@@ -111,7 +110,7 @@ function getMpcmCatalogLayerConfig( req, res, next ) {
     options.path += '/' + mpcmId;
 
     console.log( '    Loading MPCM Layer from ' + options.path )
-    var mpcmReq = http.request( options, function ( resp ) {
+    var mpcmReq = https.request( options, function ( resp ) {
         resp.setEncoding('utf8');
 
         var msg = '';
