@@ -20,8 +20,10 @@ const fonts = [
     'shadow', 'small', 'speed', 'sl script', 'stop', 'swan', 'soft'
 ]
 const ver = 'CLI v' + package.version
+var fontName = fonts[ Math.round( fonts.length * Math.random() ) ];
+fontName = fontName.charAt(0).toUpperCase() + fontName.slice(1);
 const title = figlet.textSync( 'Simple Map Kit', {
-    font: fonts[ Math.round( fonts.length * Math.random() ) ],
+    font: fontName,
     horizontalLayout: 'full'
 } ).slice( 0, -ver.length )
 console.log( chalk.yellow( title ) + chalk.gray( ver ) )
