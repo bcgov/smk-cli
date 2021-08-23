@@ -46,10 +46,7 @@ export default importComponents( [
 
                 var m = this.$vectorFile.name.match( /(^|[/\\])([^/\\.]+)[.](.+)$/ )
                 this.importTitle = m ? m[ 2 ] : this.$vectorFile.name
-            },
-            importFilename: function () {
-                if ( !this.$vectorFile ) return
-                return this.$vectorFile.name
+                M.toast( { html: 'Uploaded ' + this.importTitle } )
             },
             importLayer: function () {
                 var self = this

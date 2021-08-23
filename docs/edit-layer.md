@@ -182,7 +182,7 @@ If you wish to apply other style types to a vector (for instance, using markers 
 
 Marker styles require a marker image, a Marker size, and a marker offset.
 
-To add a marker image to your application, click once on the `Upload` button. This will open your operating systems standard file selection dialog. Select a file to import it into your application. Once imported, your marker image will be available to select in the `Marker URL` dropdown selection box.
+To add a marker image to your application, click once on the `Upload` button. This will open your operating system's standard file selection dialog. Select a file to import it into your application. Once imported, your marker image will be available to select in the `Marker URL` dropdown selection box.
 
 `Marker Size` allows you to specify the size of the image in pixels as it will display on the map. Images that are larger then the specified size will shrink to match, smaller images will be stretched.
 
