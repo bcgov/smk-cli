@@ -307,7 +307,13 @@ function getWmsCatalogLayerConfig( req, res, next ) {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function getLocalCatalog( req, res, next ) {
-    var catalogFile = path.resolve( req.app.get( 'layers' ), '-smk-catalog.json' )
+    var layersDir = req.app.get( 'layers' )
+    var catalogFile = path.resolve( layersDir, '-smk-catalog.json' )
+
+    if ( fs.readdirSync(layersDir).length === 0 ) {
+        console.log( `    Layers directory ${ layersDir } is empty; skipping read of catalog` )
+        return
+    }
 
     if ( !fs.existsSync( catalogFile ) ) {
         console.log( `    No catalog at ${ catalogFile }` );
