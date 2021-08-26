@@ -16,8 +16,8 @@ opt.isGlobal = isGlobal
 opt.exec = exec
 
 const fonts = [
-    'big', 'doom', 'graffiti', 'rectangles', 'gothic', 'script',
-    'shadow', 'small', 'speed', 'sl script', 'stop', 'swan', 'soft'
+    'Big', 'Doom', 'Gothic', 'Graffiti', 'Rectangles', 'Script',
+    'Shadow', 'SL Script', 'Small', 'Soft', 'Speed', 'Stop', 'Swan'
 ]
 const ver = 'CLI v' + package.version
 const title = figlet.textSync( 'Simple Map Kit', {
