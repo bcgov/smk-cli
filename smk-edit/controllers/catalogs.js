@@ -66,8 +66,10 @@ function getMpcmCatalog( req, res, next ) {
         return
     }
 
-    console.log( '    Loading MPCM Catalog from ' + MPCM_OPTIONS.path )
-    var mpcmReq = https.request( MPCM_OPTIONS, function( resp ) {
+    var options = JSON.parse( JSON.stringify( MPCM_OPTIONS ) )
+    options.path += '?workspace=MPCM_ALL_PUB';
+    console.log( '    Loading MPCM Catalog from ' + options.path )
+    var mpcmReq = https.request( options, function( resp ) {
         resp.setEncoding('utf8');
 
         var msg = ''
