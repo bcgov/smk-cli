@@ -128,6 +128,7 @@ export default importComponents( [
 
             },
             closeImportOptions: function ( ok ) {
+                if ( !ok ) this.resetImport()
                 this.showImportOptions = false
                 if ( !this.continueImportOptions ) return
 
