@@ -27,6 +27,18 @@ export default importComponents( [
                     } )
                 }
             },
+            showCoverageOnHover: {
+                get: function () {
+                    var layer = this.$store.getters.configLayer( this.itemId )
+                    return layer.clusterOption && !!layer.clusterOption.showCoverageOnHover
+                },
+                set: function ( val ) {
+                    var layer = this.$store.getters.configLayer( this.itemId )
+                    if ( !layer.clusterOption ) layer.clusterOption = {}
+                    layer.clusterOption.showCoverageOnHover = !!val
+                    this.$store.dispatch( 'configLayer', layer )
+                }
+            }
         },
         mounted: function () {
         },
