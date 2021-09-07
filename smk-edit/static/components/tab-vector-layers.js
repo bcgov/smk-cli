@@ -35,7 +35,9 @@ export default importComponents( [
             },
         },
         methods: {
-            readFile: function ( ev ) {
+            readFileAndImportLayer: function ( ev ) {
+                var self = this
+
                 this.importTitle = null
                 this.importFile = false
 
@@ -46,13 +48,6 @@ export default importComponents( [
 
                 var m = this.$vectorFile.name.match( /(^|[/\\])([^/\\.]+)[.](.+)$/ )
                 this.importTitle = m ? m[ 2 ] : this.$vectorFile.name
-            },
-            importFilename: function () {
-                if ( !this.$vectorFile ) return
-                return this.$vectorFile.name
-            },
-            importLayer: function () {
-                var self = this
 
                 var formData = new FormData()
                 formData.append( 'file', this.$vectorFile )
@@ -133,6 +128,7 @@ export default importComponents( [
 
             },
             closeImportOptions: function ( ok ) {
+                if ( !ok ) this.resetImport()
                 this.showImportOptions = false
                 if ( !this.continueImportOptions ) return
 

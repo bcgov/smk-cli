@@ -33,32 +33,12 @@
                                         Upload
                                         <input type="file" style="display:none"
                                             ref="fileInput"
-                                            v-on:change="readFile( $event )"
+                                            v-on:change="readFileAndImportLayer( $event )"
                                             v-bind:accept="acceptFileTypes"
                                         />
                                     </label>
                                 </div>
                             </form>
-                        </div>
-
-                        <div style="position: relative;">
-                            <div class="grey-text" style="position: absolute; top: -20px; padding: 0 0.75rem;"
-                                v-if="importFilename()"
-                            >Uploaded <pre style="font-size:smaller; display: inline">{{ importFilename() }}</pre></div>
-                        </div>
-
-                        <div class="row tight">
-                            <input-textarea class="col s6"
-                                v-model="importTitle"
-                                v-bind:disabled="!importFile"
-                            >Title</input-textarea>
-
-                            <div class="col s6 right-align">
-                                <a class="waves-effect waves-light btn blue-grey darken-2" style="margin-top: 25px"
-                                    v-on:click="importLayer"
-                                    v-bind:class="{ disabled: !importFile }"
-                                ><i class="material-icons right">library_add</i>Import Layer</a>
-                            </div>
                         </div>
                     </div>
                 </li>
