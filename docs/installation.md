@@ -13,7 +13,7 @@ If you prefer to install a specific version, you can check NPM for the available
 then append the version tag on your install command:
 
 ```bash
-npm install —global @bcgov/smk-cli@1.0.0-beta.6
+npm install —global @bcgov/smk-cli
 ```
 
 NPM should now install all required packages as a globally accessible command line utility. You're ready to get started!
