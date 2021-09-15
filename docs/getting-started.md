@@ -5,9 +5,9 @@
 Firstly, lets get acquainted with SMK and the SMK-CLI. Some useful links for various components of the SMK Project
 
 - [SMK repo](https://github.com/bcgov/smk)
-- [SMK NPM repo](https://www.npmjs.com/package/smk)
+- [SMK NPM repo](https://www.npmjs.com/package/@bcgov/smk)
 - [SMK-CLI repo](https://github.com/bcgov/smk-cli)
-- [SMK-CLI NPM repo](https://www.npmjs.com/package/smk-cli)
+- [SMK-CLI NPM repo](https://www.npmjs.com/package/@bcgov/smk-cli)
 
 Please review the SMK documentation prior to using the SMK-CLI. All SMK repositories are currently hosted on GitHub and are completely open-source.
 
