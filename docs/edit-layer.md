@@ -104,7 +104,7 @@ From the WMS Details panel, you can modify the following attributes:
 
 #### Metadata URL
 
-`Metadata URL` is a supplied URL for the layers metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
+`Metadata URL` is a supplied URL for the layer's metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
 
 ### Vector Layer Details
 
@@ -133,7 +133,7 @@ Note that the Vector Details panel is the same if you've imported vector data di
 
 #### Opacity
 
-`Opacity` adjusts how transparent the layer is by default. Making a layer 100% Opaque will prevent users from seeing feaures covered by this layer. Setting a layer to 0% Opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
+`Opacity` adjusts how transparent the layer is by default. Making a layer 100% opaque will prevent users from seeing features covered by this layer. Setting a layer to 0% opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
 
 #### Display Range
 
@@ -161,11 +161,11 @@ Note that the Vector Details panel is the same if you've imported vector data di
 
 #### Data URL
 
-`Data URL` is the URL location for your vector data. If you've imported a vector file into your application, this will be a local path to your applications source folder. Do not modify this URL unless you are sure you want to direct the application to search a specific location for the vector data.
+`Data URL` is the URL location for your vector data. If you've imported a vector file into your application, this will be a local path to your application's source folder. Do not modify this URL unless you are sure you want to direct the application to search a specific location for the vector data.
 
 #### Metadata URL
 
-`Metadata URL` is a supplied URL for the layers metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
+`Metadata URL` is a supplied URL for the layer's metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
 
 ### Vector Styling
 
