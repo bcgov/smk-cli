@@ -116,9 +116,9 @@ From the Vector Details panel, you can modify the following attributes:
 - Available for Identify
 - Opacity
 - Display Range
+- Data URL
 - How should the Data be Displayed?
 - Show Cluster Bounds on Hover 
-- Data URL
 - Metadata URL
 
 Note that the Vector Details panel is the same if you've imported vector data directly into your application, or if you're using a URL.
@@ -139,6 +139,10 @@ Note that the Vector Details panel is the same if you've imported vector data di
 
 `Display Range` allows you to specify an allowable range where this layer can be displayed. If your map is outside of this scale range, the layer will not draw on the map, and will not be identifiable or selectable.
 
+#### Data URL
+
+`Data URL` is the URL location for your vector data. If you've imported a vector file into your application, this will be a local path to your application's source folder. Do not modify this URL unless you are sure you want to direct the application to search a specific location for the vector data.
+
 #### How should the Data be Displayed
 
 `How should the Data be Displayed?` is a styling override for your vector data. This is a dropdown select box that contains three options:
@@ -158,10 +162,6 @@ Note that the Vector Details panel is the same if you've imported vector data di
 `Show Cluster Bounds on Hover` shows the bounds of a cluster's markers when you mouse over the cluster.  
 
 > __Note:__ This option only appears when `Show Features in Clusters` is selected for `How should the Data be Displayed?`.
-
-#### Data URL
-
-`Data URL` is the URL location for your vector data. If you've imported a vector file into your application, this will be a local path to your application's source folder. Do not modify this URL unless you are sure you want to direct the application to search a specific location for the vector data.
 
 #### Metadata URL
 
