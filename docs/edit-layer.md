@@ -84,7 +84,7 @@ From the WMS Details panel, you can modify the following attributes:
 
 #### Opacity
 
-`Opacity` adjust how transparent the layer is by default. Making a layer 100% Opaque will prevent users from seeing feaures covered by this layer. Setting a layer to 0% Opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
+`Opacity` adjusts how transparent the layer is by default. Making a layer 100% Opaque will prevent users from seeing feaures covered by this layer. Setting a layer to 0% Opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
 
 #### Display Range
 
@@ -100,11 +100,11 @@ From the WMS Details panel, you can modify the following attributes:
 
 #### Style Name
 
-`Style Name` Is the name of the WMS Service layer style you are presenting to your users. This should not be modified unless you are certain of a change to source layer styles (confirmed by a review of the WMS Service GetCapabilities). Usually, it's easier to simply re-add the layer.
+`Style Name` is the name of the WMS Service layer style you are presenting to your users. This should not be modified unless you are certain of a change to source layer styles (confirmed by a review of the WMS Service GetCapabilities). Usually, it's easier to simply re-add the layer.
 
 #### Metadata URL
 
-`Metadata URL` is A supplied URL for the layers metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
+`Metadata URL` is a supplied URL for the layer's metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
 
 ### Vector Layer Details
 
@@ -118,6 +118,7 @@ From the Vector Details panel, you can modify the following attributes:
 - Display Range
 - Data URL
 - How should the Data be Displayed?
+- Show Cluster Bounds on Hover 
 - Metadata URL
 
 Note that the Vector Details panel is the same if you've imported vector data directly into your application, or if you're using a URL.
@@ -132,7 +133,7 @@ Note that the Vector Details panel is the same if you've imported vector data di
 
 #### Opacity
 
-`Opacity` adjust how transparent the layer is by default. Making a layer 100% Opaque will prevent users from seeing feaures covered by this layer. Setting a layer to 0% Opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
+`Opacity` adjusts how transparent the layer is by default. Making a layer 100% opaque will prevent users from seeing features covered by this layer. Setting a layer to 0% opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
 
 #### Display Range
 
@@ -140,11 +141,11 @@ Note that the Vector Details panel is the same if you've imported vector data di
 
 #### Data URL
 
-`Data URL` Is the URL location for your vector data. If you've imported a vector file into your application, this will be a local path to your applications source folder. Do not modify this URL unless you are sure you want to direct the application to search a specific location for the vector data.
+`Data URL` is the URL location for your vector data. If you've imported a vector file into your application, this will be a local path to your application's source folder. Do not modify this URL unless you are sure you want to direct the application to search a specific location for the vector data.
 
 #### How should the Data be Displayed
 
-`How should the Data be Displayed?` Is a styling override for your vector data. This is a dropdown select box that contains three options:
+`How should the Data be Displayed?` is a styling override for your vector data. This is a dropdown select box that contains three options:
 
 - Show Feature as Styled (Default)
 - Show Features in Clusters
@@ -152,13 +153,19 @@ Note that the Vector Details panel is the same if you've imported vector data di
 
 `Show Feature as Styled` will use the supplied vector styling for the layer. This is the default setting for vector layers.
 
-`Show Features in Clusters` Will still use your default layer styling, but it will show the features clustered on the map, expanding them as you zoom in. This is very useful for dense sets of vector point data.
+`Show Features in Clusters` will still use your default layer styling, but it will show the features clustered on the map, expanding them as you zoom in. This is very useful for dense sets of vector point data.
 
-`Show Features as a Heatmap` Will remove your default styling and convert the data into a heatmap display. This is very useful for point data sets.
+`Show Features as a Heatmap` will remove your default styling and convert the data into a heatmap display. This is very useful for point data sets.
+
+#### Show Cluster Bounds on Hover 
+
+`Show Cluster Bounds on Hover` shows the bounds of a cluster's markers when you mouse over the cluster.  
+
+> __Note:__ This option only appears when `Show Features in Clusters` is selected for `How should the Data be Displayed?`.
 
 #### Metadata URL
 
-`Metadata URL` is A supplied URL for the layers metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
+`Metadata URL` is a supplied URL for the layer's metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
 
 ### Vector Styling
 
