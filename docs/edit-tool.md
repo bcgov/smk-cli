@@ -6,6 +6,7 @@ Several tools have unique configurations that allow you to tailor their behaviou
 - [Base Maps](#base-maps)
 - [Bespoke](#bespoke)
 - [Directions](#directions)
+- [Geomark](#geomark)
 - [Identify](#identify)
 - [Layers](#layers)
 - [List Menu](#list-menu)
@@ -153,6 +154,14 @@ In Addtional to the default settings for a tool, you can specify the following o
 > __Tip:__ Though intended for large freight trucks, the truck specific options may also be useful for assisting recreational vehicles, buses and other over-sized vehicles in planning optimal routes.
 
 ![Route Planner Panel](route-planner.png)
+
+## Geomark
+
+The Geomark tool allows creating and loading a geomark, which is an area of interest that is stored in a service and can be shared by a URL. A geomark can be created in SMK by drawing one or more polygons and saving the drawing as a geomark. A geomark can also be loaded by its URL.
+
+### Geomark Service URL
+
+`Geomark Service URL` is the address of the Geomark service used. The production service URL is used as a default, but a user may specify an alternative service URL.
 
 ## Identify
 

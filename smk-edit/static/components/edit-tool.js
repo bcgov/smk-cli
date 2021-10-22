@@ -9,6 +9,7 @@ export default importComponents( [
     './components/edit-tool-content-bespoke.js',
     './components/edit-tool-details-bespoke.js',
     './components/edit-tool-details-directions.js',
+    './components/edit-tool-details-geomark.js',
     './components/edit-tool-details-identify.js',
     './components/edit-tool-details-layers.js',
     './components/edit-tool-details-query.js',
