@@ -21,11 +21,10 @@ header {
     background-color: #036;
 
     background-image: url( 'bc-gov-logo-transparent.png' );
-    background-position: left top;
+    background-position: 10px -5px;
     background-repeat: no-repeat;
-    background-size: 80px 40px;
 
-    padding-left: 100px;
+    padding-left: 185px;
     color: white;
     font-size: 30px;
     padding-top: 10px;
