@@ -6,7 +6,8 @@ export default {
                     title: 'Geomark',
                     geomarkService: {
                         url: 'https://apps.gov.bc.ca/pub/geomark'
-                    }
+                    },
+                    enableCreateFromFile: false
                 }, tool )
             },
         }

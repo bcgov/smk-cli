@@ -14,6 +14,14 @@ export default importComponents( [
                     this.$store.dispatch( 'configToolSubProp', { type: this.toolType, instance: this.toolInstance, propName: 'geomarkService', url: val } )
                 }
             },
+            enableCreateFromFile: {
+                get: function () {
+                    return this.$store.getters.configTool( this.toolType, this.toolInstance ).enableCreateFromFile
+                },
+                set: function ( val ) {
+                    this.$store.dispatch( 'configTool', { type: this.toolType, instance: this.toolInstance, enableCreateFromFile: val } )
+                }
+            }
         }
     } )
 } )

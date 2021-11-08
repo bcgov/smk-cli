@@ -157,11 +157,15 @@ In Addtional to the default settings for a tool, you can specify the following o
 
 ## Geomark
 
-The Geomark tool allows creating and loading a geomark, which is an area of interest that is stored in a service and can be shared by a URL. A geomark can be created in SMK by drawing one or more polygons and saving the drawing as a geomark. A geomark can also be loaded by its URL.
+The Geomark tool allows creating and loading a geomark, which is an area of interest that is stored in a service and can be shared by a URL. A geomark can be created in SMK by drawing one or more shapes and saving the drawing as a geomark. A geomark can also be loaded by its URL.
 
 ### Geomark Service URL
 
 `Geomark Service URL` is the address of the Geomark service used. The production service URL is used as a default, but a user may specify an alternative service URL.
+
+### Enable Link to Create a Geomark from a File
+
+When checked, `Enable Link to Create a Geomark from a File` will add a link to the panel that opens a new browser tab to the page of the geomark service where a file can be uploaded to create a new geomark. The geomark's link can then be used to load a geomark in SMK. This is an alternative to drawing a shape in SMK and saving it as a geomark.
 
 ## Identify
 
