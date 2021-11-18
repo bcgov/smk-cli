@@ -74,6 +74,11 @@ export const toolTypePresentation = {
     //     icon: '',
     //     instance: false
     // },
+    'geomark': {
+        title: 'Geomark',
+        details: 'edit-tool-details-geomark',
+        default: {}
+    },
     'identify': {
         title: 'Identify',
         details: 'edit-tool-details-identify',
