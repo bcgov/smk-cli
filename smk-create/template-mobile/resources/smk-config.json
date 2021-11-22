@@ -131,7 +131,7 @@
             },
             "enableCreateFromFile": false,
             "position": "list-menu",
-            "enabled": <%= !!app.tool.geomark %>
+            "enabled": false
         }
     ]
 }
