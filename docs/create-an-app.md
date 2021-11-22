@@ -57,7 +57,7 @@ Where `mySmkProject` will be your desired project name. You will then be present
                        /|                                   /|
                        \|                                   \|      CLI v1.0.0-beta.6
 Welcome to the SMK application creation tool!
-A application skeleton will be created for you at the current directory.
+An application skeleton will be created for you at the current directory.
 But first, please answer some questions about your new SMK application.
 
 ? Enter your application's name: mySmkProject

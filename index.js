@@ -3,16 +3,12 @@
 const chalk = require( 'chalk' )
 const figlet = require( 'figlet' )
 const package = require( './package.json' )
-const path = require( 'path' )
-const isExecGlobal = require( './lib/is-exec-global.js' )
 
 const args = process.argv
-const isGlobal = isExecGlobal( args[ 1 ] )
-const exec = isGlobal ? path.parse( args[ 1 ] ).name : path.relative( process.cwd(), args[ 1 ] )
+const exec = 'smk'
 
 const command = ( args[ 2 ] || '' ).toLowerCase()
 const opt = require( 'minimist' )( args.slice( 3 ) )
-opt.isGlobal = isGlobal
 opt.exec = exec
 
 const fonts = [
