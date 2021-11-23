@@ -12,7 +12,7 @@ module.exports = async function ( args ) {
     const version = args.smkPackageVersion
 
     console.log( chalk.blue( 'Welcome to the SMK application creation tool!' ) )
-    console.log( chalk.blue( 'A application skeleton will be created for you at the current directory.' ) )
+    console.log( chalk.blue( 'An application skeleton will be created for you at the current directory.' ) )
     console.log( chalk.blue( 'But first, please answer some questions about your new SMK application.' ) )
     console.log()
 
@@ -87,7 +87,7 @@ async function inquireAppInfo( name, baseDir, package, version ) {
             default: name || 'SMK-App',
             validate: function( value )
             {
-                if ( !value ) return 'A application name is required to create a new SMK application.'
+                if ( !value ) return 'An application name is required to create a new SMK application.'
                 var dir = path.resolve( baseDir, value )
                 if ( fs.existsSync( dir ) ) return `This application name can't be used as the directory ${ dir.replace( process.cwd(), '.' ) } already exists.`
 
