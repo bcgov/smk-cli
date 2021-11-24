@@ -6,14 +6,6 @@ export default importComponents( [
     return vueComponent( import.meta.url, {
         props: [ 'toolType', 'toolInstance' ],
         computed: {
-            geomarkServiceUrl: {
-                get: function () {
-                    return this.$store.getters.configTool( this.toolType, this.toolInstance ).geomarkService.url
-                },
-                set: function ( val ) {
-                    this.$store.dispatch( 'configToolSubProp', { type: this.toolType, instance: this.toolInstance, propName: 'geomarkService', url: val } )
-                }
-            },
             enableCreateFromFile: {
                 get: function () {
                     return this.$store.getters.configTool( this.toolType, this.toolInstance ).enableCreateFromFile
