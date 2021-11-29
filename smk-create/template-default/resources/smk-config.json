@@ -111,6 +111,15 @@
         {
             "type": "select",
             "enabled": <%= !!app.tool.select %>
+        },
+        {
+            "type": "geomark",
+            "geomarkService": {
+                "url": "https://apps.gov.bc.ca/pub/geomark"
+            },
+            "enableCreateFromFile": false,
+            "position": "list-menu",
+            "enabled": <%= !!app.tool.geomark %>
         }
     ]
 }

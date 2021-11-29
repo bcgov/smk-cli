@@ -2,6 +2,7 @@ import configToolAbout from './config-tool-about.js'
 import configToolBaseMaps from './config-tool-baseMaps.js'
 import configToolBespoke from './config-tool-bespoke.js'
 import configToolDirections from './config-tool-directions.js'
+import configToolGeomark from './config-tool-geomark.js'
 import configToolIdentify from './config-tool-identify.js'
 import configToolLayers from './config-tool-layers.js'
 import configToolListMenu from './config-tool-list-menu.js'
@@ -20,6 +21,7 @@ export default mix( [
     configToolBaseMaps,
     configToolBespoke,
     configToolDirections,
+    configToolGeomark,
     configToolIdentify,
     configToolLayers,
     configToolListMenu,

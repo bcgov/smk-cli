@@ -1,0 +1,12 @@
+<div>
+    <edit-tool-details
+        v-bind:toolType="toolType"
+        v-bind:toolInstance="toolInstance"
+    ></edit-tool-details>
+
+    <div class="row">
+        <input-checkbox class="col s6"
+            v-model="enableCreateFromFile"
+        >Enable option to create a geomark from a file</input-checkbox>
+    </div>
+</div>
