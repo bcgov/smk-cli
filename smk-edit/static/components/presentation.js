@@ -76,7 +76,7 @@ export const toolTypePresentation = {
     // },
     'geomark': {
         title: 'Geomark',
-        details: 'edit-tool-details-geomark',
+        details: 'edit-tool-details',
         default: {}
     },
     'identify': {
