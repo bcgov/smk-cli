@@ -4,8 +4,7 @@ export default {
             get: function ( tool ) {
                 return Object.assign( {
                     title: 'Geomark',
-                    order: 3,
-                    enableCreateFromFile: false
+                    order: 3
                 }, tool )
             },
         }

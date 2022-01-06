@@ -159,10 +159,6 @@ In Addtional to the default settings for a tool, you can specify the following o
 
 The Geomark tool allows creating and loading geomarks. A geomark is an area of interest that is stored in a web service and can be shared by a URL. A geomark can be created in SMK by drawing one or more shapes and saving the drawing as a geomark. A geomark can also be loaded by its URL.
 
-### Enable Option to Create a Geomark from a File
-
-When checked, `Enable Option to Create a Geomark from a File` will add an option to the panel that opens a browser tab to the page of the geomark web service where a file can be uploaded to create a new geomark. The geomark's URL can then be used to load a geomark in SMK. This is an alternative to drawing a shape in SMK and saving it as a geomark.
-
 ## Identify
 
 The Identify tool allows users to receive attribute details about layers in your application by clicking on the map. See [Edit Layers](edit-layer.md) for information on settings visible attributes and allowing a layer to be identifiable.
