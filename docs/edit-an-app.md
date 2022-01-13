@@ -377,6 +377,7 @@ The following tools are currently available to add to your application.
 - Bespoke
 - Coordinate
 - Directions
+- Geomark
 - Identify
 - Layers
 - Legend
