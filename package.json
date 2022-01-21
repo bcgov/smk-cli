@@ -24,10 +24,10 @@
     "express": "^4.17.1",
     "fgdb": "^1.0.0",
     "figlet": "^1.5.0",
-    "glob": "^7.1.2",
+    "glob": "7.1.2",
     "inquirer": "^7.3.3",
     "lodash": "^4.17.19",
-    "material-design-icons-iconfont": "^6.1.0",
+    "material-design-icons-iconfont": "6.1.1",
     "minimist": "^1.2.5",
     "multer": "^1.4.2",
     "node-fetch": "^2.6.0",
@@ -43,9 +43,9 @@
   },
   "devDependencies": {
     "connect-livereload": "^0.6.0",
-    "grunt": "^1.0.3",
+    "grunt": "1.4.1",
     "grunt-contrib-connect": "^1.0.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "load-grunt-tasks": "~4.0.0"
+    "grunt-contrib-watch": "1.1.0",
+    "load-grunt-tasks": "4.0.0"
   }
 }
