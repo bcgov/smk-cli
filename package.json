@@ -1,6 +1,6 @@
 {
   "name": "@bcgov/smk-cli",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A utility for creating and configuring a Simple Map Kit project",
   "main": "index.js",
   "author": "Ben Jubb <benjubb@gmail.com>",
