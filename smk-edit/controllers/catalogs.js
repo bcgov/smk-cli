@@ -4,7 +4,7 @@ const layer = require( './layer.js' )
 const path = require( 'path' )
 const fs = require( 'fs' )
 const multer = require( 'multer' )
-const fetch = require( 'node-fetch' )
+const fetch = import( 'node-fetch' )
 // const sizeOf = require( 'image-size' )
 
 // move these into an external config
