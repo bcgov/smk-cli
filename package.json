@@ -30,7 +30,7 @@
     "material-design-icons-iconfont": "6.1.1",
     "minimist": "^1.2.5",
     "multer": "^1.4.2",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.2.0",
     "open": "^7.1.0",
     "proj4": "^2.6.2",
     "semver": "^7.3.2",
@@ -39,7 +39,7 @@
     "touch": "^3.1.0",
     "unzipper": "^0.10.11",
     "xml2js": "^0.4.23",
-    "xmldom": "^0.3.0"
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "connect-livereload": "^0.6.0",
@@ -47,5 +47,8 @@
     "grunt-contrib-connect": "^1.0.0",
     "grunt-contrib-watch": "1.1.0",
     "load-grunt-tasks": "4.0.0"
+  },
+  "overrides": {
+    "jszip": ">=3.7.0"
   }
 }
