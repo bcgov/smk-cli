@@ -131,6 +131,9 @@ export default {
 
             if ( context.getters.configHasLayer( itemId ) )
                 context.dispatch( 'configLayerRemove', { id: itemId } )
+        },
+        configToolLayersDisplayToggleLabelVisibility( context, itemId ) {
+            var item = context.getters.configToolLayersDisplayItem( itemId );
         }
     },
 }

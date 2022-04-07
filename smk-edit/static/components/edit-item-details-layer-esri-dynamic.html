@@ -5,4 +5,11 @@
             <label for="dbcDefinitionExpression">Dynamic Expression</label>
         </div>
     </div>-->
+    <div class="row">
+        <input-checkbox 
+            class="col s12"
+            v-if="hasLabels"
+            v-model="showLabels"
+        >Show labels</input-checkbox>
+    </div>
 </div>
