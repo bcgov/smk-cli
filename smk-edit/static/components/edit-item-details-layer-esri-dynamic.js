@@ -9,8 +9,8 @@ export default importComponents( [
                 const layer = this.$store.getters.configLayer( this.itemId );
                 if (layer.dynamicLayers) {
                     for (const dynamicLayer of layer.dynamicLayers) {
-                        let dynamicJson = JSON.parse(dynamicLayer);
-                        if(dynamicJson.drawingInfo.labelingInfo) {
+                        const dynamicJson = JSON.parse(dynamicLayer);
+                        if(dynamicJson.drawingInfo && dynamicJson.drawingInfo.labelingInfo) {
                             return true;
                         }
                     };
@@ -23,19 +23,21 @@ export default importComponents( [
                     if (layer.dynamicLayers) {
                         for (const dynamicLayer of layer.dynamicLayers) {
                             const dynamicJson = JSON.parse(dynamicLayer);
-                            if(dynamicJson.drawingInfo.labelingInfo && dynamicJson.drawingInfo.showLabels) {
-                                return true;
+                            if(dynamicJson.drawingInfo 
+                                && dynamicJson.drawingInfo.labelingInfo 
+                                && dynamicJson.drawingInfo.showLabels) {
+                                    return true;
                             }
                         }
                     }
                     return false;
                 },
                 set: function ( val ) {
-                    let layer = this.$store.getters.configLayer( this.itemId );
+                    const layer = this.$store.getters.configLayer( this.itemId );
                     if (layer.dynamicLayers) {
                         for (let i = 0; i < layer.dynamicLayers.length; i++) {
                             const dynamicJson = JSON.parse(layer.dynamicLayers[i]);
-                            if(dynamicJson.drawingInfo.labelingInfo) {
+                            if(dynamicJson.drawingInfo && dynamicJson.drawingInfo.labelingInfo) {
                                 dynamicJson.drawingInfo.showLabels = val;
                                 layer.dynamicLayers[i] = JSON.stringify(dynamicJson);
                             }
