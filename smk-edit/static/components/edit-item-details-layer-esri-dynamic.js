@@ -7,7 +7,7 @@ export default importComponents( [
         computed: {
             hasLabels: function() {
                 const layer = this.$store.getters.configLayer( this.itemId );
-                if (layer.dynamicLayers) {
+                if (layer && layer.dynamicLayers) {
                     for (const dynamicLayer of layer.dynamicLayers) {
                         const dynamicJson = JSON.parse(dynamicLayer);
                         if(dynamicJson.drawingInfo && dynamicJson.drawingInfo.labelingInfo) {
@@ -20,7 +20,7 @@ export default importComponents( [
             showLabels: {
                 get: function () {
                     const layer = this.$store.getters.configLayer( this.itemId );
-                    if (layer.dynamicLayers) {
+                    if (layer && layer.dynamicLayers) {
                         for (const dynamicLayer of layer.dynamicLayers) {
                             const dynamicJson = JSON.parse(dynamicLayer);
                             if(dynamicJson.drawingInfo 
@@ -34,7 +34,7 @@ export default importComponents( [
                 },
                 set: function ( val ) {
                     const layer = this.$store.getters.configLayer( this.itemId );
-                    if (layer.dynamicLayers) {
+                    if (layer && layer.dynamicLayers) {
                         for (let i = 0; i < layer.dynamicLayers.length; i++) {
                             const dynamicJson = JSON.parse(layer.dynamicLayers[i]);
                             if(dynamicJson.drawingInfo && dynamicJson.drawingInfo.labelingInfo) {
