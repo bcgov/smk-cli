@@ -3,6 +3,7 @@ const fs = require( 'fs' )
 const path = require( 'path' )
 const inquirer = require( 'inquirer' )
 const shell = require( 'shelljs' )
+const semverGte = require ( 'semver/functions/gte' )
 const semverRsort = require( 'semver/functions/rsort' )
 
 module.exports = async function ( args ) {
@@ -133,7 +134,9 @@ async function inquireAppInfo( name, baseDir, package, version ) {
                 return `Select the version of ${ chalk.yellow( app.smkPackage ) } for your application:`
             },
             choices: function ( app ) {
-                return semverRsort( JSON.parse( shell.exec( `npm view ${ app.smkPackage } versions --json`, { silent: true } ).stdout ) )
+                const allVersions = JSON.parse( shell.exec( `npm view ${ app.smkPackage } versions --json`, { silent: true } ).stdout )
+                const supportedVersions = allVersions.filter(version => semverGte(version, '1.0.10')) // TODO update to 1.1.0 before release
+                return semverRsort( supportedVersions )
             }
         },
         {
@@ -154,8 +157,14 @@ async function inquireAppInfo( name, baseDir, package, version ) {
             name: 'baseMap',
             type: 'list',
             message: 'Select the base map:',
-            choices: [ 'Streets', 'Topographic', 'NationalGeographic', 'Oceans', 'Gray', 'DarkGray', 'Imagery', 'ShadedRelief' ],
+            choices: [ 'Topographic', 'Streets', 'Imagery', 'Oceans', 'ShadedRelief', 'DarkGray', 'Gray', 'StamenTonerLight' ],
             default: 'Topographic'
+        },
+        {
+            name: 'esriApiKey',
+            type: 'input',
+            message: 'This basemap is provided by ESRI and requires an API key. To get an API key, create an ArcGIS Developer or ArcGIS Online account and then create an API key in the developer dashboard. Enter an ESRI API key:',
+            when: answers => !['StamenTonerLight'].includes(answers.baseMap)
         },
         {
             name: 'tools',

@@ -41,6 +41,23 @@ export default importComponents( [
                     this.$store.commit( 'configViewerBaseMap', val )
                 }
             },
+            esriApiKey: {
+                get: function () {
+                    return this.$store.getters.configViewerEsriApiKey
+                },
+                set: function ( val ) {
+                    this.location = null
+                    this.$store.commit( 'configViewerEsriApiKey', val )
+                }
+            },
+            selectedBasemapIsEsriType: function() {
+                for (const bm of baseMaps) {
+                    if(bm.id == this.$store.getters.configViewerBaseMap && bm.type == "ESRI") {
+                        return true;
+                    }
+                }
+                return false;
+            },
             hasMapConfig: function () {
                 return this.$store.getters.hasConfig
             },
@@ -54,6 +71,7 @@ export default importComponents( [
                     {
                         viewer: {
                             baseMap: this.$store.getters.configViewerBaseMap,
+                            esriApiKey: this.$store.getters.configViewerEsriApiKey,
                             location: JSON.parse( JSON.stringify( this.location ) )
                         }
                     }

@@ -54,6 +54,18 @@
                 </input-select>
             </div>
 
+            <div class="row tight" v-if="selectedBasemapIsEsriType">
+                <div class="col s12">
+                    This basemap is provided by ESRI's <a target="_blank" href="https://developers.arcgis.com/documentation/mapping-apis-and-services/maps/services/basemap-layer-service">vector basemap service</a> and requires an API key. To provide an API key, you can create an <a target="_blank" href="https://developers.arcgis.com/sign-up">ArcGIS Developer Account</a> for free or use an <a target="_blank" href="https://www.esri.com/en-us/arcgis/products/arcgis-online/trial">ArcGIS Online Account</a> and then create an <a target="_blank" href="https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/">API key</a> in the <a target="_blank" href="https://developers.arcgis.com/dashboard/">developer dashboard</a>.
+                </div>
+            </div>
+
+            <div class="row tight" v-if="selectedBasemapIsEsriType">
+                <input-text class="col s12"
+                    v-model="esriApiKey"
+                >ESRI API key
+                </input-text>
+            </div>
         </div>
     </section>
 

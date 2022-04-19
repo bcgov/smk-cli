@@ -211,39 +211,43 @@ export const baseMaps = [
     {
         id: 'Topographic',
         title: 'Topographic',
+        type: 'ESRI'
     },
     {
         id: 'Streets',
-        title: 'Streets'
+        title: 'Streets',
+        type: 'ESRI'
     },
     {
         id: 'Imagery',
         title: 'Imagery',
+        type: 'ESRI'
     },
     {
         id: 'Oceans',
-        title: 'Oceans'
-    },
-    {
-        id: 'NationalGeographic',
-        title: 'National Geographic'
+        title: 'Oceans',
+        type: 'ESRI'
     },
     {
         id: 'ShadedRelief',
-        title: 'Shaded Relief'
+        title: 'Shaded Relief',
+        type: 'ESRI'
     },
     {
         id: 'DarkGray',
-        title: 'Dark Gray'
+        title: 'Dark Gray',
+        type: 'ESRI'
     },
     {
         id: 'Gray',
-        title: 'Gray'
+        title: 'Gray',
+        type: 'ESRI'
     },
     {
         id: 'StamenTonerLight',
-        title: 'Stamen Toner Light'
-    },
+        title: 'Stamen Toner Light',
+        type: 'Open'
+    }
 ]
 
 export const zoomScale = []
