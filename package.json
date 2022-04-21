@@ -49,6 +49,7 @@
     "load-grunt-tasks": "4.0.0"
   },
   "overrides": {
+    "async": "~2.6.4",
     "jszip": ">=3.7.0"
   }
 }
