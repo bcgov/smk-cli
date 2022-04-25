@@ -60,7 +60,7 @@ From the DataBC Details panel, you can modify the following attributes:
 
 `Show labels` appears when a DataBC layer includes configuration for the display of labels. Toggling this value will turn labels on or off.
 
-Modifications can be made to how labels are displayed by manually editing `smk-config.json`. Each DataBC layer in the `layers` property has a `dynamicLayers` property. This includes a `drawingInfo` property which defines the appearance of the layer on the map. Label content and style can be updated by editing its `labelingInfo` property. For more information, see <a href="https://developers.arcgis.com/web-map-specification/objects/drawingInfo">`drawingInfo` documentation</a>.
+Modifications can be made to how labels are displayed by manually editing `smk-config.json`. Each DataBC layer in the `layers` property has a `dynamicLayers` property. Each dynamic layer includes a `drawingInfo` property which defines the appearance of the layer on the map. Label content and style can be updated by editing its `labelingInfo` property. For more information, see <a href="https://developers.arcgis.com/web-map-specification/objects/drawingInfo">`drawingInfo` documentation</a>.
 
 #### Metadata URL
 
