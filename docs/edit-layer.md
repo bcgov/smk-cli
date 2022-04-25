@@ -37,6 +37,7 @@ From the DataBC Details panel, you can modify the following attributes:
 - Available for Identify
 - Opacity
 - Display Range
+- Show Labels
 - Metadata URL
 
 #### Title
@@ -54,6 +55,12 @@ From the DataBC Details panel, you can modify the following attributes:
 #### Display Range
 
 `Display Range` allows you to specify an allowable range where this layer can be displayed. If your map is outside of this scale range, the layer will not draw on the map, and will not be identifiable or selectable.
+
+#### Show Labels
+
+`Show labels` appears when a DataBC layer includes configuration for the display of labels. Toggling this value will turn labels on or off.
+
+Modifications can be made to how labels are displayed by manually editing `smk-config.json`. Each DataBC layer in the `layers` property has a `dynamicLayers` property. This includes a `drawingInfo` property which defines the appearance of the layer on the map. Label content and style can be updated by editing its `labelingInfo` property. For more information, see <a href="https://developers.arcgis.com/web-map-specification/objects/drawingInfo">`drawingInfo` documentation</a>.
 
 #### Metadata URL
 
