@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'BC Sans';
+    src: url('BCSans-Regular.woff') format('woff');
+}
+
 body {
     position: absolute;
     top: 0;
@@ -12,7 +17,11 @@ body {
     justify-content: stretch;
     align-items: stretch;
 
-    font-family: Helvetica,Arial,sans-serif;
+    font-family: 'BC Sans',Helvetica,Arial,sans-serif;
+}
+
+button, input {
+    font-family: inherit;
 }
 
 header {
