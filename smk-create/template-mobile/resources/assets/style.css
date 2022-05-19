@@ -21,7 +21,7 @@ body {
 }
 
 button, input {
-    font-family: 'BC Sans',Helvetica,Arial,sans-serif;
+    font-family: inherit;
 }
 
 header {
