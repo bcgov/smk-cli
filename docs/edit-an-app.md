@@ -110,7 +110,7 @@ The Application screen shows you your current settings for the application name 
 
 - Map Viewer (Leaflet)
 - Device (Auto-detect, Desktop, or Mobile)
-- Base map (basemaps from ESRI and other sources)
+- Base map (basemaps from Esri and other sources)
 
 You can use the map on the right to select your applications initial extent. When the application is launched, this is the location that the map will zoom to. By default the extent is a bounding box around British Columbia, Canada.
 

@@ -52,7 +52,7 @@ export default importComponents( [
             },
             selectedBasemapIsEsriType: function() {
                 for (const bm of baseMaps) {
-                    if(bm.id == this.$store.getters.configViewerBaseMap && bm.type == "ESRI") {
+                    if(bm.id == this.$store.getters.configViewerBaseMap && bm.type === "ESRI") {
                         return true;
                     }
                 }

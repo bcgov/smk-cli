@@ -163,7 +163,7 @@ async function inquireAppInfo( name, baseDir, package, version ) {
         {
             name: 'esriApiKey',
             type: 'input',
-            message: 'This basemap is provided by ESRI and requires an API key. To get an API key, create an ArcGIS Developer or ArcGIS Online account and then create an API key in the developer dashboard. Enter an ESRI API key:',
+            message: 'Enter an Esri API key:',
             when: answers => !['StamenTonerLight'].includes(answers.baseMap)
         },
         {

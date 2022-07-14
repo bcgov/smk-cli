@@ -69,7 +69,7 @@ But first, please answer some questions about your new SMK application.
 ? Select the template for your application: default
 ? Select the type of map viewer: leaflet
 ? Select the base map: Topographic
-? This basemap is provided by ESRI and requires an API key. To get an API key, create an ArcGIS Developer or ArcGIS Online account and then create an API key in the developer dashboard. Enter an ESRI API key: my-ESRI-API-key
+? Enter an Esri API key: my-Esri-API-key
 ? Select the tools: about, coordinate, layers, pan, zoom, scale, minimap, identify, search
 ```
 
@@ -89,9 +89,9 @@ But first, please answer some questions about your new SMK application.
 
 `Select the type of map viewer` The SMK-CLI comes with two different map viewer options: `leaflet` or `ESRI 3D`. Press your arrow direction buttons up or down to choose an option, and press enter to select it. The default is `leaflet`.
 
-Note: Currently ESRI 3D support is experimental.
+Note: Currently Esri 3D support is experimental.
 
-`Select the base map` This will be the default map viewable on your application. Currently SMK uses the ESRI basemap layers:
+`Select the base map` This will be the default map viewable on your application. Currently SMK uses the Esri basemap layers:
 
 - Topographic
 - Streets
@@ -100,11 +100,14 @@ Note: Currently ESRI 3D support is experimental.
 - ShadedRelief
 - DarkGray
 - Gray
+
+SMK also uses:
+
 - StamenTonerLight
 
 Press your arrow direction buttons up or down to choose an option, and press enter to select it. The default is `Topographic`.
 
-`Enter an ESRI API key` Several basemaps are provided by ESRI and require the use of an API key. To get an API key, create an [ArcGIS Developer account](https://developers.arcgis.com/sign-up/) or [ArcGIS Online account](https://www.esri.com/en-us/arcgis/products/arcgis-online/trial) and then create an [API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) in the [developer dashboard](https://developers.arcgis.com/dashboard/).
+`Enter an Esri API key` Several basemaps are provided by Esri and require the use of an API key. To get an API key, create an [ArcGIS Developer account](https://developers.arcgis.com/sign-up/) or [ArcGIS Online account](https://www.esri.com/en-us/arcgis/products/arcgis-online/trial) and then create an [API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) in the [developer dashboard](https://developers.arcgis.com/dashboard/).
 
 `Select the tools` Allows you to pre-select from a set of default SMK tools to activate. Press `space` to select, `a` to toggle all, `i` to invert selection. The options are:
 
