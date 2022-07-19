@@ -19,6 +19,7 @@
             ],
             "zoom": 6.0
         },
+        "esriApiKey": "<%= app.esriApiKey %>",
         "baseMap": "<%= app.baseMap %>"
     },
     "tools": [
