@@ -135,7 +135,7 @@ async function inquireAppInfo( name, baseDir, package, version ) {
             },
             choices: function ( app ) {
                 const allVersions = JSON.parse( shell.exec( `npm view ${ app.smkPackage } versions --json`, { silent: true } ).stdout )
-                const supportedVersions = allVersions.filter(version => semverGte(version, '1.0.10')) // TODO update to 1.1.0 before release
+                const supportedVersions = allVersions.filter(version => semverGte(version, '1.1.0'))
                 return semverRsort( supportedVersions )
             }
         },
