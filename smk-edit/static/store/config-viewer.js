@@ -4,6 +4,7 @@ export default {
             type: null,
             device: null,
             baseMap: null,
+            esriApiKey: null,
             location: {
                 center: null,
                 extent: null,
@@ -27,6 +28,9 @@ export default {
         configViewerBaseMap: function ( state ) {
             return state.baseMap || 'Topographic'
         },
+        configViewerEsriApiKey: function ( state ) {
+            return state.esriApiKey
+        },
         configViewerLocation: function ( state ) {
             return state.location
         },
@@ -40,6 +44,9 @@ export default {
         },
         configViewerBaseMap: function ( state, baseMap ) {
             state.baseMap = baseMap
+        },
+        configViewerEsriApiKey: function ( state, esriApiKey ) {
+            state.esriApiKey = esriApiKey
         },
         configViewerLocation: function ( state, location ) {
             state.location = location

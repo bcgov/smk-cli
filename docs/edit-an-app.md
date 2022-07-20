@@ -22,7 +22,7 @@ Once you've navigated to your application, you use the SMK-CLI `edit` command.
 smk edit
 ```
 
-This will launch the SMK-CLI editor in your browser. As part of this process, a mini-api is launched in the background. To prevent issues with any other development servers you may have running, you can optionally supply a port number. The default is `1337`
+This will launch the SMK-CLI editor in your browser. As part of this process, a mini-api is launched in the background. To prevent issues with any other development servers you may have running, you can optionally supply a port number. The default is `1337`.
 
 ```bash
 smk edit -p 1337
@@ -108,9 +108,9 @@ You can also test your application by building and launching it on a local serve
 
 The Application screen shows you your current settings for the application name and title, and allows you to modify the following settings for your application.
 
-- Map Viewer (Leaflet or ESRI 3D)
+- Map Viewer (Leaflet)
 - Device (Auto-detect, Desktop, or Mobile)
-- Base map (ESRI basemaps)
+- Base map (basemaps from Esri and other sources)
 
 You can use the map on the right to select your applications initial extent. When the application is launched, this is the location that the map will zoom to. By default the extent is a bounding box around British Columbia, Canada.
 

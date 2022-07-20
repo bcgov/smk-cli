@@ -18,7 +18,7 @@ which will return the available commands that the SMK-CLI supports.
 /\__/ /| || | | | | || |_) || ||  __/ | |  | || (_| || |_) | | |\  \| || |_
 \____/ |_||_| |_| |_|| .__/ |_| \___| \_|  |_/ \__,_|| .__/  \_| \_/|_| \__|
                      | |                             | |
-                     |_|                             |_|   CLI v1.0.0
+                     |_|                             |_|   CLI v1.1.0
 Usage: index create|edit|help
 To create a new SMK project:     index create [name]
 To modify an SMK project config: index edit [-p port]
@@ -55,7 +55,7 @@ Where `mySmkProject` will be your desired project name. You will then be present
   /  \ |   / |/ |/ |    |/ \_ |/   |/      |  |  |   /  |    |/ \_    | \    |    |
  /(__/ |_/   |  |  |_/  |__/  |__/ |__/    |  |  |_/ \_/|_/  |__/     |  \_/ |_/  |_/
                        /|                                   /|
-                       \|                                   \|      CLI v1.0.0-beta.6
+                       \|                                   \|      CLI v1.1.0
 Welcome to the SMK application creation tool!
 An application skeleton will be created for you at the current directory.
 But first, please answer some questions about your new SMK application.
@@ -65,10 +65,11 @@ But first, please answer some questions about your new SMK application.
 ? Enter a short description for your application: This is a really cool map
 ? Enter the author's name: Vivid Solutions Inc.
 ? Enter the package name of SMK: smk
-? Select the version of smk for your application: 1.0.0-beta.3
+? Select the version of smk for your application: 1.1.0
 ? Select the template for your application: default
 ? Select the type of map viewer: leaflet
 ? Select the base map: Topographic
+? Enter an Esri API key: my-Esri-API-key
 ? Select the tools: about, coordinate, layers, pan, zoom, scale, minimap, identify, search
 ```
 
@@ -88,19 +89,25 @@ But first, please answer some questions about your new SMK application.
 
 `Select the type of map viewer` The SMK-CLI comes with two different map viewer options: `leaflet` or `ESRI 3D`. Press your arrow direction buttons up or down to choose an option, and press enter to select it. The default is `leaflet`.
 
-Note: Currently ESRI 3D support is experimental.
+Note: Currently Esri 3D support is experimental.
 
-`Select the base map` This will be the default map viewable on your application. Currently SMK uses the ESRI basemap layers:
+`Select the base map` This will be the default map viewable on your application. Currently SMK uses the Esri basemap layers:
 
-- Streets
 - Topographic
-- NationalGeographic
-- Oceans
-- Gray
-- DarkGray
+- Streets
 - Imagery
+- Oceans
+- ShadedRelief
+- DarkGray
+- Gray
+
+SMK also uses:
+
+- StamenTonerLight
 
 Press your arrow direction buttons up or down to choose an option, and press enter to select it. The default is `Topographic`.
+
+`Enter an Esri API key` Several basemaps are provided by Esri and require the use of an API key. To get an API key, create an [ArcGIS Developer account](https://developers.arcgis.com/sign-up/) or [ArcGIS Online account](https://www.esri.com/en-us/arcgis/products/arcgis-online/trial) and then create an [API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) in the [developer dashboard](https://developers.arcgis.com/dashboard/).
 
 `Select the tools` Allows you to pre-select from a set of default SMK tools to activate. Press `space` to select, `a` to toggle all, `i` to invert selection. The options are:
 
@@ -138,19 +145,11 @@ copying \smk-cli\smk-create\template-default\resources\smk-init.js ..
 
 Installing application dependencies...
 npm notice created a lockfile as package-lock.json. You should commit this file.
-added 25 packages from 37 contributors and audited 25 packages in 1.201s
-npm WARN mySmkProject@0.0.1 No repository field.
-npm WARN mySmkProject@0.0.1 No license field.
-
-
-1 package is looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
+added 31 packages, and audited 32 packages in 3s
 
 mySmkProject@0.0.1 C:\smk\mySmkProject
-+-- http-server@0.12.3
-`-- smk@1.0.0-beta.3
+├── @bcgov/smk@1.1.0
+└── http-server@0.12.3
 
 Your application has been created.
 ```
