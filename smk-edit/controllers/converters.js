@@ -1,6 +1,6 @@
 const fs = require( 'fs' )
 const path = require( 'path' )
-const DOMParser = require( "xmldom" ).DOMParser
+const DOMParser = require( "@xmldom/xmldom" ).DOMParser
 const kmlToGeoJson = require( '@tmcw/togeojson' )
 const shapefile = require( 'shapefile' )
 // const fgdb = require( 'fgdb' )
