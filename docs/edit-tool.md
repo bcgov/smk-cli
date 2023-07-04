@@ -253,6 +253,8 @@ List menu allows you to modify the common settings for tools only.
 
 ## Measure
 
+**Deprecated** - This tool does not work properly in SMK versions 1.1.2 and later. 
+
 The Measure tool adds a measure utility to your application that allows users to make distance and area measurements on your map. See the [SMK Documentation](https://bcgov.github.io/smk/) for more details.
 
 Measure tool allows you to modify the common settings for tools only.
