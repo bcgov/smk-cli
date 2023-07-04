@@ -118,9 +118,14 @@ Press your arrow direction buttons up or down to choose an option, and press ent
 - zoom
 - measure
 - markup
+- scale
 - minimap
+- directions
+- location
+- select
 - identify
 - search
+- geomark
 
 `about`, `coordinate`, `layers`, `pan`,  `minimap`, `identify`, `search` and `zoom` are selected by default. You can find more information about these specific tools in the [SMK documentation](https://bcgov.github.io/smk/)
 
