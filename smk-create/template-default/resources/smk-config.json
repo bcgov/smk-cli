@@ -86,10 +86,6 @@
             "enabled": <%= !!app.tool.coordinate %>
         },
         {
-            "type": "measure",
-            "enabled": <%= !!app.tool.measure %>
-        },
-        {
             "type": "markup",
             "enabled": <%= !!app.tool.markup %>
         },

@@ -116,7 +116,6 @@ Press your arrow direction buttons up or down to choose an option, and press ent
 - layers
 - pan
 - zoom
-- measure
 - markup
 - minimap
 - identify
