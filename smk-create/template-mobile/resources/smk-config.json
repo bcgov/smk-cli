@@ -95,11 +95,6 @@
             "enabled": false
         },
         {
-            "type": "measure",
-            "enabled": <%= !!app.tool.measure %>,
-            "position": "list-menu"
-        },
-        {
             "type": "markup",
             "enabled": false
         },

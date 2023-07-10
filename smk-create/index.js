@@ -170,7 +170,7 @@ async function inquireAppInfo( name, baseDir, package, version ) {
             name: 'tools',
             type: 'checkbox',
             message: 'Select the tools:',
-            choices: [ 'about', 'coordinate', 'layers', 'pan', 'zoom', 'measure', 'markup', 'scale', 'minimap', 'directions', 'location', 'select', 'identify', 'search', 'geomark' ],
+            choices: [ 'about', 'coordinate', 'layers', 'pan', 'zoom', 'markup', 'scale', 'minimap', 'directions', 'location', 'select', 'identify', 'search', 'geomark' ],
             default: [ 'about', 'coordinate', 'layers', 'pan', 'zoom', 'scale', 'identify', 'search' ]
         }
     ] )
