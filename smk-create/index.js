@@ -135,7 +135,7 @@ async function inquireAppInfo( name, baseDir, package, version ) {
             },
             choices: function ( app ) {
                 const allVersions = JSON.parse( shell.exec( `npm view ${ app.smkPackage } versions --json`, { silent: true } ).stdout )
-                const supportedVersions = allVersions.filter(version => semverGte(version, '1.1.0'))
+                const supportedVersions = allVersions.filter(version => semverGte(version, '1.2.0'))
                 return semverRsort( supportedVersions )
             }
         },
@@ -157,14 +157,14 @@ async function inquireAppInfo( name, baseDir, package, version ) {
             name: 'baseMap',
             type: 'list',
             message: 'Select the base map:',
-            choices: [ 'Topographic', 'Streets', 'Imagery', 'Oceans', 'ShadedRelief', 'DarkGray', 'Gray', 'StamenTonerLight' ],
-            default: 'Topographic'
+            choices: [ 'BCGov', 'BCGovHillshade', 'Topographic', 'Streets', 'Imagery', 'Oceans', 'ShadedRelief', 'DarkGray', 'Gray' ],
+            default: 'BCGov'
         },
         {
             name: 'esriApiKey',
             type: 'input',
             message: 'Enter an Esri API key:',
-            when: answers => !['StamenTonerLight'].includes(answers.baseMap)
+            when: answers => !['BCGov', 'BCGovHillshade'].includes(answers.baseMap)
         },
         {
             name: 'tools',

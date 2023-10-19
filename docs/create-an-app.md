@@ -103,7 +103,8 @@ Note: Currently Esri 3D support is experimental.
 
 SMK also uses:
 
-- StamenTonerLight
+- BCGov
+- BCGovHillshade
 
 Press your arrow direction buttons up or down to choose an option, and press enter to select it. The default is `Topographic`.
 

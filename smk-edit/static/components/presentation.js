@@ -209,6 +209,16 @@ export const availableTools = Object.keys( toolTypePresentation )
 
 export const baseMaps = [
     {
+        id: 'BCGov',
+        title: 'BC Government',
+        type: 'Open'
+    },
+    {
+        id: 'BCGovHillshade',
+        title: 'BC Government Hillshade',
+        type: 'Open'
+    },
+    {
         id: 'Topographic',
         title: 'Topographic',
         type: 'ESRI'
@@ -242,11 +252,6 @@ export const baseMaps = [
         id: 'Gray',
         title: 'Gray',
         type: 'ESRI'
-    },
-    {
-        id: 'StamenTonerLight',
-        title: 'Stamen Toner Light',
-        type: 'Open'
     }
 ]
 
