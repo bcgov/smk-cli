@@ -1,6 +1,6 @@
 {
   "name": "@bcgov/smk-cli",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A utility for creating and configuring a Simple Map Kit project",
   "main": "index.js",
   "author": "Ben Jubb <benjubb@gmail.com>",
@@ -16,7 +16,7 @@
     "debug": "./index.js edit --open no --base build/test-app --ping 300000"
   },
   "dependencies": {
-    "@bcgov/smk": ">=1.1.0",
+    "@bcgov/smk": ">=1.2.0",
     "@tmcw/togeojson": "~4.5.0",
     "chalk": "~4.1.0",
     "cors": "~2.8.5",

@@ -66,7 +66,7 @@ export default importComponents( [
                     'show-tool=pan,zoom,toolbar,layers,identify,scale,coordinate,baseMaps,legend',
                     {
                         viewer: {
-                            baseMap: 'StamenTonerLight'
+                            baseMap: 'BCGov'
                         },
                         layers: [
                             this.$store.getters.configLayer( this.itemId )

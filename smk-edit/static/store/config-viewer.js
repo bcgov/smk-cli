@@ -26,7 +26,7 @@ export default {
             return state.device || 'auto'
         },
         configViewerBaseMap: function ( state ) {
-            return state.baseMap || 'Topographic'
+            return state.baseMap || 'BCGov'
         },
         configViewerEsriApiKey: function ( state ) {
             return state.esriApiKey
