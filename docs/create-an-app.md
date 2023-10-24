@@ -18,7 +18,7 @@ which will return the available commands that the SMK-CLI supports.
 /\__/ /| || | | | | || |_) || ||  __/ | |  | || (_| || |_) | | |\  \| || |_
 \____/ |_||_| |_| |_|| .__/ |_| \___| \_|  |_/ \__,_|| .__/  \_| \_/|_| \__|
                      | |                             | |
-                     |_|                             |_|   CLI v1.1.0
+                     |_|                             |_|   CLI v1.2.0
 Usage: index create|edit|help
 To create a new SMK project:     index create [name]
 To modify an SMK project config: index edit [-p port]
@@ -55,7 +55,7 @@ Where `mySmkProject` will be your desired project name. You will then be present
   /  \ |   / |/ |/ |    |/ \_ |/   |/      |  |  |   /  |    |/ \_    | \    |    |
  /(__/ |_/   |  |  |_/  |__/  |__/ |__/    |  |  |_/ \_/|_/  |__/     |  \_/ |_/  |_/
                        /|                                   /|
-                       \|                                   \|      CLI v1.1.0
+                       \|                                   \|      CLI v1.2.0
 Welcome to the SMK application creation tool!
 An application skeleton will be created for you at the current directory.
 But first, please answer some questions about your new SMK application.
@@ -65,10 +65,10 @@ But first, please answer some questions about your new SMK application.
 ? Enter a short description for your application: This is a really cool map
 ? Enter the author's name: Vivid Solutions Inc.
 ? Enter the package name of SMK: smk
-? Select the version of smk for your application: 1.1.0
+? Select the version of smk for your application: 1.2.0
 ? Select the template for your application: default
 ? Select the type of map viewer: leaflet
-? Select the base map: Topographic
+? Select the base map: BCGov
 ? Enter an Esri API key: my-Esri-API-key
 ? Select the tools: about, coordinate, layers, pan, zoom, scale, minimap, identify, search
 ```
@@ -106,7 +106,7 @@ SMK also uses:
 - BCGov
 - BCGovHillshade
 
-Press your arrow direction buttons up or down to choose an option, and press enter to select it. The default is `Topographic`.
+Press your arrow direction buttons up or down to choose an option, and press enter to select it. The default is `BCGov`.
 
 `Enter an Esri API key` Several basemaps are provided by Esri and require the use of an API key. To get an API key, create an [ArcGIS Developer account](https://developers.arcgis.com/sign-up/) or [ArcGIS Online account](https://www.esri.com/en-us/arcgis/products/arcgis-online/trial) and then create an [API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) in the [developer dashboard](https://developers.arcgis.com/dashboard/).
 
