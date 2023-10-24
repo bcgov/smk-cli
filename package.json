@@ -16,7 +16,7 @@
     "debug": "./index.js edit --open no --base build/test-app --ping 300000"
   },
   "dependencies": {
-    "@bcgov/smk": ">=1.1.0",
+    "@bcgov/smk": ">=1.2.0",
     "@tmcw/togeojson": "~4.5.0",
     "chalk": "~4.1.0",
     "cors": "~2.8.5",
