@@ -16,12 +16,13 @@
     "debug": "./index.js edit --open no --base build/test-app --ping 300000"
   },
   "dependencies": {
-    "@bcgov/smk": ">=1.2.2",
+    "@bcgov/smk": ">=1.2.3",
     "@tmcw/togeojson": "~4.5.0",
+    "@xmldom/xmldom": "~0.8.5",
     "chalk": "~4.1.0",
     "cors": "~2.8.5",
     "csv-parse": "~4.16.0",
-    "express": "~4.19.2",
+    "express": "^4.21.0",
     "fgdb": "~1.0.0",
     "figlet": "~1.5.0",
     "glob": "7.1.2",
@@ -38,8 +39,7 @@
     "shelljs": "~0.8.5",
     "touch": "~3.1.0",
     "unzipper": "~0.10.11",
-    "xml2js": "~0.6.2",
-    "@xmldom/xmldom": "~0.8.5"
+    "xml2js": "~0.6.2"
   },
   "devDependencies": {
     "connect-livereload": "~0.6.0",
