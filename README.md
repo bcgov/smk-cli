@@ -1,21 +1,19 @@
-# Simple Map Kit Command-line Interface
+# Simple Map Kit Command Line Interface
 
 ![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)
 
 A command line utility and visual editor for creating and editing [Simple Map Kit](https://github.com/bcgov/smk) applications.
 
-# Documentation
-
-Check out the SMK CLI documentation available [here](https://bcgov.github.io/smk-cli/)
-
 # Installation
 
-The SMK CLI can be installed via NPM in two different ways;
+SMK-CLI uses Node Package Manager (NPM). [Node.js](https://nodejs.org) must be installed before installing SMK-CLI. 
+
+SMK-CLI can be installed via NPM in two different ways -
 either local to the current project, or globally for your whole system.
 
 ## Global installation
 
-To install the command globally, so it can be used from any project in our system, use this command:
+To install the command globally, so it can be used from any project in your system, use this command:
 
     npm install --global @bcgov/smk-cli
 
@@ -32,25 +30,29 @@ To install the command local to a particular project, first change into the dire
     cd <project>
     npm install --save-dev @bcgov/smk-cli
 
-The `smk` will be installed for that particular project, as a dev dependency.
+The `smk` module will be installed for that particular project as a dev dependency.
 Test that installation was successful by executing:
 
-    node_modules/.bin/smk help
+    ./node_modules/.bin/smk help
 
 # Commands
 
     smk create [name]
 
-This will launch the command line tool for creating a new SMK application.
-You can provide a name, it will be the name of the new subdirectory for the application.
-This will download the latest version of SMK from GitHub and build a map configuration for you to start working with.
+This will launch the `create` tool for creating a new SMK application. If you provide a name, it will become the name of the new subdirectory for the application. Next you will see a series of prompts asking you to choose or enter values. Many of these can be changed later when using the `edit` tool.
+
+Once the wizard prompts are completed, the tool will download the chosen version of SMK as well as its NPM dependencies and build an SMK application configuration for you to start working with.
 
     smk edit [-p port]
 
-Once you've created an SMK application, or if you have an existing one, you can run this command to launch the visual editor.
+Once you've created an SMK application, or if you have an existing one, you can run this command to start an http server at the port you specified, or port 8080 if you didn't specify one, and launch the visual editor in a browser tab.
 
-For more information on the SMK project, or to read documentation on SMK development and building your finished SMK app, see https://bcgov.github.io/smk/
+# SMK
+
+For more information on the SMK project, or to read documentation on SMK development and building your finished SMK app, see https://bcgov.github.io/smk/.
 
 # Uninstall
 
     npm uninstall --global @bcgov/smk-cli
+
+# [Further Documentation](https://bcgov.github.io/smk-cli/)
