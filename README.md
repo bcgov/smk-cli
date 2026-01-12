@@ -27,6 +27,8 @@ Test that installation was successful by executing:
 
     smk help
 
+You should see the help information for `smk-cli`. If you don't and are using Windows, then it's likely your npm folder (`%APPDATA%\npm`) is not part of the system PATH variable. The simplest way to add it is with via the [Control Panel](https://www.computerhope.com/issues/ch000549.htm). After adding the npm folder to path, `smk help` should work.
+
 ## Local installation
 
 To install the command local to a particular project, first change into the directory of the project:
