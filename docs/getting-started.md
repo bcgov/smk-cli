@@ -2,7 +2,7 @@
 
 ## SMK and SMK-CLI repositories
 
-Firstly, lets get acquainted with SMK and the SMK-CLI. Some useful links for various components of the SMK Project
+First, let's get acquainted with SMK and the SMK-CLI. Below are some useful links for various components of the SMK project.
 
 - [SMK repo](https://github.com/bcgov/smk)
 - [SMK NPM repo](https://www.npmjs.com/package/@bcgov/smk)
@@ -13,17 +13,15 @@ Please review the SMK documentation prior to using the SMK-CLI. All SMK reposito
 
 ## SMK-CLI Dependencies
 
-The first step in getting started with the SMK-CLI is installation of dependencies. SMK-CLI is installed as an npm global package so you'll need to have node.js and npm installed on your machine.
+The first step in getting started with the SMK-CLI is installing dependencies. SMK-CLI makes use of the Node.js JavaScript runtime and the Node Package Manager (NPM). 
 
 Node.js is a free, open source server environment that runs on various platforms (Windows, Linux, Unix, Mac OS X, etc.), for running JavaScript on a server based environment.
 
-NPM is a package manager for Node.js applications and is installed along side Node.js.
+NPM is a package manager for Node.js applications and is installed with Node.js.
 
-These tools are needed to install and run the SMK-CLI and build your final SMK project for local testing.
+These tools are needed to install and run SMK-CLI and build your SMK project for local testing.
 
-You can find downloads for installation of these dependencies at [Node.js](https://nodejs.org/en/)
-
-You will need to ensure you've installed Node.js v12.x or higher
+You can find downloads for installation of these dependencies at [Node.js](https://nodejs.org/en/).
 
 ## Technologies used
 
