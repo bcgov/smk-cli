@@ -25,25 +25,25 @@ Almost all tools share a common set of default settings. Some tools will only ha
 
 ### Title
 
-`Title` Allows you to change the title that is displayed in the panel. Click once in the text box and modify the text as needed. Defaults to "Base Maps"
+`Title` Allows you to change the title that is displayed in the panel. Click once in the text box and modify the text as needed.
 
 ### Position
 
-`Position` Allows you to change where the base maps panel can be activated from. Click once in the dropdown selector to be presented with a list of available options. You can position your panel in the following locations:
+`Position` Allows you to change where the tool panel can be activated from. Click once in the dropdown selector to be presented with a list of available options. You can position your panel in the following locations:
 
 - list-menu
 - shortcut-menu
 - toolbar
 
-> __Note:__ This may depend on other tool settings. For instance, if you have not activated the shortcut menu tool, setting shortcut-menu as the position will not work. Ensure you've activated the corresponding menu tools before modifying this configuration
+> __Note:__ This may depend on other tool settings. For instance, if you have not activated the shortcut menu tool, setting shortcut-menu as the position will not work. Ensure you've activated the corresponding menu tools before modifying this configuration.
 
 ### Order
 
-`Order` Allows you to change the order in which the tool will be added to it's selected position. Use this if you want to move a tools activation button to a different position.
+`Order` Allows you to change the order in which the tool will be added to its selected position. Use this if you want to move a tool's activation button to a different position.
 
-### Show title in Toolbar
+### Show title in toolbar
 
-`Show title in Toolbar` Allows you to specify if you want the title to be displayed in the toolbar. This is set to `false` by default. Be careful of setting this on screens with many buttons, or on mobile devices.
+`Show title in toolbar` Allows you to specify if you want the title to be displayed in the toolbar. This is set to `false` by default. Be careful of setting this on screens with many buttons or on mobile devices.
 
 ### Set Icon
 
@@ -57,7 +57,7 @@ The `About` tool adds an "about" panel to your application where you can include
 
 ![About](smk-cli-about.png)
 
-The About tool contains a `Contents` section, where you can supply HTML Markup content. This will then be displayed to the user when they view the about content in the application.
+The About tool contains a `Contents` section, where you can supply HTML markup content. This will then be displayed to the user when they view the About content in the application.
 
 ![About view](about-view.png)
 
@@ -65,9 +65,9 @@ The About tool contains a `Contents` section, where you can supply HTML Markup c
 
 The `Base Maps` tool adds a base map selection panel to your application. From this panel, you can change the currently visible base map from within the application.
 
-![Base map Tool](basemap-tool.png)
+![Base Maps](basemap-tool.png)
 
-In Additional to the default settings for a tool,  Base map configuration has two additional options you can configure:
+In addition to the default settings for a tool, Base Map configuration has two additional options you can configure:
 
 - Select which base maps are available
 - Appearance of base map tiles in panel
@@ -76,7 +76,7 @@ Please review `Common settings` above. Below are Base Map specific Settings.
 
 ### Select which base maps are available
 
-`Select which base maps are available` Allows you to specify your list of selectable base maps from the SMK list of base map options. Click once on any check-box to add or remove it from your base map list. This will not affect your selection of default base map for you application.
+`Select which base maps are available` Allows you to specify your list of selectable base maps from the SMK list of base map options. Click once on any check-box to add or remove it from your base map list. This will not affect your selection of default base map for your application.
 
 ![Options](basemap-options.png)
 
@@ -89,19 +89,19 @@ Please review `Common settings` above. Below are Base Map specific Settings.
 
 ## Bespoke
 
-Bespoke is a special tool that "holds" other accessible tool data. Specifically, this is used for custom tools, and the layer specific search, query and filter tools. When you create a Search/Filter/Query on a layer, a `Bespoke` is generated automatically. Your application can have many of these tools.
+Bespoke is a special tool that "holds" other accessible tool data. Specifically, this is used for custom tools, as well as the layer specific search, query and filter tools. When you create a Search/Filter/Query on a layer, a `Bespoke` tool is generated automatically. Your application can have many of these tools.
 
 Please review `Common settings` above. The `Bespoke` tool does not have any additional special configurations.
 
 ## Directions
 
-The Directions tool allows access to the DataBC GeoLocation API for creating routes and route-planning. This is a highly customizable tool with a number of specialized options depending on the type of routes you wish to create.
+The Directions tool allows access to the DataBC GeoLocation API for creating routes and for route planning. This is a highly customizable tool with a number of specialized options depending on the type of routes you wish to create.
 
 ![Settings](directions-settings.png)
 
 > __Note:__ To use the API, you will need to be provided with an API key from DataBC. An API key is not included with SMK.
 
-In Addtional to the default settings for a tool, you can specify the following options for the route planner:
+In addtion to the default settings for a tool, you can specify the following options for the route planner:
 
 - Route Optimization
 - Route Traveled
@@ -137,19 +137,19 @@ In Addtional to the default settings for a tool, you can specify the following o
 
 ### Truck Height
 
-`Truck Height` Allows you to specify if the default truck height in metres that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
+`Truck Height` Allows you to specify if the default truck height in meters that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
 
 ### Truck Width
 
-`Truck Width` Allows you to specify if the default truck width in metres that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
+`Truck Width` Allows you to specify if the default truck width in meters that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
 
 ### Truck Length
 
-`Truck Length` Allows you to specify if the default truck length in metres that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
+`Truck Length` Allows you to specify if the default truck length in meters that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
 
 ### Truck Weight
 
-`Truck Weight` Allows you to specify if the default truck height in kilograms that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
+`Truck Weight` Allows you to specify if the default truck weight in kilograms that the route planner API will use to calculate optimal trucking routes. Additionally, there's an option to present this toggle to the user, so they can change the default setting in the application.
 
 > __Tip:__ Though intended for large freight trucks, the truck specific options may also be useful for assisting recreational vehicles, buses and other over-sized vehicles in planning optimal routes.
 
@@ -193,19 +193,19 @@ In addition to the default settings, Identify has several unique customizable op
 
 ### Allow changing search radius units
 
-`Allow changing search radius units` Allows the user to change the search radius units for radius searches
+`Allow changing search radius units` Allows the user to change the search radius units for radius searches.
 
 ### Search Radius
 
-`Search Radius` Sets the default search radius to use
+`Search Radius` Sets the default search radius to use.
 
 ### Search Radius Units
 
 `Search Radius Units` Sets the default search radius units to use. Available options are:
 
 - Pixels
-- Metres
-- Kilometres
+- Meters
+- Kilometers
 
 ![Identify](identify-tool.png)
 
@@ -215,7 +215,7 @@ The Layers tool enables a layer activation panel for your application. This pane
 
 ![Layer tool options](layer-tool.png)
 
-In addition to the default settings, Identify has several unique customizable options:
+In addition to the default settings, Layers has several unique customizable options:
 
 - Allow filtering layer list
 - Show legend toggle
@@ -231,17 +231,17 @@ In addition to the default settings, Identify has several unique customizable op
 
 `Show legend toggle` activates a toggle on the layer panel to show or hide the layer legend.
 
-### Show 'All Layers' visibility toggle
+### Show 'All layers' visibility toggle
 
-`Show All Layers visibility toggle` activates a toggle that allows users to set all layers to visible or hidden with a single click. Not recommended for applications with a large volume of layers.
+`Show All layers visibility toggle` activates a toggle that allows users to set all layers to visible or hidden with a single click. Not recommended for applications with a large volume of layers.
 
 ### Set layer visible icon
 
-`Set layer visible icon` Will open the icon selection popup, allowing you to change the default icon shown for visible layers
+`Set layer visible icon` Will open the icon selection popup, allowing you to change the default icon shown for visible layers.
 
 ### Set layer hidden icon
 
-`Set layer hidden icon` Will open the icon selection popup, allowing you to change the default icon shown for hidden layers
+`Set layer hidden icon` Will open the icon selection popup, allowing you to change the default icon shown for hidden layers.
 
 ![Layer panel](layers-panel.png)
 
@@ -249,15 +249,15 @@ In addition to the default settings, Identify has several unique customizable op
 
 List Menu enables the "hamburger" menu option that displays on the top-left of the SMK application. When active, you can place any of your tools within this menu as an alternative to using the shortcut or toolbar menu options.
 
-List menu allows you to modify the common settings for tools only.
+List Menu allows you to modify the common settings for tools only.
 
 ## Measure
 
-**Deprecated** - This tool does not work properly in SMK versions 1.1.2 and later. 
+> __Deprecated:__ This tool does not work properly in SMK versions 1.1.2 and later. 
 
 The Measure tool adds a measure utility to your application that allows users to make distance and area measurements on your map. See the [SMK Documentation](https://bcgov.github.io/smk/) for more details.
 
-Measure tool allows you to modify the common settings for tools only.
+Measure allows you to modify the common settings for tools only.
 
 ![Measure Tool](measure-panel.png)
 
@@ -275,11 +275,11 @@ The scale tool has several unique customizable options:
 
 ### Show Scale Factor
 
-`Show Scale Factor` Adds a display for the current maps scale factor.
+`Show Scale Factor` Adds a display for the current map's scale factor.
 
 ### Show Scale Bar
 
-`Show Scale Bar` Adds a display for a scalebar for the current maps scale factor, units adjusted based on zoom level (Kilometres, metres).
+`Show Scale Bar` Adds a display for a scalebar for the current map's scale factor, with units adjusted based on zoom level (kilometers or meters).
 
 ### Show Zoom Level
 
@@ -289,7 +289,7 @@ The scale tool has several unique customizable options:
 
 ## Search
 
-The Search tool adds a search bar to the top left side of your application, allowing users to access the DataBC geocoder search results, for address and location searches.
+The Search tool adds a search bar to the top left side of your application, allowing users to access the DataBC Geocoder search results for address and location searches.
 
 ![search tool options](search-tool.png)
 
@@ -310,7 +310,7 @@ In addition to the default settings, Search has two additional customizable opti
 
 ## Select
 
-The Select tool allows users to make selections from identified data on your map. This tool works in concert with the Identify tool for creating your selection sets.
+The Select tool allows users to make selections from identified data on your map. This tool works in concert with the Identify tool for creating selection sets.
 
 ![Select tool](selection-tool.png)
 
@@ -337,7 +337,7 @@ The Version tool adds a panel to your application that displays SMK specific ver
 
 ## Zoom
 
-The Zoom tool enables zooming functionality for your application, either by drawing a box, the mouse scroll wheel, double-click, or by using the zoom buttons on the screen.
+The Zoom tool enables zooming functionality for your application, either by drawing a box, the mouse scroll wheel, double-clicking, or by using the zoom buttons on the screen.
 
 ![zoom tool](zoom-tool.png)
 
