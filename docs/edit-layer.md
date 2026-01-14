@@ -2,14 +2,14 @@
 
 ## Contents
 
-- [DataBC Details](#databc-Details)
+- [DataBC Details](#databc-details)
 - [WMS Details](#wms-details)
 - [Vector Layer Details](#vector-layer-details)
 - [Attributes](#attributes)
 - [Queries](#queries)
 - [Custom Identify displays](#custom-identify-displays)
 
-Layers in SMK are highly customizable and allow for a number of configurations to tailor the layer to your applications specific needs. From the layer edit popup you can adjust display information, attribute details, and create special layer-specific query tools, as well as test your layer to ensure it displays as expected.
+Layers in SMK are highly customizable and allow for a number of configurations to tailor the layer to your application's specific needs. From the layer edit popup you can adjust display information, attribute details, and create special layer-specific query tools, as well as test your layer to ensure it displays as expected.
 
 Each layer type, DataBC, WMS and Vector, has some specific options that are only available to that type.
 
@@ -21,9 +21,9 @@ Click once on the edit button to activate the edit popup. The edit popup contain
 - Attributes
 - Queries
 
-`Details` allows you to make changes to the default details of a layer, including opacity and title
+`Details` allows you to make changes to the default details of a layer, including opacity and title.
 
-`Attributes` allows you to modify configurations for the attributes of that layer, including visibility and title.
+`Attributes` allows you to modify configurations for the attributes of that layer, including visibility and attribute title.
 
 `Queries` allows you to create custom queries for the layer to allow users to search for specific features easier.
 
@@ -34,7 +34,8 @@ Click once on the edit button to activate the edit popup. The edit popup contain
 From the DataBC Details panel, you can modify the following attributes:
 
 - Title
-- Available for Identify
+- Available for identify
+- Always show legend in layers tool
 - Opacity
 - Display Range
 - Show Labels
@@ -44,17 +45,21 @@ From the DataBC Details panel, you can modify the following attributes:
 
 `Title` allows you to change the displayed title for the layer in all locations of your application. Click once in the Title text-box and enter your desired layer title.
 
-#### Available for Identify
+#### Available for identify
 
-`Avaiable for Identify` allows this layer to display results in the identify window when a user clicks on the map with the identify tool. If you do not want a layer to be identified (for example, reference layers, boundaries, etc.) disable this check-box by clicking it once.
+`Avaiable for identify` allows this layer to display results in the identify window when a user clicks on the map with the identify tool. If you do not want a layer to be identified (for example, reference layers, boundaries, etc.) disable this check-box by clicking it once.
 
-#### Opacity
+#### Always show legend in layers tool
 
-`Opacity` adjust how transparent the layer is by default. Making a layer 100% Opaque will prevent users from seeing features covered by this layer. Setting a layer to 0% Opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
+`Always show legend in layers tool` toggles whether the legend always appears in the Layers tool. By default, each layer's legend is off.
 
 #### Display Range
 
 `Display Range` allows you to specify an allowable range where this layer can be displayed. If your map is outside of this scale range, the layer will not draw on the map, and will not be identifiable or selectable.
+
+#### Opacity
+
+`Opacity` adjusts how transparent the layer is by default. Making a layer 100% Opaque will prevent users from seeing features covered by this layer. Setting a layer to 0% Opaque will prevent it from displaying on the map at all, but it will still be identifiable and selectable (just invisible).
 
 #### Show Labels
 
@@ -73,13 +78,13 @@ Modifications can be made to how labels are displayed by manually editing `smk-c
 From the WMS Details panel, you can modify the following attributes:
 
 - Title
-- Available for Identify
+- Available for identify
+- Always show legend in layers tool
 - Opacity
 - Display Range
 - Service URL
 - Layer Name
 - Style Name
-- Metadata URL
 
 #### Title
 
@@ -88,6 +93,10 @@ From the WMS Details panel, you can modify the following attributes:
 #### Available for Identify
 
 `Avaiable for Identify` allows this layer to display results in the identify window when a user clicks on the map with the identify tool. If you do not want a layer to be identified (for example, reference layers, boundaries, etc.) disable this check-box by clicking it once.
+
+#### Always show legend in layers tool
+
+`Always show legend in layers tool` toggles whether the legend always appears in the Layers tool. By default, each layer's legend is off.
 
 #### Opacity
 
@@ -109,10 +118,6 @@ From the WMS Details panel, you can modify the following attributes:
 
 `Style Name` is the name of the WMS Service layer style you are presenting to your users. This should not be modified unless you are certain of a change to source layer styles (confirmed by a review of the WMS Service GetCapabilities). Usually, it's easier to simply re-add the layer.
 
-#### Metadata URL
-
-`Metadata URL` is a supplied URL for the layer's metadata. By default this is empty for WMS layers, but can be supplied if desired. This is useful for providing users with links to data sources or specific external resources related to the data displayed in your application.
-
 ### Vector Layer Details
 
 ![Vector Edit Details](smk-cli-vector-edit-details.png)
@@ -120,7 +125,8 @@ From the WMS Details panel, you can modify the following attributes:
 From the Vector Details panel, you can modify the following attributes:
 
 - Title
-- Available for Identify
+- Available for identify
+- Always show legend in layers tool
 - Opacity
 - Display Range
 - Data URL
@@ -137,6 +143,10 @@ Note that the Vector Details panel is the same if you've imported vector data di
 #### Available for Identify
 
 `Avaiable for Identify` allows this layer to display results in the identify window when a user clicks on the map with the identify tool. If you do not want a layer to be identified (for example, reference layers, boundaries, etc.) disable this check-box by clicking it once.
+
+#### Always show legend in layers tool
+
+`Always show legend in layers tool` toggles whether the legend always appears in the Layers tool. By default, each layer's legend is off.
 
 #### Opacity
 
@@ -188,19 +198,19 @@ Vectors have three primary categories for editing style information, depending o
 
 In addition, you can specify the style for the legend, which by default will be set to match your data style. You can also update the legend title if you want it to display differently from your layer title.
 
-If you wish to apply other style types to a vector (for instance, using markers for a lines point coordinates), you can enable those specific style options by clicking once on the toggle buttons on the right of the style tiles. Note however that some styles, like for instance fill styles, will have little effect on some data types.
+If you wish to apply other style types to a vector (for instance, using markers for a line's point coordinates), you can enable those specific style options by clicking once on the toggle buttons on the right of the style tiles. Note however that some styles, like for instance fill styles, will have little effect on some data types.
 
 #### Marker Style
 
 ![Marker style](marker-style-edit.png)
 
-Marker styles require a marker image, a Marker size, and a marker offset.
+Marker styles require a marker image, a marker size, and a marker offset.
 
 To add a marker image to your application, click once on the `Upload` button. This will open your operating system's standard file selection dialog. Select a file to import it into your application. Once imported, your marker image will be available to select in the `Marker URL` dropdown selection box.
 
-`Marker Size` allows you to specify the size of the image in pixels as it will display on the map. Images that are larger then the specified size will shrink to match, smaller images will be stretched.
+`Marker Size` allows you to specify the size of the image in pixels as it will display on the map. Images that are larger then the specified size will shrink to match, and smaller images will be stretched.
 
-`Marker Offset` specifies an offset size in pixels to shift your marker over. Generally a marker will draw on the map with the images top left corner on the point. If you want to centre your marker, supply an offset of half the marker size. As different markers and sizes have different offset needs, this value is not defaulted.
+`Marker Offset` specifies an offset size in pixels to shift your marker over. Generally a marker will draw on the map with the image's top left corner on the point. If you want to centre your marker, supply an offset of half the marker size. As different markers and sizes have different offset needs, this value is not defaulted.
 
 #### Stroke Style
 
@@ -220,7 +230,7 @@ Stroke styles are the styling for linework for your vector data. This includes t
 - Round
 - Square
 
-Click once on the Stroke Cap dropdown select box to display the possible values and select one. The Default value is `Round`
+Click once on the Stroke Cap dropdown select box to display the possible values and select one. The Default value is `Round`.
 
 `Stroke Join` is the style used where lines connect, for example the vertices along a polygons perimeter. You can specify the following styles:
 
@@ -228,7 +238,7 @@ Click once on the Stroke Cap dropdown select box to display the possible values 
 - Round
 - Bevel
 
-Click once on the Stroke Join dropdown select box to display the possible values and select one. The Default value is `Round`
+Click once on the Stroke Join dropdown select box to display the possible values and select one. The Default value is `Round`.
 
 `Dash Pattern` is used if you want your linework to appear dashed or dotted, rather than a solid single line. These are numeric values indicating the size of the dashes. For example `20, 20` will create line dashes 20 pixels in size, with a 20 pixel gap between them.
 
@@ -270,7 +280,7 @@ To expand the attribute tile, click once anywhere on the tile. It will expand an
 
 ![Expanded Attribute](attribute-tile-expanded.png)
 
-To modify the title, click once on the Title text box and enter your new title to display. By default, SMK will determine a Human-readable title by converting the name of the attribute, but as this may not be correct it's recommended to review your attribute titles and adjust any that may be incorrect.
+To modify the title, click once on the Title text box and enter your new title to display. By default, SMK-CLI will determine a human-readable title by converting the name of the attribute, but as this may not be correct it's recommended to review your attribute titles and adjust any that may be incorrect.
 
 Once you have finished modifying the attribute configurations, click once on the tile header to close the expanded tile.
 
@@ -278,7 +288,7 @@ Once you have finished modifying the attribute configurations, click once on the
 
 ### Queries
 
-Queries are a powerful tool that enable customized search and filtering queries for a layer. SMK-CLI ha the capability to enable a user to generate very complex queries, but some options are limited. A developer with a strong understanding of json and the SMK query framework can extend your queries if a particular function is needed but unavailable by the SMK-CLI editor.
+Queries are a powerful tool that enable customized search and filtering queries for a layer. SMK-CLI ha the capability to enable a user to generate very complex queries, but some options are limited. A developer with a strong understanding of JSON and the SMK query framework can extend a query if a particular function is needed but unavailable by the SMK-CLI editor.
 
 ![query editor](query-editor.png)
 
@@ -296,11 +306,11 @@ From the query edit panel you can modify the displayed Query Title and Query Des
 
 #### Parameters
 
-Queries function from Parameters, operator, and Clauses. You must include at least one Parameter, specify the Operator and at least one Clause into your query for it to produce results.
+Queries function from Parameters, an Operator, and Clauses. You must include at least one Parameter, specify an Operator, and include at least one Clause into your query for it to produce results.
 
 Think of a parameter as your entry field. The parameter will be displayed to the user and allow them to enter values to use for the query.
 
-To add a parameter. Click once in the `Add New Parameter` button. A query parameter tile will be added to your query. Click once anywhere in the tile to expand it for editing.
+To add a parameter, click once in the `Add New Parameter` button. A query parameter tile will be added to your query. Click once anywhere in the tile to expand it for editing.
 
 ![parameter edit](query-parameter-edit.png)
 
@@ -329,15 +339,15 @@ There are three default options for editing a parameter:
 
 #### Title
 
-`Title` is a text box containing the displayed title of your parameter. This title is displayed to the user and it's recommended to use a concise, but informative title describing what detail the user is expected to provide to the query.
+`Title` is a text box containing the displayed title of your parameter. This title is displayed to the user. It is recommended to use a concise but informative title describing what detail the user is expected to provide to the query.
 
 #### Default Value
 
-`Default Value` is the pre-set default value that will be supplied to this parameter so users do not have to fill in or select the parameter. `Constant` types required a default, but other types do not.
+`Default Value` is the preset default value that will be supplied to this parameter so users do not have to fill in or select the parameter. `Constant` types require a default, but other types do not.
 
 ### Operator
 
-Below the `Parameter` listing and `Add New Parameter` button is a dropdown select box for choosing your queries Operator.
+Below the `Parameter` listing and `Add New Parameter` button is a dropdown select box for choosing your query's Operator.
 
 The Operator defines the method of query, and contains three options:
 
@@ -365,9 +375,7 @@ Select your Parameter, the related Attribute and specify the clause.
 
 ## Custom Identify displays
 
-It is possible to completely customize your layers Identify popup display. This is an advanced feature that requires a working understanding of the Vue.js framework, HTML and potentially some javascript knowledge. More details on providing custom popups will be made available in the future.
-
-> Query documentation and functionality is currently in progress, check back for further updates soon!
+It is possible to completely customize your layer's Identify popup display. This is an advanced feature that requires a working understanding of the Vue.js framework, HTML and potentially some JavaScript knowledge. More details on providing custom popups will be made available in the future.
 
 [Creating an SMK application with the CLI](create-an-app.md) |
 [Editing an SMK application with the CLI](edit-an-app.md) |
