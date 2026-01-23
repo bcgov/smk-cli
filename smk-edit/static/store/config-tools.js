@@ -7,7 +7,7 @@ import configToolIdentify from './config-tool-identify.js'
 import configToolLayers from './config-tool-layers.js'
 import configToolListMenu from './config-tool-list-menu.js'
 import configToolLocation from './config-tool-location.js'
-import configToolMeasure from './config-tool-measure.js'
+// import configToolMeasure from './config-tool-measure.js'
 import configToolQuery from './config-tool-query.js'
 import configToolScale from './config-tool-scale.js'
 import configToolSearch from './config-tool-search.js'
@@ -26,7 +26,7 @@ export default mix( [
     configToolLayers,
     configToolListMenu,
     configToolLocation,
-    configToolMeasure,
+    // configToolMeasure,
     configToolQuery,
     configToolScale,
     configToolSearch,

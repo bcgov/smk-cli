@@ -384,7 +384,7 @@ The following tools are currently available to add to your application.
 - List Menu
 - Location
 - Markup
-- Measure
+<!-- - Measure -->
 - Pan
 - Scale
 - Search
