@@ -10,7 +10,7 @@ Several tools have unique configurations that allow you to tailor their behaviou
 - [Identify](#identify)
 - [Layers](#layers)
 - [List Menu](#list-menu)
-- [Measure](#measure)
+<!-- - [Measure](#measure) -->
 - [Scale](#scale)
 - [Search](#search)
 - [Select](#select)
@@ -251,7 +251,7 @@ List Menu enables the "hamburger" menu option that displays on the top-left of t
 
 List menu allows you to modify the common settings for tools only.
 
-## Measure
+<!-- ## Measure
 
 **Deprecated** - This tool does not work properly in SMK versions 1.1.2 and later. 
 
@@ -260,7 +260,7 @@ The Measure tool adds a measure utility to your application that allows users to
 Measure tool allows you to modify the common settings for tools only.
 
 ![Measure Tool](measure-panel.png)
-
+ -->
 ## Scale
 
 The Scale tool adds a scalebar to the bottom right corner of your application.

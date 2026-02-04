@@ -116,13 +116,13 @@ export const toolTypePresentation = {
         details: false,
         default: {}
     },
-    'measure': {
-        title: 'Measure',
-        details: 'edit-tool-details',
-        default: {
-            icon: 'straighten',
-        }
-    },
+    // 'measure': {
+    //     title: 'Measure',
+    //     details: 'edit-tool-details',
+    //     default: {
+    //         icon: 'straighten',
+    //     }
+    // },
     // 'menu': {
     //     title: 'Menu',
     //     position: true,

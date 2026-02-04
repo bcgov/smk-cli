@@ -11,7 +11,7 @@ export default {
                     showLocation: true,
                     command: {
                         identify: true,
-                        measure: true,
+                        // measure: true,
                         directions: true,
                     }
                 }, tool )
