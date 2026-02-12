@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'BC Sans';
+    src: url('assets/BCSans-Regular.woff') format('woff');
+}
+
 #app {
     position: absolute;
     top: 0;
@@ -28,6 +33,10 @@
 .input-field.inline {
     vertical-align: baseline;
     margin: 0;
+}
+
+body {
+    font-family: 'BC Sans', sans-serif;
 }
 
 header, main, footer {

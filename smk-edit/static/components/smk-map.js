@@ -10,6 +10,10 @@ vueComponent( import.meta.url, {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>SMK</title>
         <style>
+            body, input {
+                font-family: 'BC Sans', sans-serif;
+            }
+
             #smk-map-frame {
                 position: absolute;
                 top: 0;

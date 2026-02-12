@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'BC Sans';
+    src: url('BCSans-Regular.woff') format('woff');
+}
+
+/* Override font styling from materialize.min.css */
+button, input, optgroup, select, td, textarea, ul {
+    font-family: 'BC Sans', sans-serif;
+}
+
 body {
     position: absolute;
     top: 0;
@@ -12,7 +22,7 @@ body {
     justify-content: stretch;
     align-items: stretch;
 
-    font-family: Helvetica,Arial,sans-serif;
+    font-family: 'BC Sans',Helvetica,Arial,sans-serif;
 }
 
 header {
