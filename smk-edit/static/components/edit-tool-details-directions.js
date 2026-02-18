@@ -1,5 +1,17 @@
 import { vueComponent, importComponents } from '../vue-util.js'
 
+// Get and set properties of the "routePlannerService" object
+function configToolRoutePlannerService( opt ) {
+    return {
+        get: function () {
+            return this.$store.getters.configTool( this.toolType, this.toolInstance ).routePlannerService[ opt ]
+        },
+        set: function ( val ) {
+            this.$store.dispatch( 'configToolSubProp', { type: this.toolType, instance: this.toolInstance, propName: 'routePlannerService', [ opt ]: val } )
+        }
+    }
+}
+
 function configToolCommand( cmd ) {
     return {
         get: function () {
@@ -28,6 +40,10 @@ export default importComponents( [
     return vueComponent( import.meta.url, {
         props: [ 'toolType', 'toolInstance' ],
         computed: {
+            url: configToolRoutePlannerService( 'url' ),
+
+            apiKey: configToolRoutePlannerService( 'apiKey' ),
+
             optimal: configTool( 'optimal' ),
             commandOptimal: configToolCommand( 'optimal' ),
 
