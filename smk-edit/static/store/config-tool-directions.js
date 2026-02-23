@@ -8,7 +8,10 @@ export default {
                     icon: 'directions_car',
                     title: 'Route Planner',
                     geocoderService: {},
-                    routePlannerService: {},
+                    routePlannerService: {
+                        url: 'https://router.api.gov.bc.ca/',
+                        apiKey: ''
+                    },
                     optimal: false,
                     roundTrip: false,
                     criteria: 'shortest',

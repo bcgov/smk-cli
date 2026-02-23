@@ -6,6 +6,20 @@
 
     <div class="row">
         <div class="col s6">
+            <input-text
+                v-model="url"
+            >URL</input-text>
+        </div>
+
+        <div class="col s6">
+            <input-text
+                v-model="apiKey"
+            >API Key</input-text>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s6">
             <input-toggle
                 v-model="roundTrip"
                 on="Find optimal"
