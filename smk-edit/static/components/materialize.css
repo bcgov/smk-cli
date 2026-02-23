@@ -54,3 +54,8 @@
 .materialize.input-field {
     margin-bottom: 0;
 }
+
+/* Override font styling from materialize.min.css */
+button, input, optgroup, select, td, textarea, ul {
+    font-family: 'BC Sans', sans-serif;
+}
