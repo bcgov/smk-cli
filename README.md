@@ -4,9 +4,12 @@
 
 A command line utility and visual editor for creating and editing [Simple Map Kit](https://github.com/bcgov/smk) applications.
 
+# Feedback
+Report a bug, request an enhancement, or provide feedback at the [Data Systems and Services Portal](https://dpdd.atlassian.net/servicedesk/customer/portal/1/group/1).
+
 # Documentation
 
-Check out the SMK CLI documentation available [here](https://bcgov.github.io/smk-cli/)
+Check out the SMK CLI documentation available [here](https://bcgov.github.io/smk-cli/).
 
 # Installation
 
