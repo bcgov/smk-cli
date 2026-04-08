@@ -11,11 +11,11 @@ export const store = new Vuex.Store( {
         statusPingInterval: 5000,
         dirtyConfig: false,
         activeTab: null,
-        wmsCatalogUrl: 'https://openmaps.gov.bc.ca/geo/pub/wms',
+        wmsCatalogUrl: 'https://openmaps.gov.bc.ca/geo/pub/ows',
         wmsCatalogUrls: [
-            'https://openmaps.gov.bc.ca/geo/pub/wms',
+            'https://openmaps.gov.bc.ca/geo/pub/ows',
             'https://maps.th.gov.bc.ca/geoV05/ows',
-            'https://geo.nrs.gov.bc.ca/pub/geoserver/wms'
+            'https://geo.nrs.gov.bc.ca/pub/geoserver/ows'
         ],
         version: 1,
         smkUrl: '/module/smk.js'

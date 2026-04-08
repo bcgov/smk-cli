@@ -178,15 +178,15 @@ The functionality for WMS layers is identical to that of the DataBC layers descr
 
 #### Setting your WMS URL
 
-By default, the application will set the WMS service URL to the [DataBC Catalog WMS Service](https://openmaps.gov.bc.ca/geo/pub/wms). To change your WMS service, click once on the WMS Selector.
+By default, the application will set the WMS service URL to the [DataBC Catalog WMS Service](https://openmaps.gov.bc.ca/geo/pub/ows). To change your WMS service, click once on the WMS Selector.
 
 ![WMS Selector](smk-cli-wms-selector.png)
 
 You'll notice that the selector is actually a dropdown select box. SMK-CLI is pre-configured with some additional default WMS Services. These include:
 
-- [DataBC Catalog WMS Service](https://openmaps.gov.bc.ca/geo/pub/wms) (selected by default)
+- [DataBC Catalog WMS Service](https://openmaps.gov.bc.ca/geo/pub/ows) (selected by default)
 - [Maps.th.gov.bc.ca](https://maps.th.gov.bc.ca/geoV05/ows)
-- [NRS GeoServer](https://geo.nrs.gov.bc.ca/pub/geoserver/wms)
+- [NRS GeoServer](https://geo.nrs.gov.bc.ca/pub/geoserver/ows)
 - Another WMS Service
 
 ![Selector](smk-cli-wms-selector.png)
