@@ -21,7 +21,7 @@
     "@xmldom/xmldom": "~0.8.5",
     "chalk": "~4.1.0",
     "cors": "~2.8.5",
-    "csv-parse": "^7.0.3",
+    "csv-parse": "~7.0.3",
     "express": "^4.21.0",
     "fgdb": "~1.0.0",
     "figlet": "^1.12.0",
